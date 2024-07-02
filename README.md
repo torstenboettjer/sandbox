@@ -1,2 +1,2 @@
-# homemanager
-Sharing the nix home manager configuration accross multiple machines
+# NIX Home Manager
+Sharing the nix home manager configuration for Debian accross multiple desktop machines
