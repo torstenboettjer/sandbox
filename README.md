@@ -17,14 +17,20 @@ sh <(curl -L https://nixos.org/nix/install) --daemon
 ```
 ## 3. Home-Manager Repository
 
-Use `gh` nix package to clone the home manager repository
+Use `gh` nix package to clone the github repository
 
 ```sh
 nix-shell -p gh
 ```
 
-Log into guthub
+Log into github
 
 ```sh
 gh auth login
+```
+
+Clone home manager repository
+
+```sh
+gh repo clone torstenboettjer/home_manager
 ```
