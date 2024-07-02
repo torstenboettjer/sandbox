@@ -65,3 +65,10 @@ Create the first home-manager generation
 ```sh
 nix-shell '<home-manager>' -A install
 ```
+
+## 7.
+
+
+```sh
+echo -e '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.profile
+```
