@@ -5,8 +5,8 @@ Sharing the nix home manager configuration for Debian accross multiple desktop m
 
 Activate crosh
 
-Name: torsten
-Size: 85 GB
+* Name: torsten
+* Size: 85 GB
 
 ## 2. Nix Packetmanager
 
