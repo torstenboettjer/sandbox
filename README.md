@@ -35,14 +35,16 @@ Clone home manager repository
 gh repo clone torstenboettjer/home_manager
 ```
 
-## Enable Experimental Features
+## 4. Enable Experimental Features
 
-```sh
- sudo vim /etc/nix/nix.conf
-```
-
-Adding the following line
+Appending the following line to `sudo vim /etc/nix/nix.conf`:
 
 ```sh
 experimental-features = nix-command flakes
+```
+
+After that run the first test
+
+```sh
+nix run nixpkgs#hello
 ```
