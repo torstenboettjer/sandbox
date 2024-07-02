@@ -89,6 +89,12 @@ Make sure that the right system is active in *~/home_manager/flake.nix*
       system = "aarch64-linux";
 ```
 
+Configure git to push changes into the home-manager repository
+
+```sh
+git config --global user.email "torsten.boettjer@gmail.com"
+git config --global user.name "Torsten Boettjer"
+```
 
 Run the Makefile
 
