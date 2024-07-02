@@ -79,6 +79,17 @@ source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
 home-manager --version
 ```
 
+Make sure that the right system is active in *~/home_manager/flake.nix*
+
+```nix
+  outputs = { nixpkgs, home-manager, ... }:
+    let
+      lib = nixpkgs.lib;
+      # system = "x86_64-linux";
+      system = "aarch64-linux";
+```
+
+
 Run the Makefile
 
 ```sh
