@@ -6,6 +6,7 @@
       gh
       gnumake
       lunarvim
+      vscode
     ];
 
     username = "torsten";
