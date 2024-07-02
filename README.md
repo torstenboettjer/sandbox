@@ -40,7 +40,7 @@ gh repo clone torstenboettjer/home_manager
 Appending the following line to `/etc/nix/nix.conf`:
 
 ```sh
-sudo echo -e "experimental-features = nix-command flakes\ntrusted-users = root torsten" >> /etc/nix/nix.conf
+echo -e "experimental-features = nix-command flakes\ntrusted-users = root torsten" | sudo tee -a /etc/nix/nix.conf
 ```
 
 After that run the first test
