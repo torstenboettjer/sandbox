@@ -35,16 +35,25 @@ Clone home manager repository
 gh repo clone torstenboettjer/home_manager
 ```
 
-## 4. Enable Experimental Features
+## 4. Experimental Features
 
-Appending the following line to `/etc/nix/nix.conf`:
+Enabling experimental features by appending the following line to `/etc/nix/nix.conf`:
 
 ```sh
 echo -e "experimental-features = nix-command flakes\ntrusted-users = root torsten" | sudo tee -a /etc/nix/nix.conf
 ```
 
-After that run the first test
+Run functional test
 
 ```sh
 nix run nixpkgs#hello
+```
+
+## 5. Home-Manager Channel
+
+Add the appropriate channel, e.g. to follow the Nixpkgs master channel run:
+
+```sh
+nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+nix-channel --update
 ```
