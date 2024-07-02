@@ -57,3 +57,11 @@ Add the appropriate channel, e.g. to follow the Nixpkgs master channel run:
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --update
 ```
+
+## 6. Installation
+
+Create the first home-manager generation
+
+```sh
+nix-shell '<home-manager>' -A install
+```
