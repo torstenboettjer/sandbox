@@ -15,3 +15,10 @@ Install the Nix package manager globally
 ```sh
 sh <(curl -L https://nixos.org/nix/install) --daemon
 ```
+## 3. Home-Manager Repository
+
+Use `gh` nix package to clone the home manager repository
+
+```sh
+nix-shell -p gh
+```
