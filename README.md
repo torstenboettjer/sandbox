@@ -37,10 +37,11 @@ gh repo clone torstenboettjer/home_manager
 
 ## 4. Enable Experimental Features
 
-Appending the following line to `sudo vim /etc/nix/nix.conf`:
+Appending the following line to `/etc/nix/nix.conf`:
 
 ```sh
 experimental-features = nix-command flakes
+trusted-users = root torsten
 ```
 
 After that run the first test
