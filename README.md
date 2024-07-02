@@ -22,3 +22,9 @@ Use `gh` nix package to clone the home manager repository
 ```sh
 nix-shell -p gh
 ```
+
+Log into guthub
+
+```sh
+gh auth login
+```
