@@ -3,6 +3,9 @@
   home = {
     packages = with pkgs; [
       hello
+      gh
+      gnumake
+      lunarvim
     ];
 
     username = "torsten";
