@@ -34,3 +34,15 @@ Clone home manager repository
 ```sh
 gh repo clone torstenboettjer/home_manager
 ```
+
+## Enable Experimental Features
+
+```sh
+ sudo vim /etc/nix/nix.conf
+```
+
+Adding the following line
+
+```sh
+experimental-features = nix-command flakes
+```
