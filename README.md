@@ -78,3 +78,10 @@ Test the installation
 source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
 home-manager --version
 ```
+
+Run the Makefile
+
+```sh
+cd ~/home_manager
+make
+```
