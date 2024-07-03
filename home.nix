@@ -87,6 +87,13 @@
     # EDITOR = "emacs";
   };
 
+  # Configure git
+  programs.git = {
+    enable = true;
+    userName = "Torsten Boettjer";
+    userEmail = "torsten.boettjer@gmail.com";
+  };
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
