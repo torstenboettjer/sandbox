@@ -53,6 +53,9 @@
 
     # https://direnv.net/
     pkgs.direnv
+
+    # https://devenv.sh/
+    pkgs.devenv
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
