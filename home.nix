@@ -50,6 +50,9 @@
 
     # https://code.visualstudio.com/
     pkgs.vscode
+
+    # https://direnv.net/
+    pkgs.direnv
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
