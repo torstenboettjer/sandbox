@@ -1,4 +1,4 @@
-# NIX Home Manager
+# NIX Home Manager on CROSH
 Sharing the nix home manager configuration for Debian accross multiple desktop machines
 
 ## 1. Linux Developer Environment
@@ -37,7 +37,7 @@ gh repo clone torstenboettjer/home_manager
 
 ## 4. Experimental Features
 
-Enabling experimental features by appending the following line to `/etc/nix/nix.conf`:
+Enabling flakes requires to enable experimental features by appending the following line to `/etc/nix/nix.conf`:
 
 ```sh
 echo -e "experimental-features = nix-command flakes\ntrusted-users = root torsten" | sudo tee -a /etc/nix/nix.conf
@@ -51,7 +51,7 @@ nix run nixpkgs#hello
 
 ## 5. Home-Manager Channel
 
-Add the appropriate channel, e.g. to follow the Nixpkgs master channel run:
+Add and than update the appropriate channel, e.g. to follow the Nixpkgs master channel run:
 
 ```sh
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
@@ -89,16 +89,16 @@ Make sure that the right system is active in *~/home_manager/flake.nix*
       system = "aarch64-linux";
 ```
 
-Configure git to push changes into the home-manager repository
+Link the home manager configruation files to the repository
 
 ```sh
-git config --global user.email "torsten.boettjer@gmail.com"
-git config --global user.name "Torsten Boettjer"
+rm ~/.config/home-manager/home.nix ~/.config/home-manager/flake.nix
+for file in home.nix flake.nix; do ln -s "$HOME/home_manager/$file" "$HOME/.config/home-manager/$file"; done
 ```
 
-Run the Makefile
+Run the Makefile to update the minimal configuration
 
 ```sh
 cd ~/home_manager
-make
+make update
 ```
