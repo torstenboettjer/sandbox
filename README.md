@@ -13,7 +13,7 @@ Activate crosh
 Install the Nix package manager globally
 
 ```sh
-sh <(curl -L https://nixos.org/nix/install) --daemon
+sh <(curl -L https://nixos.org/nix/install) --daemon --yes
 ```
 ## 3. Home-Manager Repository
 
