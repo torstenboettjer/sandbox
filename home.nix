@@ -43,7 +43,7 @@
     pkgs.gnumake
 
     # https://www.lunarvim.org/
-    pkgs.lunarvim
+    # pkgs.lunarvim
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
