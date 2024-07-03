@@ -2,6 +2,9 @@
 # { lib, pkgs, ... }:
 
 {
+  # Enable the configuration to allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "torsten";
@@ -43,7 +46,10 @@
     pkgs.gnumake
 
     # https://www.lunarvim.org/
-    # pkgs.lunarvim
+    pkgs.lunarvim
+
+    # https://code.visualstudio.com/
+    pkgs.vscode
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
