@@ -108,3 +108,13 @@ Activating direnv, an environment switcher for the shell that automatically load
 ```sh
 echo -e 'eval "$(direnv hook bash)"' >> $HOME/.bashrc
 ```
+
+## 7. Development environments
+
+Devenv is a tool that leverages Nix to create reproducible development environments. It can be seen as an extension of the Nix ecosystem, specifically tailored for development workflows. Given a Git repository, create the initial structure:
+
+```sh
+devenv init
+```
+
+Will create the following files: `.envrc, devenv.nix, devenv.yaml, .gitignore`
