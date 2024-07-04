@@ -1,4 +1,4 @@
-# NIX Home Manager on CROSH
+# Devenv on CROSH
 Sharing the nix home manager configuration for Debian accross multiple desktop machines
 
 ## 1. Linux Developer Environment
