@@ -102,3 +102,9 @@ Run the Makefile to update the minimal configuration
 cd ~/home_manager
 make update
 ```
+
+Activating direnv, an environment switcher for the shell that automatically loads and unloads environment variables, when the directory is changed
+
+```sh
+echo -e 'eval "$(direnv hook bash)"' >> $HOME/.bashrc
+```
