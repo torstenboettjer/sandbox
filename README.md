@@ -2,6 +2,13 @@
 
 Managing a homogeneous development environment on local desktops ensures consistency, reduces configuration issues, and streamlines the development process. Combining the nix package manager with git repositories allows for a management of local environments through configuration files. It ensure that all team members use the same configuration, tracks change and allows rollback without abstraction of the runtime environment.
 
+## Toolset
+* **[Linux Development Environment](https://chromeos.dev/en/linux)**: Ubuntu VM that enables developers to run Linux apps for development alongside the usual ChromeOS desktop & apps.
+* **[VS Code](https://code.visualstudio.com/docs/setup/linux)**: Cross-platform code editor developed by Microsoft supporting a wide range of programming languages.
+* **[Nix Packet Manager](https://nixos.org/)**: Linux package manager that enables reproducible and declarative builds for virtual machines.
+* **[devenv.sh](https://devenv.sh/)**: A shell that is using Nix for the definition of reproducible and composable development environments.
+* **[process-compose](https://f1bonacc1.github.io/process-compose/)**: Command-line utility that facilitates the management of processes similar to docker compose but on a local machine.
+
 ## Linux Developer Environment
 
 The foundation for service engineering is a local Linux sandbox. A sub-system like the ChromeOS [Linux Development environment](https://chromeos.dev/en/linux) is sufficient. It is easy to set up and addresses development needs.
@@ -120,9 +127,3 @@ devenv init
 
 Will create the following files{subdirectories in a given repository: `.envrc, devenv.nix, devenv.yaml, .gitignore`. The nix file contains the system software and platform components, required to build an applications.
 
-### Toolset
-* **[Linux Development Environment](https://chromeos.dev/en/linux)**: Ubuntu VM that enables developers to run Linux apps for development alongside the usual ChromeOS desktop & apps.
-* **[VS Code](https://code.visualstudio.com/docs/setup/linux)**: Cross-platform code editor developed by Microsoft supporting a wide range of programming languages.
-* **[NixOS](https://nixos.org/)**: Linux package manager that enables reproducible and declarative builds for virtual machines.
-* **[devenv.sh](https://devenv.sh/)**: A shell that is using Nix for the definition of reproducible and composable development environments.
-* **[process-compose](https://f1bonacc1.github.io/process-compose/)**: Command-line utility that facilitates the management of processes similar to docker compose but on a local machine.
