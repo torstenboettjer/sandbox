@@ -56,6 +56,12 @@
 
     # https://devenv.sh/
     pkgs.devenv
+
+    # https://jqlang.github.io/jq/
+    jq
+
+    # https://curl.se/
+    curl
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
