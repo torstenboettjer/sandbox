@@ -4,7 +4,7 @@ Managing a homogeneous development environment on local desktops ensures consist
 
 ## Linux Developer Environment
 
-ChromeOS allows operation engineers to run a secure [Linux sandbox](https://chromeos.dev/en/linux), which minimizes security risks is easy to set up and suitable for development needs that address Linux as a main host operating system.
+The foundation for service engineering is a local [Linux sandbox](https://chromeos.dev/en/linux). A sub-system like the ChromeOS Linux Development environment is sufficient. It is easy to set up and addresses development needs.
 
 * Name: torsten
 * Size: 85 GB
