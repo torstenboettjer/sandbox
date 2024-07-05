@@ -119,3 +119,10 @@ devenv init
 ```
 
 Will create the following files{subdirectories in a given repository: `.envrc, devenv.nix, devenv.yaml, .gitignore`. The nix file contains the system software and platform components, required to build an applications.
+
+### Toolset
+* **[Linux Development Environment](https://chromeos.dev/en/linux)**: Ubuntu VM that enables developers to run Linux apps for development alongside the usual ChromeOS desktop & apps.
+* **[VS Code](https://code.visualstudio.com/docs/setup/linux)**: Cross-platform code editor developed by Microsoft supporting a wide range of programming languages.
+* **[NixOS](https://nixos.org/)**: Linux package manager that enables reproducible and declarative builds for virtual machines.
+* **[devenv.sh](https://devenv.sh/)**: A shell that is using Nix for the definition of reproducible and composable development environments.
+* **[process-compose](https://f1bonacc1.github.io/process-compose/)**: Command-line utility that facilitates the management of processes similar to docker compose but on a local machine.
