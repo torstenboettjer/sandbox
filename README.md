@@ -11,7 +11,7 @@ ChromeOS allows DevOps engineers to run a secure Linux sandbox, which minimizes 
 
 ## 2. Nix Packetmanager
 
-Install the Nix package manager globally
+The Nix package manager allows engineers to build and manage software packages. It enables functional deployments and provides features like reproducibility, isolation, and atomic upgrades. Key features is ensuring that a package is built in the same way every time, regardless of the environment, which is achieved through precise specification of dependencies and build instructions.
 
 ```sh
 sh <(curl -L https://nixos.org/nix/install) --daemon --yes
