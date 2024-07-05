@@ -4,7 +4,7 @@ Managing a homogeneous development environment on local desktops ensures consist
 
 ## 1. Linux Developer Environment
 
-ChromeOS allows DevOps engineers to run a secure Linux sandbox, which minimizes security risks is easy to set up and suitable for development needs that address Linux as a main host operating system.
+ChromeOS allows DevOps engineers to run a secure [Linux sandbox](https://chromeos.dev/en/linux), which minimizes security risks is easy to set up and suitable for development needs that address Linux as a main host operating system.
 
 * Name: torsten
 * Size: 85 GB
