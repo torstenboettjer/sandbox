@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Parameters
-CONTAINER_NAME="my-container"
-DISTRO="debian/buster"
+CONTAINER_NAME="MyContainer"
+DISTRO="debian/bookworm"
 USERNAME="torsten"
 CONTAINER_SIZE="85G"  # Example size
 
