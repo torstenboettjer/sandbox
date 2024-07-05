@@ -1,9 +1,10 @@
-# Devenv on CROSH
-Sharing the nix home manager configuration for Debian accross multiple desktop machines
+# Developer Workplace
+
+Managing a homogeneous development environment on local desktops ensures consistency, reduces configuration issues, and streamlines the development process. Combining the nix package manager with git repositories allows for a management of local environments through configuration files. It ensure that all team members use the same configuration, tracks change and allows rollback without abstraction of the runtime environment.
 
 ## 1. Linux Developer Environment
 
-Activate crosh
+ChromeOS allows DevOps engineers to run a secure Linux sandbox, which minimizes security risks is easy to set up and suitable for development needs that address Linux as a main host operating system.
 
 * Name: torsten
 * Size: 85 GB
