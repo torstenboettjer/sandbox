@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Parameters
-CONTAINER_NAME="MyContainer"
+CONTAINER_NAME="nix"
 DISTRO="debian/bookworm"
 USERNAME="torsten"
 CONTAINER_SIZE="85G"  # Example size
