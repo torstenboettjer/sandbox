@@ -4,7 +4,7 @@ Managing a homogeneous development environment on local desktops ensures consist
 
 ## Linux Developer Environment
 
-The foundation for service engineering is a local [Linux sandbox](https://chromeos.dev/en/linux). A sub-system like the ChromeOS Linux Development environment is sufficient. It is easy to set up and addresses development needs.
+The foundation for service engineering is a local Linux sandbox. A sub-system like the ChromeOS [Linux Development environment](https://chromeos.dev/en/linux) is sufficient. It is easy to set up and addresses development needs.
 
 * Name: torsten
 * Size: 85 GB
