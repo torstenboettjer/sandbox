@@ -1,4 +1,4 @@
-# Operation Engineering Workplace
+# Workplace Operation Engineering
 
 Managing a homogeneous development environment on local desktops ensures consistency, reduces configuration issues, and streamlines the development process. Combining the nix package manager with git repositories allows for a management of local environments through configuration files. It ensure that all team members use the same configuration, tracks change and allows rollback without abstraction of the runtime environment.
 
