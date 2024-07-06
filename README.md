@@ -1,6 +1,6 @@
 # Engineering Workplace
 
-Managing a homogenous development environment for Linux services on local desktops ensures consistency, reduces configuration issues, and streamlines the development process for cloud services. The nix package manager allows to compose the operating system declaratively to manage local environments through configuration files shared in a git repository. It enables a smooth move from development to production and ensures that all team members use the same configuration, tracks change and allows rollback without abstraction of the runtime environment, the network and the storage interface.
+Managing a homogenous development environment for Linux services on local desktops ensures consistency, reduces configuration issues, and streamlines the development process for cloud services. The nix package manager allows to compose the operating system declaratively to manage local environments through configuration files shared in a git repository. It enables a smooth move from development to production and ensures that all team members use the same configuration, tracks change and allows rollback without abstracting the runtime environment, the network and the storage interface.
 
 ## Toolset
 
