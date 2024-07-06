@@ -4,11 +4,11 @@ Managing a homogenous development environment for Linux services on local deskto
 
 ## Toolset
 
-* **[Linux Development Environment](https://chromeos.dev/en/linux)**: A Debian VM that allows developers to run Linux apps for development alongside the usual desktop and applications.
-* **[Nix Packet Manager](https://nixos.org/)**: Linux package manager that enables reproducible and declarative builds for virtual machines, the home manager ensures a homogenous toolset.
-* **[Direnv](https://direnv.net/)**: Shell extension that loads and unloads environment variables depending on the current directory.
-* **[Process-compose](https://f1bonacc1.github.io/process-compose/)**: Command-line utility that facilitates the management of processes without further abstraction.
-* **[Devenv.sh](https://devenv.sh/)**: Defines development environment declaratively by toggling basic options for nix, direnv and process-compose.
+* **[Linux Environment](https://chromeos.dev/en/linux)**: Debian VM or Container that allows developers to run Linux apps for development alongside the usual desktop and applications.
+* **[Nix](https://nixos.org/)**: Linux package manager that enables reproducible and declarative builds for virtual machines, the home manager ensures a homogenous toolset.
+* **[Direnv](https://direnv.net/)**: Shell extension to load and unload environment variables depending on the current directory.
+* **[Process-compose](https://f1bonacc1.github.io/process-compose/)**: Command-line utility to facilitate the management of processes without further abstraction.
+* **[Devenv](https://devenv.sh/)**: Configuration tool to define development environment declaratively by toggling basic options for nix, direnv and process-compose.
 
 ## Linux Developer Environment
 
