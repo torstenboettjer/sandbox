@@ -41,7 +41,7 @@ gh auth login
 Clone home manager repository
 
 ```sh
-gh repo clone torstenboettjer/home_manager
+gh repo clone hcops/home_manager
 ```
 
 #### Enable Flakes
