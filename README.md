@@ -1,6 +1,6 @@
 # Cloud Engineering Workplace
 
-Managing a homogenous development environment for Linux services on local desktops ensures consistency, reduces configuration issues, and streamlines the development process for cloud services. The core component is the nix package manager that allows a declarative configuration of the operating system without abstracting the runtime environment, the network and the storage interface. It to compose the operating system declaratively and enables system administrators and security operators to centralize the extension of golden images, track and rollback configuration changes.  to manage local environments through configuration files shared in a git repository  to production and ensures that all team members use the same 
+Managing a homogenous development environment for Linux services on local desktops ensures consistency, reduces configuration issues, and streamlines the development process for cloud services. The core component is the nix package manager that allows a declarative configuration of the operating system without abstracting the runtime environment, the network and the storage interface. It enables engineers to compose the operating system for different pusposes differently and enables operators to centralize the extension of golden images, track and rollback configuration changes. Managing local development environments through the same configuration files, shared in a git repository, ensures a smooth transition from development to production.
 
 ## Toolset
 
