@@ -24,7 +24,7 @@ The [Nix package manager](https://nixos.org/) allows engineers to build and mana
 ```sh
 sh <(curl -L https://nixos.org/nix/install) --daemon --yes
 ```
-### Home-Manager Repository
+### Home-Manager
 
 Use `gh` nix package to clone the github repository
 
@@ -44,7 +44,7 @@ Clone home manager repository
 gh repo clone torstenboettjer/home_manager
 ```
 
-### Flakes
+#### Enable Flakes
 
 Flakes are still classified as experimental feature in NixOS. Enabling flakes requires to append the following line to `/etc/nix/nix.conf`:
 
@@ -58,7 +58,7 @@ Run functional test
 nix run nixpkgs#hello
 ```
 
-### Home-Manager
+#### Select the home-manager channel
 
 Add and than update the appropriate channel, e.g. to follow the Nixpkgs master channel run:
 
@@ -67,7 +67,7 @@ nix-channel --add https://github.com/nix-community/home-manager/archive/master.t
 nix-channel --update
 ```
 
-### Installation
+#### Installation
 
 Create the first home-manager generation
 
