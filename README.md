@@ -1,4 +1,4 @@
-# Engineering Workplace
+# Cloud Engineering Workplace
 
 Managing a homogenous development environment for Linux services on local desktops ensures consistency, reduces configuration issues, and streamlines the development process for cloud services. The nix package manager allows to compose the operating system declaratively to manage local environments through configuration files shared in a git repository. It enables a smooth move from development to production and ensures that all team members use the same configuration, tracks change and allows rollback without abstracting the runtime environment, the network and the storage interface.
 
@@ -8,7 +8,7 @@ Managing a homogenous development environment for Linux services on local deskto
 * **[Nix Packetmanager](https://nixos.org/)**: Linux package manager that enables reproducible and declarative builds for virtual machines, the home manager ensures a homogenous toolset.
 * **[Direnv](https://direnv.net/)**: Shell extension that loads and unloads environment variables depending on the current directory.
 * **[Process-compose](https://f1bonacc1.github.io/process-compose/)**: Command-line utility that facilitates the management of processes without further abstraction.
-* **[Devenv.sh](https://devenv.sh/)**: A shell script for the definition of reproducible and composable development environments.
+* **[Devenv.sh](https://devenv.sh/)**: Defines development environment declaratively by toggling basic options for nix, direnv and process-compose.
 
 ## Linux Developer Environment
 
