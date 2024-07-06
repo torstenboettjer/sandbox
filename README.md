@@ -5,7 +5,7 @@ Managing a homogenous development environment for Linux services on local deskto
 ## Toolset
 
 * **[Linux Development Environment](https://chromeos.dev/en/linux)**: A Debian VM that allows developers to run Linux apps for development alongside the usual desktop and applications.
-* **[Nix Packetmanager](https://nixos.org/)**: Linux package manager that enables reproducible and declarative builds for virtual machines, the home manager ensures a homogenous toolset.
+* **[Nix Packet Manager](https://nixos.org/)**: Linux package manager that enables reproducible and declarative builds for virtual machines, the home manager ensures a homogenous toolset.
 * **[Direnv](https://direnv.net/)**: Shell extension that loads and unloads environment variables depending on the current directory.
 * **[Process-compose](https://f1bonacc1.github.io/process-compose/)**: Command-line utility that facilitates the management of processes without further abstraction.
 * **[Devenv.sh](https://devenv.sh/)**: Defines development environment declaratively by toggling basic options for nix, direnv and process-compose.
@@ -17,7 +17,7 @@ The foundation for service engineering is a local Linux sandbox. A sub-system li
 * Name: torsten
 * Size: 85 GB
 
-## Nix Packetmanager
+## Packet Manager
 
 The [Nix package manager](https://nixos.org/) allows engineers to build and manage software packages. It enables functional deployments and provides features like reproducibility, isolation, and atomic upgrades. Key features is ensuring that a package is built in the same way every time, regardless of the environment, which is achieved through precise specification of dependencies and build instructions.
 
