@@ -1,9 +1,13 @@
 #!/bin/bash
+# Call with 'sh <(curl -L https://raw.githubusercontent.com/hcops/repository/main/launch.sh <username>)'
+
+# Ask for a username
+
 
 # Parameters
 CONTAINER_NAME="nix"
 DISTRO="debian/bookworm"
-USERNAME="torsten"
+USERNAME=$1
 CONTAINER_SIZE="85G"  # Example size
 
 # Enable the Linux (Beta) environment
@@ -24,4 +28,3 @@ lxc exec ${CONTAINER_NAME} -- apt-get install -y build-essential
 
 # Exit
 exit
-
