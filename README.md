@@ -1,13 +1,14 @@
 # Engineering Workplace
 
-Managing a homogeneous development environment on local desktops ensures consistency, reduces configuration issues, and streamlines the development process. Combining the nix package manager with git repositories allows for a management of local environments through configuration files. It ensure that all team members use the same configuration, tracks change and allows rollback without abstraction of the runtime environment.
+Managing a homogenous development environment for Linux services on local desktops ensures consistency, reduces configuration issues, and streamlines the development process for cloud services. The nix package manager allows to compose the operating system declaratively to manage local environments through configuration files shared in a git repository. It enables a smooth move from development to production and ensures that all team members use the same configuration, tracks change and allows rollback without abstraction of the runtime environment, the network and the storage interface.
 
 ## Toolset
-* **[Linux Development Environment](https://chromeos.dev/en/linux)**: Ubuntu VM that enables developers to run Linux apps for development alongside the usual ChromeOS desktop & apps.
-* **[VS Code](https://code.visualstudio.com/docs/setup/linux)**: Cross-platform code editor developed by Microsoft supporting a wide range of programming languages.
-* **[Nix Packet Manager](https://nixos.org/)**: Linux package manager that enables reproducible and declarative builds for virtual machines.
-* **[devenv.sh](https://devenv.sh/)**: A shell that is using Nix for the definition of reproducible and composable development environments.
-* **[process-compose](https://f1bonacc1.github.io/process-compose/)**: Command-line utility that facilitates the management of processes similar to docker compose but on a local machine.
+
+* **[Linux Development Environment](https://chromeos.dev/en/linux)**: A Debian VM that allows developers to run Linux apps for development alongside the usual desktop and applications.
+* **[Nix Packetmanager](https://nixos.org/)**: Linux package manager that enables reproducible and declarative builds for virtual machines, the home manager ensures a homogenous toolset.
+* **[Direnv](https://direnv.net/)**: Shell extension that loads and unloads environment variables depending on the current directory.
+* **[Process-compose](https://f1bonacc1.github.io/process-compose/)**: Command-line utility that facilitates the management of processes without further abstraction.
+* **[Devenv.sh](https://devenv.sh/)**: A shell script for the definition of reproducible and composable development environments.
 
 ## Linux Developer Environment
 
@@ -23,7 +24,7 @@ The [Nix package manager](https://nixos.org/) allows engineers to build and mana
 ```sh
 sh <(curl -L https://nixos.org/nix/install) --daemon --yes
 ```
-## Home-Manager Repository
+### Home-Manager Repository
 
 Use `gh` nix package to clone the github repository
 
@@ -43,9 +44,9 @@ Clone home manager repository
 gh repo clone torstenboettjer/home_manager
 ```
 
-## Experimental Features
+### Flakes
 
-Enabling flakes requires to enable experimental features by appending the following line to `/etc/nix/nix.conf`:
+Flakes are still classified as experimental feature in NixOS. Enabling flakes requires to append the following line to `/etc/nix/nix.conf`:
 
 ```sh
 echo -e "experimental-features = nix-command flakes\ntrusted-users = root torsten" | sudo tee -a /etc/nix/nix.conf
@@ -57,7 +58,7 @@ Run functional test
 nix run nixpkgs#hello
 ```
 
-## Home-Manager Channel
+### Home-Manager
 
 Add and than update the appropriate channel, e.g. to follow the Nixpkgs master channel run:
 
@@ -66,7 +67,7 @@ nix-channel --add https://github.com/nix-community/home-manager/archive/master.t
 nix-channel --update
 ```
 
-## Installation
+### Installation
 
 Create the first home-manager generation
 
@@ -110,6 +111,8 @@ Run the Makefile to update the minimal configuration
 cd ~/home_manager
 make update
 ```
+
+## Shell Extension
 
 Activating direnv, an environment switcher for the shell that automatically loads and unloads environment variables, when the directory is changed
 
