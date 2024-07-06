@@ -1,14 +1,14 @@
-# Cloud Engineering Workplace
+# Cloud Engineering Workspace
 
 Managing a homogenous development environment for Linux services on local desktops ensures consistency, reduces configuration issues, and streamlines the development process for cloud services. The core component is the nix package manager that allows a declarative configuration of the operating system without abstracting the runtime environment, the network and the storage interface. It enables engineers to compose the operating system for different pusposes differently and enables operators to centralize the extension of golden images, track and rollback configuration changes. Managing local development environments through the same configuration files, shared in a git repository, ensures a smooth transition from development to production.
 
 ## Toolset
 
-* **[Linux Development Environment](https://chromeos.dev/en/linux)**: A Debian VM that allows developers to run Linux apps for development alongside the usual desktop and applications.
-* **[Nix Packet Manager](https://nixos.org/)**: Linux package manager that enables reproducible and declarative builds for virtual machines, the home manager ensures a homogenous toolset.
-* **[Direnv](https://direnv.net/)**: Shell extension that loads and unloads environment variables depending on the current directory.
-* **[Process-compose](https://f1bonacc1.github.io/process-compose/)**: Command-line utility that facilitates the management of processes without further abstraction.
-* **[Devenv.sh](https://devenv.sh/)**: Defines development environment declaratively by toggling basic options for nix, direnv and process-compose.
+* **[Linux Environment](https://chromeos.dev/en/linux)**: Debian VM or Container that allows developers to run Linux apps for development alongside the usual desktop and applications.
+* **[Nix](https://nixos.org/)**: Linux package manager that enables reproducible and declarative builds for virtual machines, the home manager ensures a homogenous toolset.
+* **[Direnv](https://direnv.net/)**: Shell extension to load and unload environment variables depending on the current directory.
+* **[Process-compose](https://f1bonacc1.github.io/process-compose/)**: Command-line utility to facilitate the management of processes without further abstraction.
+* **[Devenv](https://devenv.sh/)**: Configuration tool to define development environment declaratively by toggling basic options for nix, direnv and process-compose.
 
 ## Linux Developer Environment
 
