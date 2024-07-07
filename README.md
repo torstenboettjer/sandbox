@@ -28,7 +28,7 @@ sh <(curl -L https://nixos.org/nix/install) --daemon --yes
 ```
 ### Home-Manager
 
-One of the Nix features is spawning a shell that allows temporarily load and use packages. E.g. `gh` can be loaded to to clone the workspace repository from github.
+The home-manager enables nix user to declaratively define and manage your personal environment settings, applications, and configurations. This makes it easy to deploy and maintain a consistent development environment across different machines. The installation is automated using the nix-shell that allows temporarily load and use packages.
 
 ```sh
 nix-shell -p gh
