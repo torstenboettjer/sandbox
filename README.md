@@ -28,15 +28,10 @@ sh <(curl -L https://nixos.org/nix/install) --daemon --yes
 ```
 ### Home-Manager
 
-Use `gh` nix package to clone the github repository
+One of the Nix features is spawning a shell that allows temporarily load and use packages. E.g. `gh` can be loaded to to clone the workspace repository from github.
 
 ```sh
 nix-shell -p gh
-```
-
-Log into github
-
-```sh
 gh auth login
 ```
 
