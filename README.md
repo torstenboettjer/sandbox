@@ -37,7 +37,7 @@ The system configuration is stored in a file called ´flake.nix´, tools are def
 
 ```sh
 # clone the default home-manager configuration 
-gh repo clone hcops/home_manager
+gh repo clone hcops/workspace
 
 # activating experimental features
 echo -e "experimental-features = nix-command flakes\ntrusted-users = root torsten" | sudo tee -a /etc/nix/nix.conf
@@ -58,7 +58,7 @@ echo -e '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.prof
 source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh && home-manager --version
 ```
 
-Make sure that the right system is active in *~/home_manager/flake.nix*
+Make sure that the right system is active in *~/workspace/flake.nix*
 
 ```nix
   outputs = { nixpkgs, home-manager, ... }:
@@ -72,13 +72,13 @@ Link the home manager configruation files to the repository
 
 ```sh
 rm ~/.config/home-manager/home.nix ~/.config/home-manager/flake.nix
-for file in home.nix flake.nix; do ln -s "$HOME/home_manager/$file" "$HOME/.config/home-manager/$file"; done
+for file in home.nix flake.nix; do ln -s "$HOME/workspace/$file" "$HOME/.config/home-manager/$file"; done
 ```
 
 Run the Makefile to update the minimal configuration
 
 ```sh
-cd ~/home_manager
+cd ~/workspace
 make update
 ```
 
