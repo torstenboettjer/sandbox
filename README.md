@@ -23,14 +23,14 @@ The package manager enables functional deployments and provides features like re
 
 ```sh
 exec bash && source ./.bashrc
-´´´
+```
 
 After the installation, the shell session needs a restart.
 
 ### Setup a common toolset with home-manager
 
 The home-manager enables nix operators to define and manage local environment settings, applications, and configurations through a common repository. This makes it easy to deploy and maintain a consistent toolsets accross users. The installation is automated using the nix-shell that allows temporarily load and use packages. 
-´´´sh
+```sh
 nix-shell -p gh | gh auth login
 ```
 
