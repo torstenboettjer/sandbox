@@ -29,11 +29,8 @@ The home-manager enables nix operators to define and manage local environment se
 # restart the shell session
 exec bash && source ./.bashrc
 
-# start gh temporarily
-nix-shell -p gh
-
-# login into github
-gh auth login
+# start gh temporarily and log into an existing Github account
+nix-shell -p gh | gh auth login
 ```
 
 The system configuration is stored in a file called ´flake.nix´, tools are defined in `home.nix`. Flakes are still classified as experimental feature in NixOS. Enabling flakes requires to append the following line to `/etc/nix/nix.conf` and adding the appropriate Nixpkgs channel.
