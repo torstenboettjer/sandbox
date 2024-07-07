@@ -12,25 +12,16 @@ The nix package manager was introduced in [2003 by Eelco Dolstra](https://en.wik
 * **[Devenv](https://devenv.sh/)**: Configuration tool to define development environment declaratively by toggling basic options for nix and process-compose.
 * **[Direnv](https://direnv.net/)**: Shell extension to load and unload devenv environments automatically moving in and out of a directory.
 
-## Linux Environment
+## Sandbox
 
-The foundation for service engineering is a local Linux sandbox. Desktop systems like Windows or ChromeOS [Linux Development environment](https://chromeos.dev/en/linux) provide a sub-system that is easy to set up and addresses the basic needs.
-
-```sh
-sh <(curl -L https://raw.githubusercontent.com/hcops/test/main/crosh)
-```
-
-* Name: torsten
-* Size: 85 GB
-
-## Packet Manager
-
-The [Nix package manager](https://nixos.org/) allows engineers to build and manage software packages. It enables functional deployments and provides features like reproducibility, isolation, and atomic upgrades. Key features is ensuring that a package is built in the same way every time, regardless of the environment, which is achieved through precise specification of dependencies and build instructions.
+The foundation for service engineering is a Linux sandbox. Desktop systems like Windows or ChromeOS provide a Linux subsystem that is easy to set up. The disk size should be increased to at least **50GB**, after that the Nix package manager is installed. 
 
 ```sh
 sh <(curl -L https://nixos.org/nix/install) --daemon --yes
 ```
-### Home-Manager
+Nix enables functional deployments and provides features like reproducibility, isolation, and atomic upgrades. Key features is ensuring that a package is built in the same way every time, regardless of the environment, which is achieved through precise specification of dependencies and build instructions.
+
+### Step 1: Enabling the Home-Manager
 
 The home-manager enables nix user to declaratively define and manage your personal environment settings, applications, and configurations. This makes it easy to deploy and maintain a consistent development environment across different machines. The installation is automated using the nix-shell that allows temporarily load and use packages.
 
