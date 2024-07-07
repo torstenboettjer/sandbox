@@ -1,6 +1,6 @@
 # Cloud Engineering Workspace
 
-Creating local development environments for operation engineers that enables teams to build and maintain cloud services with a shared, homogenous operating system configuration ensures consistency, reduces deployment issues, and streamlines the development process. Having the right toolset within a development team can significantly enhance productivity, code quality, and collaboration. The configuration toolchain needs to avoid any impact on the selection of programming languages or frameworks involved in the application development process. The selected tools need to support production grade deloyments to empower a continous integration and deployment pipeline that is managed in a version control system. 
+Creating local development environments for operation engineers that enables teams to build and maintain cloud services with a shared, homogenous operating system configuration ensures consistency, reduces deployment issues, and streamlines the development process. Having the right toolset within a development team can significantly enhance productivity, code quality, and collaboration, therefore the configuration toolchain needs to avoid any impact on the selection of programming languages or frameworks involved in the application development process. Instead, the selected tools need to support production grade deloyments to empower a continous integration and deployment pipeline that is managed in a version control system. 
 
 ## Toolset
 
