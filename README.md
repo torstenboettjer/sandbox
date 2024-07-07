@@ -19,17 +19,18 @@ A linux sandbox is a prerequisite, desktop systems like Windows or ChromeOS prov
 ```sh
 sh <(curl -L https://nixos.org/nix/install) --daemon --yes
 ```
-The package manager enables functional deployments and provides features like reproducibility, isolation, and atomic upgrades. Key features is ensuring that a package is built in the same way every time, regardless of the environment, which is achieved through precise specification of dependencies and build instructions.
+The package manager enables functional deployments and provides features like reproducibility, isolation, and atomic upgrades. Key features is ensuring that a package is built in the same way every time, regardless of the environment, which is achieved through precise specification of dependencies and build instructions. 
+
+```sh
+exec bash && source ./.bashrc
+´´´
+
+After the installation, the shell session needs a restart.
 
 ### Setup a common toolset with home-manager
 
-The home-manager enables nix operators to define and manage local environment settings, applications, and configurations through a common repository. This makes it easy to deploy and maintain a consistent toolsets accross users. The installation is automated using the nix-shell that allows temporarily load and use packages. Here is an example for such a deployment.
-
-```sh
-# restart the shell session
-exec bash && source ./.bashrc
-
-# start gh temporarily and log into an existing Github account
+The home-manager enables nix operators to define and manage local environment settings, applications, and configurations through a common repository. This makes it easy to deploy and maintain a consistent toolsets accross users. The installation is automated using the nix-shell that allows temporarily load and use packages. 
+´´´sh
 nix-shell -p gh | gh auth login
 ```
 
