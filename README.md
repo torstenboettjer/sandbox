@@ -58,8 +58,7 @@ nix-shell '<home-manager>' -A install
 echo -e '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.profile
 
 # test the installation
-source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
-home-manager --version
+source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh && home-manager --version
 ```
 
 Make sure that the right system is active in *~/home_manager/flake.nix*
