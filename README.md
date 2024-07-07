@@ -2,7 +2,7 @@
 
 Creating local development environments for operation engineers that enables teams to build and maintain cloud services with a shared, homogenous operating system configuration ensures consistency, reduces deployment issues, and streamlines the development process. Having the right toolset within a development team can significantly enhance productivity, code quality, and collaboration, therefore the configuration toolchain needs to avoid any impact on the selection of programming languages or frameworks involved in the application development process. Instead, the selected tools need to support production grade deloyments to empower a continous integration and deployment pipeline that is managed in a version control system. 
 
-## Toolset
+## Nix-based Toolset
 
 The nix package manager allows a declarative configuration of the operating system without abstracting the runtime environment, the network and the storage interface. It enables engineers to compose the operating system for different pusposes differently and enables operators to centralize the extension of golden images, track and rollback configuration changes. Managing local development environments through the same configuration files, shared in a git repository, ensures a smooth transition from development to production.
 
