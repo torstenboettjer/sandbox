@@ -14,7 +14,7 @@ The nix package manager was introduced in [2003 by Eelco Dolstra](https://en.wik
 
 ## Linux Environment
 
-The foundation for service engineering is a local Linux sandbox. A sub-system like the ChromeOS [Linux Development environment](https://chromeos.dev/en/linux) is sufficient. It is easy to set up and addresses development needs.
+The foundation for service engineering is a local Linux sandbox. Desktop systems like Windows or ChromeOS [Linux Development environment](https://chromeos.dev/en/linux) provide a sub-system that is easy to set up and addresses the basic needs.
 
 * Name: torsten
 * Size: 85 GB
