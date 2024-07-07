@@ -14,7 +14,7 @@ The nix package manager was introduced in [2003 by Eelco Dolstra](https://en.wik
 
 ## Sandbox
 
-The foundation for service engineering is a Linux sandbox. Desktop systems like Windows or ChromeOS provide a Linux subsystem that is easy to set up. The disk size should be increased to at least **50GB**, after that the Nix package manager is installed. 
+The foundation for service engineering is a Linux sandbox. Desktop systems like Windows or ChromeOS provide a Linux subsystem that is easy to set up. The disk size should be increased to at least *50GB*, after that the Nix package manager is installed. 
 
 ```sh
 sh <(curl -L https://nixos.org/nix/install) --daemon --yes
