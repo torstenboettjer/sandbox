@@ -19,13 +19,11 @@ A linux sandbox is a prerequisite, desktop systems like Windows or ChromeOS prov
 ```sh
 sh <(curl -L https://nixos.org/nix/install) --daemon --yes
 ```
-The package manager enables functional deployments and provides features like reproducibility, isolation, and atomic upgrades. Key features is ensuring that a package is built in the same way every time, regardless of the environment, which is achieved through precise specification of dependencies and build instructions. 
+The package manager enables functional deployments and provides features like reproducibility, isolation, and atomic upgrades. Key features is ensuring that a package is built in the same way every time, regardless of the environment, which is achieved through precise specification of dependencies and build instructions. After the installation, the shell session needs a restart.
 
 ```sh
 exec bash && source ./.bashrc
 ```
-
-After the installation, the shell session needs a restart.
 
 ### Setup a common toolset with home-manager
 
