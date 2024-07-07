@@ -26,13 +26,7 @@ Nix enables functional deployments and provides features like reproducibility, i
 The home-manager enables nix user to declaratively define and manage your personal environment settings, applications, and configurations. This makes it easy to deploy and maintain a consistent development environment across different machines. The installation is automated using the nix-shell that allows temporarily load and use packages.
 
 ```sh
-nix-shell -p gh
-gh auth login
-```
-
-Clone home manager repository
-
-```sh
+nix-shell -p gh && gh auth login
 gh repo clone hcops/home_manager
 ```
 
