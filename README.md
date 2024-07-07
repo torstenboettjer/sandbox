@@ -21,7 +21,7 @@ sh <(curl -L https://nixos.org/nix/install) --daemon --yes
 ```
 Nix enables functional deployments and provides features like reproducibility, isolation, and atomic upgrades. Key features is ensuring that a package is built in the same way every time, regardless of the environment, which is achieved through precise specification of dependencies and build instructions.
 
-### Step 1: Enabling the Home-Manager
+### Enabling the Home-Manager
 
 The home-manager enables nix user to declaratively define and manage your personal environment settings, applications, and configurations. This makes it easy to deploy and maintain a consistent development environment across different machines. The installation is automated using the nix-shell that allows temporarily load and use packages.
 
