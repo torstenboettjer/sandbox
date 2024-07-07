@@ -56,11 +56,8 @@ nix-shell '<home-manager>' -A install
 
 # add the nix path to `.bashrc`
 echo -e '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.profile
-```
 
-Test the installation
-
-```sh
+# test the installation
 source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
 home-manager --version
 ```
