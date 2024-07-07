@@ -50,19 +50,11 @@ nix-channel --add https://github.com/nix-community/home-manager/archive/master.t
 
 # updte the home manager channel
 nix-channel --update
-```
 
-#### Installation
-
-Create the first home-manager generation
-
-```sh
+# create the first home-manager generation
 nix-shell '<home-manager>' -A install
-```
 
-Add the nix path to `.bashrc`
-
-```sh
+# add the nix path to `.bashrc`
 echo -e '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.profile
 ```
 
