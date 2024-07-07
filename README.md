@@ -12,7 +12,7 @@ The nix package manager allows a declarative configuration of the operating syst
 * **[Process-compose](https://f1bonacc1.github.io/process-compose/)**: Command-line utility to facilitate the management of processes without further abstraction.
 * **[Devenv](https://devenv.sh/)**: Configuration tool to define development environment declaratively by toggling basic options for nix, direnv and process-compose.
 
-## Linux Developer Environment
+## Linux Environment
 
 The foundation for service engineering is a local Linux sandbox. A sub-system like the ChromeOS [Linux Development environment](https://chromeos.dev/en/linux) is sufficient. It is easy to set up and addresses development needs.
 
