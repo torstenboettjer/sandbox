@@ -14,16 +14,16 @@ Adopting functional deployments for applications that run on dedicated hosts dem
 
 ## Sandbox
 
-A linux sandbox is a prerequisite, desktop systems like Windows or ChromeOS provide a Linux subsystem that is easy to set up for Mac user there is an [project](https://github.com/LnL7/nix-darwin) that aims to bring the convenience of a declarative system approach directly to macOS. Setting up a Linux development environment the disk size should be increased to at least *50GB*, after that the Nix package manager is installed. 
+A linux sandbox is a prerequisite, desktop systems like Windows or ChromeOS provide a Linux subsystem that is easy to set up for Mac user there is an [project](https://github.com/LnL7/nix-darwin) that aims to bring the convenience of a declarative system approach directly to macOS. Setting up a Linux development environment the disk size should be increased to at least *50GB*, after that the Nix package manager can be installed. 
 
 ```sh
 sh <(curl -L https://nixos.org/nix/install) --daemon --yes
 ```
-Nix enables functional deployments and provides features like reproducibility, isolation, and atomic upgrades. Key features is ensuring that a package is built in the same way every time, regardless of the environment, which is achieved through precise specification of dependencies and build instructions.
+The package manager enables functional deployments and provides features like reproducibility, isolation, and atomic upgrades. Key features is ensuring that a package is built in the same way every time, regardless of the environment, which is achieved through precise specification of dependencies and build instructions.
 
-### Setup development tools with home-manager
+### Setup a common toolset with home-manager
 
-The home-manager enables nix user to declaratively define and manage your personal environment settings, applications, and configurations. This makes it easy to deploy and maintain a consistent development environment across different machines. The installation is automated using the nix-shell that allows temporarily load and use packages.
+The home-manager enables nix operators to define and manage local environment settings, applications, and configurations through a common repository. This makes it easy to deploy and maintain a consistent toolsets accross users. The installation is automated using the nix-shell that allows temporarily load and use packages. Here is an example for such a deployment.
 
 ```sh
 # restart the shell session
@@ -38,6 +38,8 @@ gh auth login
 # clone the default home-manager configuration 
 gh repo clone hcops/home_manager
 ```
+
+The system configuration is stored in a file called ´flake.nix´, tools are defined in `home.nix`.
 
 #### Enable Flakes
 
