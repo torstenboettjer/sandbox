@@ -23,13 +23,14 @@ The package manager enables functional deployments and provides features like re
 
 ```sh
 exec bash && source ./.bashrc
+nix-shell -p gh
 ```
 
 ### Setup a common toolset with home-manager
 
 The home-manager enables nix operators to define and manage local environment settings, applications, and configurations through a common repository. This makes it easy to deploy and maintain a consistent toolsets accross users. The installation is automated using the nix-shell that allows temporarily load and use packages. 
 ```sh
-nix-shell -p gh | gh auth login
+gh auth login
 ```
 
 The system configuration is stored in a file called ´flake.nix´, tools are defined in `home.nix`. Flakes are still classified as experimental feature in NixOS. Enabling flakes requires to append the following line to `/etc/nix/nix.conf` and adding the appropriate Nixpkgs channel.
