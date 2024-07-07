@@ -4,7 +4,7 @@ Creating local development environments for operation engineers that enables tea
 
 ## Nix-based Toolset
 
-The nix package manager allows a declarative configuration of the operating system without abstracting the runtime environment, the network and the storage interface. It enables engineers to compose the operating system for different pusposes differently and enables operators to centralize the extension of golden images, track and rollback configuration changes. Managing the configuration of the operatins through the configuration files, shared in a git repository, ensures a close collaboration without centralization and enables smooth transition from development to production.
+The nix package manager allows a declarative configuration of the operating system without abstracting the runtime environment, the network and the storage interface. It enables engineers to compose the operating system for different pusposes differently and enables operators to centralize the extension of golden images, track and rollback configuration changes. Managing the configuration of the operatins through the configuration files, shared in a git repository, ensures a close collaboration without centralization and enables smooth transition from development to production. Operation engineers need access to the following tools on their local desktops:
 
 * **[Linux Environment](https://chromeos.dev/en/linux)**: Debian VM or Container that allows developers to run Linux apps for development alongside the usual desktop and applications.
 * **[Nix](https://nixos.org/)**: Linux package manager that enables reproducible and declarative builds for virtual machines, the home manager ensures a homogenous toolset.
