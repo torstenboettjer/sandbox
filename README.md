@@ -30,7 +30,10 @@ The home-manager enables nix user to declaratively define and manage your person
 exec bash && source ./.bashrc
 
 # start gh temporarily
-nix-shell -p gh && gh auth login
+nix-shell -p gh
+
+# login into github
+gh auth login
 
 # clone the default home-manager configuration 
 gh repo clone hcops/home_manager
