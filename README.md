@@ -39,26 +39,16 @@ gh auth login
 gh repo clone hcops/home_manager
 ```
 
-The system configuration is stored in a file called ´flake.nix´, tools are defined in `home.nix`. Flakes are still classified as experimental feature in NixOS. Enabling flakes requires to append the following line to `/etc/nix/nix.conf`:
+The system configuration is stored in a file called ´flake.nix´, tools are defined in `home.nix`. Flakes are still classified as experimental feature in NixOS. Enabling flakes requires to append the following line to `/etc/nix/nix.conf` and adding the appropriate Nixpkgs channel.
 
 ```sh
+# activating experimental features
 echo -e "experimental-features = nix-command flakes\ntrusted-users = root torsten" | sudo tee -a /etc/nix/nix.conf
-```
 
-The base setup can be tested running a nix shell program.
-
-```sh
-nix run nixpkgs#hello
-```
-
-The expected output is "Hello World".
-
-#### Select the home-manager channel
-
-Add and than update the appropriate channel, e.g. to follow the Nixpkgs master channel run:
-
-```sh
+# add the home-manager package channel
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+
+# updte the home manager channel
 nix-channel --update
 ```
 
