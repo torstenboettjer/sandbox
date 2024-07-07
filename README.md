@@ -14,7 +14,7 @@ Adopting functional deployments for applications that run on dedicated hosts dem
 
 ## Sandbox
 
-The foundation for service engineering is a Linux sandbox. Desktop systems like Windows or ChromeOS provide a Linux subsystem that is easy to set up. The disk size should be increased to at least *50GB*, after that the Nix package manager is installed. 
+A linux sandbox is a prerequisite, desktop systems like Windows or ChromeOS provide a Linux subsystem that is easy to set up for Mac user there is an [project](https://github.com/LnL7/nix-darwin) that aims to bring the convenience of a declarative system approach directly to macOS. Setting up a Linux development environment the disk size should be increased to at least *50GB*, after that the Nix package manager is installed. 
 
 ```sh
 sh <(curl -L https://nixos.org/nix/install) --daemon --yes
