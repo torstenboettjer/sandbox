@@ -14,12 +14,13 @@ Adopting functional deployments for applications that run on dedicated hosts dem
 
 ## Sandbox
 
-A linux sandbox is a prerequisite, desktop systems like Windows or ChromeOS provide a Linux subsystem that is easy to set up for Mac user there is an [project](https://github.com/LnL7/nix-darwin) that aims to bring the convenience of a declarative system approach directly to macOS. Setting up a Linux development environment the disk size should be increased to at least *50GB*, after that the Nix package manager can be installed. 
+Desktop systems like [Windows](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS](https://chromeos.dev/en/linux) let developers to run a Linux environment without without installing a second operating system. For MacOS there is a [community project](https://github.com/LnL7/nix-darwin). For a development environment the avialable disk size should be at least *80GB*, after that the Nix package manager can be installed. 
 
 ```sh
 sh <(curl -L https://nixos.org/nix/install) --daemon --yes
 ```
-The package manager enables functional deployments and provides features like reproducibility, isolation, and atomic upgrades. Key features is ensuring that a package is built in the same way every time, regardless of the environment, which is achieved through precise specification of dependencies and build instructions. After the installation, the shell session needs a restart.
+
+The package manager enables functional deployments and provides features like reproducibility, isolation, and atomic upgrades. Key features is ensuring a consitent package deployments through precise specification of dependencies and build instructions. To activate the package manager, reference is added to the shell configuration, after the installation, the session requires a restart.
 
 ```sh
 exec bash && source ./.bashrc
