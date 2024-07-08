@@ -28,13 +28,13 @@ exec bash && source ./.bashrc
 
 ### Setup a common toolset with home-manager
 
-The home-manager enables nix operators to define and manage local environment settings, applications, and configurations through a common repository. This makes it easy to deploy and maintain a consistent toolsets accross users. The installation is automated using the nix-shell that allows temporarily load and use packages. 
+The [Home Manager](https://nix-community.github.io/home-manager/) is a Nix-powered tool for the definition of user environment settings and applications on a linux system. Sharing the configurations through git makes it easy to deploy and maintain a consistent toolsets accross users. Adding the home-manager with a common configuration is simplified using the nix-shell that allows temporarily load and use packages. 
 
 ```sh
 nix-shell -p gh --run "gh auth login"
 ```
 
-The system configuration is stored in a file called ´flake.nix´, tools are defined in `home.nix`. Flakes are still classified as experimental feature in NixOS. Enabling flakes requires to append the following line to `/etc/nix/nix.conf` and adding the appropriate Nixpkgs channel.
+The github client is used to load a default configuration and ensures the use of a homogenous toolset accross of development and production environments in a team. The configuration is splitted between two files, the set of applications is defined in `home.nix`, system configurations are stored in a file called ´flake.nix´. Flakes are still classified as experimental feature in Nix, enabling flakes requires to append a flag `/etc/nix/nix.conf`. After that the the appropriate nix package channel is added and updated.
 
 ```sh
 # clone the default home-manager configuration 
