@@ -12,7 +12,7 @@ Adopting functional deployments for applications that run on dedicated hosts dem
 * **[Devenv](https://devenv.sh/)**: Configuration tool to define development environment declaratively by toggling basic options for nix and process-compose.
 * **[Direnv](https://direnv.net/)**: Shell extension to load and unload devenv environments automatically moving in and out of a directory.
 
-## Sandbox
+## Linux Sandbox
 
 Desktop systems like [Windows](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS](https://chromeos.dev/en/linux) let developers to run a Linux environment without without installing a second operating system. For MacOS there is a [community project](https://github.com/LnL7/nix-darwin). For a development environment the avialable disk size should be at least *80GB*, after that the Nix package manager can be installed. 
 
