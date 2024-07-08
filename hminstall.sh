@@ -55,6 +55,11 @@ nix-shell '<home-manager>' -A install
 # add the nix path to `.bashrc`
 echo -e '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.profile
 
+# tbd
+rm ~/.config/home-manager/home.nix ~/.config/home-manager/flake.nix
+for file in home.nix flake.nix; do ln -s "$HOME/workspace/$file" "$HOME/.config/home-manager/$file"; done
+
+
 # test the installation
 source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh && home-manager --version
 
