@@ -41,16 +41,6 @@ The github client is used to load a default configuration and ensures the use of
 curl -sSL https://raw.githubusercontent.com/hcops/test/main/hminstall.sh | sh
 ```
 
-Make sure that the right system is active in *~/workspace/flake.nix*
-
-```nix
-  outputs = { nixpkgs, home-manager, ... }:
-    let
-      lib = nixpkgs.lib;
-      # system = "x86_64-linux";
-      system = "aarch64-linux";
-```
-
 Link the home manager configruation files to the repository
 
 ```sh
