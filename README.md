@@ -28,7 +28,7 @@ exec bash && source ./.bashrc
 
 ### Setup a common toolset with home-manager
 
-The [Home Manager](https://nix-community.github.io/home-manager/) is a Nix-powered tool for the definition of user environment settings and applications on a linux system. Sharing the configurations through git makes it easy to deploy and maintain a consistent toolsets accross users. Adding the home-manager with a common configuration is simplified using the nix-shell that allows temporarily load and use packages. 
+The [Home Manager](https://nix-community.github.io/home-manager/) is a Nix-powered tool for the definition of user environment settings and applications on a linux system. Sharing the configurations through git makes it easy to deploy and maintain a common toolset for system administrators and operation engineers. Adding the home-manager with a common configuration is simplified using the nix-shell that allows temporarily load and use packages. 
 
 ```sh
 nix-shell -p gh --run "gh auth login"
@@ -82,6 +82,10 @@ Run the Makefile to update the minimal configuration
 cd ~/workspace
 make update
 ```
+
+## Project Environments
+
+While operation teams are organized around palform services, development teams are organized around solutions. 
 
 ## Shell Extension
 
