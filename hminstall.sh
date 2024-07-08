@@ -3,15 +3,32 @@
 # Exit on error
 set -e
 
-function nxconfig() {
-    echo "Which platform runs your sandbox on:"
-    select option in "x86_64-linux" "aarch64-linux"; do
-        case $option in
-            "x86_64-linux" ) ./nxcfg.sh x86_64-linux; break;;
-            "aarch64-linux" ) ./nxcfg.sh aarch64-linux; break;;
-        esac
-    done
+# Write a function that provides the user with a choice to select a platform and returns the selected option into a variable
+function select_platform() {
+    echo "Please select a platform:"
+    echo "1) x86_64"
+    echo "2) aarch64"
+
+    read -p "Enter your choice (1-2): " choice
+
+    case $choice in
+        1)
+            platform="x86_64-linux"
+            ;;
+        2)
+            platform="aarch64-linux"
+            ;;
+        *)
+            echo "Invalid choice. Please select a valid option."
+            select_platform
+            ;;
+    esac
+
+    echo "You selected: $platform"
+    return $platform
 }
+
+PLTFRM=$(select_platform)
 
 # create log file
 touch ./setup.log
@@ -33,7 +50,7 @@ nix-channel --update
 nix-shell '<home-manager>' -A install
 
 # configure nix files
-nxconfig
+./nxcfg.sh $PLTFRM
 
 # add the nix path to `.bashrc`
 echo -e '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.profile

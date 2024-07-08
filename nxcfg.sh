@@ -8,5 +8,4 @@ TGSYS=$1
 sed -i "s/_USRNAME_/${USER}/g" ./home.nix 
 sed -i "s/_GHBNAME_/${GHBNAME}/g" ./home.nix
 sed -i "s/_GHBMAIL_/${GHBMAIL}/g" ./home.nix 
-
 sed -i "s/_SYSTEM_/${TGSYS}/g" ./flake.nix 
