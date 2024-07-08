@@ -8,19 +8,19 @@ set -e
 touch ./setup.log
 
 # https://nixos.org/
-if command -v nix &> /dev/null; then
-    echo "Installing nix single user mode..."
-    curl -LO https://nixos.org/nix/install
-    chmod +x ./install
-    ./install --daemon --yes
-    . $HOME/.nix-profile/etc/profile.d/nix.sh
-    echo "--> done"
-    NIXVERSION=$(nix --version)
-    echo "$NIXVERSION is installed." >> ./setup.log
-else
-    NIXVERSION=$(nix --version)
-    echo "$NIXVERSION is installed." >> ./setup.log
-fi
+# if command -v nix &> /dev/null; then
+#     echo "Installing nix single user mode..."
+#     curl -LO https://nixos.org/nix/install
+#     chmod +x ./install
+#     ./install --daemon --yes
+#     . $HOME/.nix-profile/etc/profile.d/nix.sh
+#     echo "--> done"
+#     NIXVERSION=$(nix --version)
+#     echo "$NIXVERSION is installed." >> ./setup.log
+# else
+#     NIXVERSION=$(nix --version)
+#     echo "$NIXVERSION is installed." >> ./setup.log
+# fi
 
 # clone the default home-manager configuration 
 gh repo clone hcops/workspace
@@ -44,4 +44,4 @@ echo -e '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.prof
 source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh && home-manager --version
 
 # remove nix install script
-rm ./install
+# rm ./install
