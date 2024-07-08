@@ -40,13 +40,6 @@ The github client is used to load a default configuration and ensures the use of
 curl -sSL https://raw.githubusercontent.com/hcops/test/main/hminstall.sh | sh
 ```
 
-Link the home manager configruation files to the repository
-
-```sh
-rm ~/.config/home-manager/home.nix ~/.config/home-manager/flake.nix
-for file in home.nix flake.nix; do ln -s "$HOME/workspace/$file" "$HOME/.config/home-manager/$file"; done
-```
-
 Run the Makefile to update the minimal configuration
 
 ```sh
