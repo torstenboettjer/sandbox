@@ -28,7 +28,7 @@ echo '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.profile
 source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh && home-manager --version
 
 # activate home manager
-home-manager switch --flake .#$USER
+cd $HOME/workspace/ && home-manager switch --flake .#$USER
 
 # override a placeholder in a configuration file with a variable
 sed -i "s/_USRNAME_/${USER}/g" $HOME/workspace/home.nix 
