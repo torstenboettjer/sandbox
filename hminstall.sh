@@ -21,15 +21,34 @@ nix-channel --update
 # create the first home-manager generation
 nix-shell '<home-manager>' -A install
 
-# configure nix files
-select_platform
-./nxcfg.sh $PLTFRM
-
 # add the nix path to `.bashrc`
 echo -e '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.profile
 
-# tbd
-rm ~/.config/home-manager/home.nix ~/.config/home-manager/flake.nix
+# override a placeholder in a configuration file with a variable
+sed -i "s/_USRNAME_/${USER}/g" ./home.nix 
+sed -i "s/_GHBNAME_/$(jq -r '.name' $HOME/ghacc.json)/g" ./home.nix
+sed -i "s/_GHBMAIL_/$(jq -r '.email' $HOME/ghacc.json)/g" ./home.nix 
+sed -i "s/_SYSTEM_/${PLTFRM}/g" ./flake.nix 
+
+# Check if the file exists
+HOME_PATH="~/.config/home-manager/home.nix"
+if [ -f "$HOME_PATH" ]; then
+  echo "File '$HOME_PATH' exists. Deleting..."
+  rm "$FILE_PATH"
+  echo "File '$HOME_PATH' has been deleted."
+else
+  echo "File '$HOME_PATH' does not exist."
+fi
+
+FLAKE_PATH="~/.config/home-manager/flake.nix"
+if [ -f "$FLAKE_PATH" ]; then
+  echo "File '$FLAKE_PATH' exists. Deleting..."
+  rm "$FILE_PATH"
+  echo "File '$FLAKE_PATH' has been deleted."
+else
+  echo "File '$FLAKE_PATH' does not exist."
+fi
+
 for file in home.nix flake.nix; do ln -s "$HOME/workspace/$file" "$HOME/.config/home-manager/$file"; done
 
 
