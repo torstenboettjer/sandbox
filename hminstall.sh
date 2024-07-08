@@ -3,20 +3,14 @@
 # Exit on error
 set -e
 
-# request platform selection
-PS3="Enter a number to select your platform: "
-select platform in x86_64-linux aarch64-linux
-do
-    echo "Selected platform: $PLTFRM"
-    break
-done
+PLTFRM=$1
 
 # clone the default home-manager configuration 
 nix-shell -p gh --run "gh api user > $HOME/ghacc.json"
 nix-shell -p gh --run "gh repo clone hcops/workspace"
 
 # activating experimental features
-echo -e "experimental-features = nix-command flakes\ntrusted-users = root ${USER}" | sudo tee -a /etc/nix/nix.conf
+echo "experimental-features = nix-command flakes\ntrusted-users = root ${USER}" | sudo tee -a /etc/nix/nix.conf
 
 # add the home-manager package channel
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
