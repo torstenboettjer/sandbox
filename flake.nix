@@ -13,8 +13,7 @@
   outputs = { nixpkgs, home-manager, ... }:
     let
       lib = nixpkgs.lib;
-      system = "x86_64-linux";
-      # system = "aarch64-linux";
+      system = "_SYSTEM_";
       pkgs = import nixpkgs { inherit system; };
     in {
       homeConfigurations = {

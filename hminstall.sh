@@ -3,6 +3,16 @@
 # Exit on error
 set -e
 
+function nxconfig() {
+    echo "Which platform runs your sandbox on:"
+    select option in "x86_64-linux" "aarch64-linux"; do
+        case $option in
+            "x86_64-linux" ) ./nxcfg.sh x86_64-linux; break;;
+            "aarch64-linux" ) ./nxcfg.sh aarch64-linux; break;;
+        esac
+    done
+}
+
 # create log file
 touch ./setup.log
 
@@ -21,6 +31,9 @@ nix-channel --update
 
 # create the first home-manager generation
 nix-shell '<home-manager>' -A install
+
+# configure nix files
+nxconfig
 
 # add the nix path to `.bashrc`
 echo -e '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.profile

@@ -1,5 +1,4 @@
 { config, pkgs, ... }:
-# { lib, pkgs, ... }:
 
 {
   # Enable the configuration to allow unfree packages
@@ -7,8 +6,8 @@
 
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "torsten";
-  home.homeDirectory = "/home/torsten";
+  home.username = "_USRNAME_";
+  home.homeDirectory = "/home/_USRNAME_";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -102,8 +101,8 @@
   # Configure git
   programs.git = {
     enable = true;
-    userName = "Torsten Boettjer";
-    userEmail = "torsten.boettjer@gmail.com";
+    userName = "_GHNAME_";
+    userEmail = "_GHMAIL_";
   };
 
   # Let Home Manager install and manage itself.
