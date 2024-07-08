@@ -22,13 +22,13 @@ nix-channel --update
 nix-shell '<home-manager>' -A install
 
 # add the nix path to `.bashrc`
-echo -e '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.profile
+echo '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.profile
 
 # override a placeholder in a configuration file with a variable
-sed -i "s/_USRNAME_/${USER}/g" ./home.nix 
-sed -i "s/_GHBNAME_/$(jq -r '.name' $HOME/ghacc.json)/g" ./home.nix
-sed -i "s/_GHBMAIL_/$(jq -r '.email' $HOME/ghacc.json)/g" ./home.nix 
-sed -i "s/_SYSTEM_/${PLTFRM}/g" ./flake.nix 
+sed -i "s/_USRNAME_/${USER}/g" $HOME/workspace/home.nix 
+sed -i "s/_GHBNAME_/$(jq -r '.name' $HOME/ghacc.json)/g" $HOME/workspace/home.nix
+sed -i "s/_GHBMAIL_/$(jq -r '.email' $HOME/ghacc.json)/g" $HOME/workspace/home.nix 
+sed -i "s/_SYSTEM_/${PLTFRM}/g" $HOME/workspace/flake.nix 
 
 # Check if the file exists
 HOME_PATH="~/.config/home-manager/home.nix"
