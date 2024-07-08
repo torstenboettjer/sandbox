@@ -29,4 +29,4 @@ echo -e '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.prof
 source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh && home-manager --version
 
 # activate home manager
-home-manager switch --flake .#"${USER}"
+home-manager switch --flake .#$USER
