@@ -37,7 +37,7 @@ sed -i "s/_GHBMAIL_/$(jq -r '.email' $HOME/ghacc.json)/g" $HOME/workspace/home.n
 sed -i "s/_SYSTEM_/${PLTFRM}/g" $HOME/workspace/flake.nix 
 
 # Check if the file exists
-HOME_PATH="~/.config/home-manager/home.nix"
+HOME_PATH="${HOME}/.config/home-manager/home.nix"
 if [ -f "$HOME_PATH" ]; then
   echo "File '$HOME_PATH' exists. Deleting..."
   rm "$FILE_PATH"
@@ -46,7 +46,7 @@ else
   echo "File '$HOME_PATH' does not exist."
 fi
 
-FLAKE_PATH="~/.config/home-manager/flake.nix"
+FLAKE_PATH="${HOME}/.config/home-manager/flake.nix"
 if [ -f "$FLAKE_PATH" ]; then
   echo "File '$FLAKE_PATH' exists. Deleting..."
   rm "$FILE_PATH"
@@ -55,4 +55,4 @@ else
   echo "File '$FLAKE_PATH' does not exist."
 fi
 
-for file in home.nix flake.nix; do ln -s "$HOME/workspace/$file" "$HOME/.config/home-manager/$file"; done
+for file in home.nix flake.nix; do ln -s "${HOME}/workspace/$file" "${HOME}/.config/home-manager/$file"; done
