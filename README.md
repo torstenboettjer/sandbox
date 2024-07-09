@@ -37,7 +37,7 @@ nix-shell -p gh --run "gh auth login"
 The github client is used to load a default configuration and ensures the use of a homogenous toolset accross of development and production environments in a team. The configuration is splitted between two files, the set of applications is defined in `home.nix`, system configurations are stored in a file called ´flake.nix´. Flakes are still classified as experimental feature in Nix, enabling flakes requires to append a flag `/etc/nix/nix.conf`. After that the the appropriate nix package channel is added and updated.
 
 ```sh
-curl -L https://raw.githubusercontent.com/hcops/test/main/launch | sh -s -- aarch64-linux
+curl -L https://raw.githubusercontent.com/hcops/test/main/hminstall.sh | sh -s -- aarch64-linux
 ```
 The script requires the target platform like `x86_64-linux` or `aarch64-linux` as input. Run the Makefile to update the minimal configuration
 
