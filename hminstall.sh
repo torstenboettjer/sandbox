@@ -9,7 +9,9 @@ PLTFRM=$1
 nix-shell -p gh --run "gh api user > $HOME/ghacc.json"
 
 NME=$(nix-shell -p jq --run "jq -r '.name' $HOME/ghacc.json")
-EML=$(nix-shell -p jq --run "jq -r '.email' $HOME/ghacc.json")
+EML=$(nix-shell -p gh jq --run "primary_email=$(gh api user/emails --jq '.[] | select(.primary == true) | .email')")
+
+echo "Github email: ${EML}"
 
 nix-shell -p gh --run "gh repo clone hcops/workspace"
 
