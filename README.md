@@ -1,5 +1,6 @@
 # Engineering Sandbox
-Building cloud services for enterprises starts with an environment that enables system engineers to develop, maintain and execute of system configurations without prescribing specific programming languages, frameworks or platform services. In enterprise IT service operator often provision purpose build systems that accomodate technical requirements of various third party application vendors. Hence, while cloud operators have moved from runbook automation to infrastructure-as-code (IaC) and started using provisioning tools like Terraform to automate service deployments with immutable artifacts, enterprise operator also need a tools that help to manage the uptime, security and performance of mutable hosts. And while IaC tools work under the assumption, that applications are deployed through a cloud controller that orchestrates workloads on highly abstracted infrastructure, the scope of a service delivery platform in enterprise IT compromises applications that don't adhere to a micro-service design. Instead of applications that translate system definitions into api calls, declarative package manager and and reproducable process orchestrator are required, to allow system engineers attaching system configurations to repositories that reflect the application lifecycle.
+
+Building cloud services for enterprises starts with an environment that enables system engineers to develop, maintain and execute of system configurations without dependencies on specific programming languages, frameworks or platform services. Other than most cloud service operator, enterprise service operator need to be able, to provision purpose build systems that accomodate technical requirements of third party application vendors. While cloud operators have moved from runbook automation to infrastructure-as-code (IaC) and started using provisioning tools like Terraform to automate service deployments with immutable artifacts, enterprise operator need tools that also help them to manage the uptime, security and performance of mutable hosts. And while IaC tools work under the assumption, that applications are deployed through a cloud controller that orchestrates workloads on infrastructure pools, the scope of a service delivery platform in enterprise IT compromises applications that don't adhere to a micro-service design. Translating system definitions into api calls is not enough, declarative package manager and and process composer are required, with the ability to utilize configuration files that trigger system changes and match the lifecycle stage of an application, not the other way around.
 
 ## Technology Stack
 
@@ -25,16 +26,15 @@ Nix enables functional deployments and provides features like reproducibility, i
 exec bash && source ./.bashrc
 ```
 
-### Default Configuration
+### Layer 1: Standard Tools
 
-The [Home Manager](https://nix-community.github.io/home-manager/) is a Nix-powered tool for the definition of user environment settings and applications on a linux system. Sharing the configurations through git makes it easy to deploy and maintain a common toolset for system administrators and operation engineers. Adding the home-manager with a common configuration is simplified using the nix-shell that allows temporarily load and use packages. 
-
-The github client is used to load a default configuration and ensures the use of a homogenous toolset accross of development and production environments in a team. The configuration is splitted between two files, the set of applications is defined in `home.nix`, system configurations are stored in a file called ´flake.nix´. Flakes are still classified as experimental feature in Nix, enabling flakes requires to append a flag `/etc/nix/nix.conf`. After that the the appropriate nix package channel is added and updated.
+A standard toolset in system engineering is key for long term quality and maintainability in system design. The [Home-Manager](https://nix-community.github.io/home-manager/) defines user environments that can ubquiously transported and activated accross Linux machines. Engineers use the same toolset, regardless where they login. Sharing the configurations through git makes it easy to deploy and maintain a common toolset for system administrators and operation engineers. The script requires the target platform like `x86_64-linux` or `aarch64-linux` as input. 
 
 ```sh
 curl -L https://raw.githubusercontent.com/hcops/sandbox/main/setup | sh -s -- <x86_64-linux or aarch64-linux>
 ```
-The script requires the target platform like `x86_64-linux` or `aarch64-linux` as input. Run the Makefile to update the minimal configuration
+
+In this example the github client is used to load a default configuration and ensures the use of a homogenous toolset accross of development and production environments in a team. The configuration is splitted between two files, the set of applications is defined in `home.nix`, system configurations are stored in a file called ´flake.nix´. Flakes are still classified as experimental feature in Nix, enabling flakes requires to append a flag `/etc/nix/nix.conf`. After that the the appropriate nix package channel is added and updated.
 
 ## Platform Components
 
