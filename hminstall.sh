@@ -5,7 +5,11 @@ set -e
 
 PLTFRM=$1
 
-# clone the default home-manager configuration 
+# Function to strip surrounding quotes from a string
+strip_quotes() {
+    echo "$1" | sed -e 's/^"//' -e 's/"$//' -e "s/^'//" -e "s/'$//"
+}
+
 # clone the default home-manager configuration
 nix-shell -p gh --run "gh auth login -h github.com -s user && \
         gh api user > ${HOME}/ghacc.json && \
@@ -14,6 +18,9 @@ nix-shell -p gh --run "gh auth login -h github.com -s user && \
 
 NME=$(nix-shell -p jq --run "jq -r '.name' ${HOME}/ghacc.json")
 EML=$(nix-shell -p jq --run "jq '.[] | select(.primary == true) | .email' ${HOME}/mails.json")
+
+# Strip quotes from the mail string
+EML=$(strip_quotes $EML)
 
 # activating experimental features
 echo "experimental-features = nix-command flakes\ntrusted-users = root ${USER}" | sudo tee -a /etc/nix/nix.conf
@@ -31,6 +38,7 @@ nix-shell '<home-manager>' -A install
 echo '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.profile
 
 echo "Username: ${NME}"
+echo "GH eMail: ${EML}"
 
 # override a placeholder in a configuration file with a variable
 sed -i "s/_USRNAME_/${USER}/g" $HOME/workspace/home.nix 
