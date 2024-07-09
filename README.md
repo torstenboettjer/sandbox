@@ -36,7 +36,7 @@ curl -L https://raw.githubusercontent.com/hcops/sandbox/main/setup | sh -s -- <x
 
 The home configuration is defined with the [home.nix](./home.nix) file. The github client is used to load a default configuration and ensures the use of a homogenous toolset accross of development and production environments in a team. The system configuration in the [flake.nix](./flake.nix). Flakes are still classified as experimental feature in Nix, a respective flag is appended to `/etc/nix/nix.conf`. 
 
-## Layer 2: Platform Components
+### Layer 2: Platform Components
 
 One of the returning issues in the development of cloud services is the divergent structure between development and operation. While development teams are organized around solutions to focus on the delivery of functionality, operation teams are organized around services for efficient management and maintenance of system software. 
 
@@ -46,7 +46,7 @@ Activating direnv, an environment switcher for the shell that automatically load
 echo -e 'eval "$(direnv hook bash)"' >> $HOME/.bashrc
 ```
 
-## Service Development
+### Layer 3: Service Deployment
 
 Devenv is a tool that leverages Nix to create reproducible development environments, it is an extension of the Nix ecosystem, tailored for development workflows. A development environment is defined by creating a directory, setting up a git repository, and sharing the repository with other developers via Github.
 
