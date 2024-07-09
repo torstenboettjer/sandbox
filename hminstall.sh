@@ -6,14 +6,14 @@ set -e
 PLTFRM=$1
 
 # clone the default home-manager configuration 
-nix-shell -p gh --run "gh api user > $HOME/ghacc.json"
+# clone the default home-manager configuration
+nix-shell -p gh --run "gh auth login -h github.com -s user && \
+        gh api user > ${HOME}/ghacc.json && \
+        gh api user/emails > ${HOME}/mails.json && \
+        gh repo clone hcops/workspace"
 
-NME=$(nix-shell -p jq --run "jq -r '.name' $HOME/ghacc.json")
-EML=$(nix-shell -p gh jq --run "primary_email=$(gh api user/emails --jq '.[] | select(.primary == true) | .email')")
-
-echo "Github email: ${EML}"
-
-nix-shell -p gh --run "gh repo clone hcops/workspace"
+NME=$(nix-shell -p jq --run "jq -r '.name' ${HOME}/ghacc.json")
+EML=$(nix-shell -p jq --run "jq '.[] | select(.primary == true) | .email' ${HOME}/mails.json")
 
 # activating experimental features
 echo "experimental-features = nix-command flakes\ntrusted-users = root ${USER}" | sudo tee -a /etc/nix/nix.conf
