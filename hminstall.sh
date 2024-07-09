@@ -7,6 +7,10 @@ PLTFRM=$1
 
 # clone the default home-manager configuration 
 nix-shell -p gh --run "gh api user > $HOME/ghacc.json"
+
+NME=$(nix-shell -p jq --run "jq -r '.name' $HOME/ghacc.json")
+EML=$(nix-shell -p jq --run "jq -r '.email' $HOME/ghacc.json")
+
 nix-shell -p gh --run "gh repo clone hcops/workspace"
 
 # activating experimental features
@@ -24,17 +28,21 @@ nix-shell '<home-manager>' -A install
 # add the nix path to `.bashrc`
 echo '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.profile
 
-# test the installation
-source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh && home-manager --version
-
-# activate home manager
-cd $HOME/workspace/ && home-manager switch --flake .#$USER
+echo "Username: ${NME}"
 
 # override a placeholder in a configuration file with a variable
 sed -i "s/_USRNAME_/${USER}/g" $HOME/workspace/home.nix 
-sed -i "s/_GHBNAME_/$(jq -r '.name' $HOME/ghacc.json)/g" $HOME/workspace/home.nix
-sed -i "s/_GHBMAIL_/$(jq -r '.email' $HOME/ghacc.json)/g" $HOME/workspace/home.nix 
-sed -i "s/_SYSTEM_/${PLTFRM}/g" $HOME/workspace/flake.nix 
+sed -i "s/_GHBNAME_/${NME}/g" $HOME/workspace/home.nix
+sed -i "s/_GHBMAIL_/${EML}/g" $HOME/workspace/home.nix 
+sed -i "s/_SYSTEM_/${PLTFRM}/g" $HOME/workspace/flake.nix
+
+cd $HOME/workspace/ && git add . && git commit -m "update configuration files"
+
+# test the installation
+home-manager --version
+
+# activate home manager
+home-manager switch --flake .#$USER
 
 # Check if the file exists
 HOME_PATH="${HOME}/.config/home-manager/home.nix"
@@ -43,7 +51,7 @@ if [ -f "$HOME_PATH" ]; then
   rm "$FILE_PATH"
   echo "File '$HOME_PATH' has been deleted."
 else
-  echo "File '$HOME_PATH' does not exist."
+  echo "File 'home.nix' was not created yet"
 fi
 
 FLAKE_PATH="${HOME}/.config/home-manager/flake.nix"
@@ -52,7 +60,7 @@ if [ -f "$FLAKE_PATH" ]; then
   rm "$FILE_PATH"
   echo "File '$FLAKE_PATH' has been deleted."
 else
-  echo "File '$FLAKE_PATH' does not exist."
+  echo "File 'flake.nix' was not created yet"
 fi
 
 for file in home.nix flake.nix; do ln -s "${HOME}/workspace/$file" "${HOME}/.config/home-manager/$file"; done
