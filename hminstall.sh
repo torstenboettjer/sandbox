@@ -36,7 +36,9 @@ sed -i "s/_GHBNAME_/${NME}/g" $HOME/workspace/home.nix
 sed -i "s/_GHBMAIL_/${EML}/g" $HOME/workspace/home.nix 
 sed -i "s/_SYSTEM_/${PLTFRM}/g" $HOME/workspace/flake.nix
 
-cd $HOME/workspace/ && git add . && git commit -m "update configuration files"
+# cd $HOME/workspace/ && git add . && git commit -m "update configuration files"
+
+cd $HOME/workspace/ 
 
 # test the installation
 home-manager --version
