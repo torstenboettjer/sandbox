@@ -101,8 +101,8 @@
   # Configure git
   programs.git = {
     enable = true;
-    userName = "_GHNAME_";
-    userEmail = "_GHMAIL_";
+    userName = "_GHBNAME_";
+    userEmail = "_GHBMAIL_";
   };
 
   # Let Home Manager install and manage itself.
