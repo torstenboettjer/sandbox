@@ -61,18 +61,16 @@ HOME_PATH="${HOME}/.config/home-manager/home.nix"
 if [ -f "$HOME_PATH" ]; then
   echo "File '$HOME_PATH' exists. Replacing..."
   rm "$HOME_PATH"
-  echo "File '$HOME_PATH' has been deleted."
 else
-  echo "File 'home.nix' does not exist, creating ..."
+  echo "${HOME_PATH} does not exist, creating ..."
 fi
 
 FLAKE_PATH="${HOME}/.config/home-manager/flake.nix"
 if [ -f "$FLAKE_PATH" ]; then
   echo "File '$FLAKE_PATH' exists. Replacing..."
   rm "$FLAKE_PATH"
-  echo "File '$FLAKE_PATH' has been deleted."
 else
-  echo "File 'flake.nix' does not exist, creating ..."
+  echo "${FLAKE_PATH} does not exist, creating ..."
 fi
 
 for file in home.nix flake.nix; do ln -s "${HOME}/workspace/$file" "${HOME}/.config/home-manager/$file"; done
