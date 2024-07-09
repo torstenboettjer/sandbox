@@ -1,8 +1,8 @@
-# Cloud Engineering Workspace
+# DevOps for the Enterprises IT
 
-Building cloud services starts with a desktop environment for operation engineers that supports the efficient development, maintainance and execution of system configurations. Automating the deployment of a common toolset for teams ensures consistency, reduces deployment issues, and streamlines the collaboration with application owners and software developer. Today, most continous integration and deployment pipelines help manage the application lifecycle, but work under the assumption, that applications will be deployed against a cloud controller that orchestrates workloads on highly abstracted infrastructure. While this works for cloud-native services, the scope of programmable infrastructure enhances with applications that do not adhere to a micro-service system design. Enterprise operator often need to provision of purpose build systems to accomodate the design of third party applications. Hence, effective provisioning tools ensure productivity and code quality for system engineers, but avoid dependencies on programming languages, frameworks or orchestration tools involved in the application development process. Instead of applications that translate system definitions into api calls, package management and process orchestration tools allow system engineers to automate the configuration of application hosts together with the deployment process and and build development environments that match the provisioning process for production server. 
+Building enterprise cloud services starts with a developer environment that supports the development, maintainance and execution of system configurations, while avoiding any impact on programming languages, frameworks or services required for development and the delivery of applications. Even thoug, many operation teams have moved from runbook automation to infrastructure-as-code and started using provisioning tools like Terraform and Ansible to automate service deployments. But those tools only work under the assumption, that applications will be deployed against a cloud controller that orchestrates workloads on highly abstracted infrastructure. While this works for cloud-native services, for enterprises the scope of programmable infrastructure is enhanced and covers applications that do not adhere to a micro-service system design. In enterprise IT service operator often need to provision of purpose build systems to accomodate the design of third party applications. Effective provisioning tools ensure productivity and code quality for system engineers. Instead of applications that translate system definitions into api calls, package management and process orchestration tools allow system engineers to automate the configuration of application hosts together with the deployment process and and build development environments that match the provisioning process for production server. 
 
-## Technology Stack
+## Cloud Engineering Sandbox
 
 Adopting functional deployments for applications that run on dedicated hosts demands for declarative configurations that do not abstract the runtime environment, network and storage interface. The nix package manager solves this problem for Linux systems. Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. The nix package manager allows engineers to compose purpose build operating systems and store the configuratons in a git repository to centralize management tasks, to track and roll back system configurations. Sharing configurations in a repository fosters the development of platforms with advanced compliance and security requirements without burdening application owners or development teams. Using these files for development, test and production enables the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations. A local development environment compromises the following tools:
 
@@ -26,7 +26,7 @@ The package manager enables functional deployments and provides features like re
 exec bash && source ./.bashrc
 ```
 
-### Toolset
+### Development Tools
 
 The [Home Manager](https://nix-community.github.io/home-manager/) is a Nix-powered tool for the definition of user environment settings and applications on a linux system. Sharing the configurations through git makes it easy to deploy and maintain a common toolset for system administrators and operation engineers. Adding the home-manager with a common configuration is simplified using the nix-shell that allows temporarily load and use packages. 
 
@@ -46,11 +46,9 @@ cd ~/workspace
 make update
 ```
 
-## Project Environments
+## Delivery Platform
 
-While operation teams are organized around palform services, development teams are organized around solutions. 
-
-## Shell Extension
+One of the returning issues in the development of cloud services is the divergent structure between development and operation. While development teams are organized around solutions to focus on the delivery of functionality, operation teams are organized around services for efficient management and maintenance of system software. 
 
 Activating direnv, an environment switcher for the shell that automatically loads and unloads environment variables, when the directory is changed
 
@@ -58,7 +56,7 @@ Activating direnv, an environment switcher for the shell that automatically load
 echo -e 'eval "$(direnv hook bash)"' >> $HOME/.bashrc
 ```
 
-## Development Environments
+## Service Configuration
 
 Devenv is a tool that leverages Nix to create reproducible development environments, it is an extension of the Nix ecosystem, tailored for development workflows. A development environment is defined by creating a directory, setting up a git repository, and sharing the repository with other developers via Github.
 
