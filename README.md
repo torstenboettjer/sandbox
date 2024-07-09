@@ -1,18 +1,17 @@
-# DevOps for the Enterprises IT
-
+# Building Hybrid Cloud Services
 Building cloud services for enterprises starts with a developer environment that supports the development, maintainance and execution of system configurations, whitout prescribing programming languages, frameworks or platform services. Even thoug, many operation teams have moved from runbook automation to infrastructure-as-code and started using provisioning tools like Terraform and Ansible to automate service deployments. But those tools only work under the assumption, that applications will be deployed against a cloud controller that orchestrates workloads on highly abstracted infrastructure. While this works for cloud-native services, for enterprises the scope of programmable infrastructure is enhanced and covers applications that do not adhere to a micro-service system design. In enterprise IT service operator often need to provision of purpose build systems to accomodate the design of third party applications. Effective provisioning tools ensure productivity and code quality for system engineers. Instead of applications that translate system definitions into api calls, package management and process orchestration tools allow system engineers to automate the configuration of application hosts together with the deployment process and and build development environments that match the provisioning process for production server. 
 
-## Cloud Engineering Sandbox
+## Sandbox
 
 Adopting functional deployments for applications that run on dedicated hosts demands for declarative configurations that do not abstract the runtime environment, network and storage interface. The nix package manager solves this problem for Linux systems. Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. The nix package manager allows engineers to compose purpose build operating systems and store the configuratons in a git repository to centralize management tasks, to track and roll back system configurations. Sharing configurations in a repository fosters the development of platforms with advanced compliance and security requirements without burdening application owners or development teams. Using these files for development, test and production enables the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations. A local development environment compromises the following tools:
 
-* **[Linux Sandbox](https://chromeos.dev/en/linux)**: Debian VM or Container that allows developers to run Linux apps for development alongside the usual desktop and applications.
+* **[Linux OS](https://chromeos.dev/en/linux)**: Debian VM or Container that allows developers to run Linux apps for development alongside the usual desktop and applications.
 * **[Nix Package Manager](https://nixos.org/)**: A Linux configuration manager that enables reproducible and declarative builds for virtual machines.
 * **[Process-compose](https://f1bonacc1.github.io/process-compose/)**: Command-line utility to facilitate the management of processes without further abstraction.
 * **[Devenv](https://devenv.sh/)**: Configuration tool to define development environment declaratively by toggling basic options for nix and process-compose.
 * **[Direnv](https://direnv.net/)**: Shell extension to load and unload devenv environments automatically moving in and out of a directory.
 
-## Linux Sandbox
+## Foundation
 
 Desktop systems like [Windows](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS](https://chromeos.dev/en/linux) let developers to run a Linux environment without without installing a second operating system. For MacOS there is a [community project](https://github.com/LnL7/nix-darwin). For a development environment the avialable disk size should be at least *80GB*, after that the Nix package manager can be installed. 
 
@@ -26,7 +25,7 @@ The package manager enables functional deployments and provides features like re
 exec bash && source ./.bashrc
 ```
 
-### Development Tools
+### Developer Tools
 
 The [Home Manager](https://nix-community.github.io/home-manager/) is a Nix-powered tool for the definition of user environment settings and applications on a linux system. Sharing the configurations through git makes it easy to deploy and maintain a common toolset for system administrators and operation engineers. Adding the home-manager with a common configuration is simplified using the nix-shell that allows temporarily load and use packages. 
 
@@ -46,7 +45,7 @@ cd ~/workspace
 make update
 ```
 
-## Delivery Platform
+## Platform Configuration
 
 One of the returning issues in the development of cloud services is the divergent structure between development and operation. While development teams are organized around solutions to focus on the delivery of functionality, operation teams are organized around services for efficient management and maintenance of system software. 
 
@@ -56,7 +55,7 @@ Activating direnv, an environment switcher for the shell that automatically load
 echo -e 'eval "$(direnv hook bash)"' >> $HOME/.bashrc
 ```
 
-## Service Configuration
+## Service Development
 
 Devenv is a tool that leverages Nix to create reproducible development environments, it is an extension of the Nix ecosystem, tailored for development workflows. A development environment is defined by creating a directory, setting up a git repository, and sharing the repository with other developers via Github.
 
