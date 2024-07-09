@@ -59,20 +59,20 @@ home-manager switch --flake .#$USER
 # Check if the file exists
 HOME_PATH="${HOME}/.config/home-manager/home.nix"
 if [ -f "$HOME_PATH" ]; then
-  echo "File '$HOME_PATH' exists. Deleting..."
+  echo "File '$HOME_PATH' exists. Replacing..."
   rm "$FILE_PATH"
   echo "File '$HOME_PATH' has been deleted."
 else
-  echo "File 'home.nix' was not created yet"
+  echo "File 'home.nix' does not exist, creating ..."
 fi
 
 FLAKE_PATH="${HOME}/.config/home-manager/flake.nix"
 if [ -f "$FLAKE_PATH" ]; then
-  echo "File '$FLAKE_PATH' exists. Deleting..."
+  echo "File '$FLAKE_PATH' exists. Replacing..."
   rm "$FILE_PATH"
   echo "File '$FLAKE_PATH' has been deleted."
 else
-  echo "File 'flake.nix' was not created yet"
+  echo "File 'flake.nix' does not exist, creating ..."
 fi
 
 for file in home.nix flake.nix; do ln -s "${HOME}/workspace/$file" "${HOME}/.config/home-manager/$file"; done
