@@ -1,7 +1,7 @@
 # Engineering Sandbox
 Building cloud services for enterprises starts with an environment that enables system engineers to develop, maintain and execute of system configurations without prescribing specific programming languages, frameworks or platform services. In enterprise IT service operator often provision purpose build systems that accomodate technical requirements of various third party application vendors. Hence, while cloud operators have moved from runbook automation to infrastructure-as-code (IaC) and started using provisioning tools like Terraform to automate service deployments with immutable artifacts, enterprise operator also need a tools that help to manage the uptime, security and performance of mutable hosts. And while IaC tools work under the assumption, that applications are deployed through a cloud controller that orchestrates workloads on highly abstracted infrastructure, the scope of a service delivery platform in enterprise IT compromises applications that don't adhere to a micro-service design. Instead of applications that translate system definitions into api calls, declarative package manager and and reproducable process orchestrator are required, to allow system engineers attaching system configurations to repositories that reflect the application lifecycle.
 
-## Operating System
+## Toolset
 
 Adopting functional deployments for applications that run on dedicated hosts demands for declarative configurations that do not abstract the runtime environment, network and storage interface. The nix package manager solves this problem for Linux systems. Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. The nix package manager allows engineers to compose purpose build operating systems and store the configuratons in a git repository to centralize management tasks, to track and roll back system configurations. Sharing configurations in a repository fosters the development of platforms with advanced compliance and security requirements without burdening application owners or development teams. Using these files for development, test and production enables the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations. A local development environment compromises the following tools:
 
@@ -11,15 +11,15 @@ Adopting functional deployments for applications that run on dedicated hosts dem
 * **[Devenv](https://devenv.sh/)**: Configuration tool to define development environment declaratively by toggling basic options for nix and process-compose.
 * **[Direnv](https://direnv.net/)**: Shell extension to load and unload devenv environments automatically moving in and out of a directory.
 
-## Foundation
+## Getting Started
 
-Desktop systems like [Windows](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS](https://chromeos.dev/en/linux) let developers to run a Linux environment without without installing a second operating system. For MacOS there is a [community project](https://github.com/LnL7/nix-darwin). For a development environment the avialable disk size should be at least *80GB*, after that the Nix package manager can be installed. 
+Setting up a sandbox engineers need access to a git repository and a Linux VM or container. The typical desktop systems like [Windows](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS](https://chromeos.dev/en/linux) let developers to run a Linux environment without installing a second operating system. MacOS can use the Nix package manager directly and refer to  [nix-darwin](https://github.com/LnL7/nix-darwin) community project. The default recommendation for a new development environment is an avialable disk size of *80 to 120GB*, however, the size really varies from use case to use case. The package mananger is installed via command line interface. 
 
 ```sh
 sh <(curl -L https://nixos.org/nix/install) --daemon --yes
 ```
 
-The package manager enables functional deployments and provides features like reproducibility, isolation, and atomic upgrades. Key features is ensuring a consitent package deployments through precise specification of dependencies and build instructions. To activate the package manager, reference is added to the shell configuration, after the installation, the session requires a restart.
+Nix enables functional deployments and provides features like reproducibility, isolation, and atomic upgrades. Key features is ensuring a consitent package deployments through precise specification of dependencies and build instructions. To activate the package manager, a reference is added to the shell configuration (e.g. ~/.bashrc), hence after the installation, the shell session requires a restart.
 
 ```sh
 exec bash && source ./.bashrc
