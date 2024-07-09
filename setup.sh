@@ -3,6 +3,7 @@
 # Exit on error
 set -e
 
+# store the traget platform in a variable
 PLTFRM=$1
 
 # Function to strip surrounding quotes from a string
@@ -36,9 +37,6 @@ nix-shell '<home-manager>' -A install
 
 # add the nix path to `.bashrc`
 echo '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.profile
-
-echo "Username: ${NME}"
-echo "GH eMail: ${EML}"
 
 # override a placeholder in a configuration file with a variable
 sed -i "s/_USRNAME_/${USER}/g" $HOME/workspace/home.nix 
@@ -74,3 +72,12 @@ else
 fi
 
 for file in home.nix flake.nix; do ln -s "${HOME}/workspace/$file" "${HOME}/.config/home-manager/$file"; done
+
+# clean configration files
+for json in ghacc.json mails.json; do rm "${HOME}/$json"; done
+
+# return settings
+echo "Home manager is now active, using the following configuration:"
+echo "Linux user: ${USER}"
+echo "GitHub user: ${NME}"
+echo "GitHub eMail: ${EML}"
