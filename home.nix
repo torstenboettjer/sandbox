@@ -20,10 +20,15 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
+  home.packages = with pkgs; [
+    gh       # https://cli.github.com/manual/
+    gnumake  # https://www.gnu.org/software/make/manual/make.html
+    lunarvim # https://www.lunarvim.org/
+    vscode   # https://code.visualstudio.com/
+    direnv   # https://direnv.net/
+    devenv   # https://devenv.sh/
+    jq       # https://jqlang.github.io/jq/
+    curl     # https://curl.se/
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -37,30 +42,6 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-
-    # https://cli.github.com/manual/
-    pkgs.gh
-
-    # https://www.gnu.org/software/make/manual/make.html
-    pkgs.gnumake
-
-    # https://www.lunarvim.org/
-    pkgs.lunarvim
-
-    # https://code.visualstudio.com/
-    pkgs.vscode
-
-    # https://direnv.net/
-    pkgs.direnv
-
-    # https://devenv.sh/
-    pkgs.devenv
-
-    # https://jqlang.github.io/jq/
-    pkgs.jq
-
-    # https://curl.se/
-    pkgs.curl
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
