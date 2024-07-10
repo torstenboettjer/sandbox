@@ -14,11 +14,11 @@ strip_quotes() {
 # clone the default home-manager configuration
 nix-shell -p gh --run "gh auth login -h github.com -s user && \
         gh api user > ${HOME}/ghacc.json && \
-        gh api user/emails > ${HOME}/mails.json && \
+        gh api user/emails > ${HOME}/ghml.json && \
         gh repo clone hcops/workspace"
 
 NME=$(nix-shell -p jq --run "jq -r '.login' ${HOME}/ghacc.json")
-EML=$(nix-shell -p jq --run "jq '.[] | select(.primary == true) | .email' ${HOME}/mails.json")
+EML=$(nix-shell -p jq --run "jq '.[] | select(.primary == true) | .email' ${HOME}/ghml.json")
 
 # Strip quotes from the mail string
 EML=$(strip_quotes $EML)
@@ -74,7 +74,7 @@ fi
 for file in home.nix flake.nix; do ln -s "${HOME}/sandbox/$file" "${HOME}/.config/home-manager/$file"; done
 
 # clean configration files
-for json in ghacc.json mails.json; do rm "${HOME}/$json"; done
+for json in ghacc.json ghml.json; do rm "${HOME}/$json"; done
 
 # activate direnv
 echo 'eval "$(direnv hook bash)"' >> $HOME/.bashrc
