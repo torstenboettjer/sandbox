@@ -76,6 +76,12 @@ for file in home.nix flake.nix; do ln -s "${HOME}/sandbox/$file" "${HOME}/.confi
 # clean configration files
 for json in ghacc.json mails.json; do rm "${HOME}/$json"; done
 
+# activate direnv
+echo 'eval "$(direnv hook bash)"' >> $HOME/.bashrc
+
+# restart nix daemon
+sudo systemctl restart nix-daemon
+
 # return settings
 echo "Home manager is now active, using the following configuration:"
 echo "Linux user: ${USER}"
