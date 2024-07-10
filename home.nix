@@ -80,10 +80,20 @@
   };
 
   # Configure git
-  programs.git = {
-    enable = true;
-    userName = "_GHBNAME_";
-    userEmail = "_GHBMAIL_";
+  programs = {
+    git = {
+      enable = true;
+      userName = "_GHBNAME_";
+      userEmail = "_GHBMAIL_";
+    };
+    
+    direnv = {
+      enable = true;
+      enableBashIntegration = true; # see note on other shells below
+      nix-direnv.enable = true;
+    };
+
+    bash.enable = true; # see note on other shells below
   };
 
   # Let Home Manager install and manage itself.
