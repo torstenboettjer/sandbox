@@ -39,14 +39,14 @@ nix-shell '<home-manager>' -A install
 echo '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.profile
 
 # override a placeholder in a configuration file with a variable
-sed -i "s/_USRNAME_/${USER}/g" $HOME/workspace/home.nix 
-sed -i "s/_GHBNAME_/${NME}/g" $HOME/workspace/home.nix
-sed -i "s/_GHBMAIL_/${EML}/g" $HOME/workspace/home.nix 
-sed -i "s/_SYSTEM_/${PLTFRM}/g" $HOME/workspace/flake.nix
+sed -i "s/_USRNAME_/${USER}/g" $HOME/sandbox/home.nix 
+sed -i "s/_GHBNAME_/${NME}/g" $HOME/sandbox/home.nix
+sed -i "s/_GHBMAIL_/${EML}/g" $HOME/sandbox/home.nix 
+sed -i "s/_SYSTEM_/${PLTFRM}/g" $HOME/sandbox/flake.nix
 
 # cd $HOME/workspace/ && git add . && git commit -m "update configuration files"
 
-cd $HOME/workspace/ 
+cd $HOME/sandbox/ 
 
 # test the installation
 home-manager --version
@@ -71,7 +71,7 @@ else
   echo "${FLAKE_PATH} does not exist, creating ..."
 fi
 
-for file in home.nix flake.nix; do ln -s "${HOME}/workspace/$file" "${HOME}/.config/home-manager/$file"; done
+for file in home.nix flake.nix; do ln -s "${HOME}/sandbox/$file" "${HOME}/.config/home-manager/$file"; done
 
 # clean configration files
 for json in ghacc.json mails.json; do rm "${HOME}/$json"; done
