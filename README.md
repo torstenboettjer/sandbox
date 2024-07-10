@@ -54,18 +54,7 @@ Direnv is used to enable engineers to support multiple development projects effe
 direnv allow
 ```
 
-The 'allow' flag authorizes direnv to automatically load and unload environment variables, when the directory is changed. It checks for the existence of a .envrc file and if the file exists, the defined variables are captured and made available in the current shell. Platform components are added to a directory, by either adding a shell.nix or a default.nix to the project directory.
-
-```sh
-# save this as shell.nix
-{ pkgs ? import <nixpkgs> {}}:
-
-pkgs.mkShell {
-  packages = [ pkgs.hello ];
-}
-```
-
-Then add the line use nix to your envrc:
+The 'allow' flag authorizes direnv to automatically load and unload environment variables, when the directory is changed. It checks for the existence of a .envrc file and if the file exists, the defined variables are captured and made available in the current shell. Platform components are added to a directory, by either adding a [shell.nix](./shell.nix) or a default.nix to the project directory. 
 
 ```sh
 $ echo "use nix" >> .envrc
