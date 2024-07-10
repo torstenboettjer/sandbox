@@ -38,7 +38,7 @@ With nix being active, building a sandbox becomes a three step process:
 
 ### Common Tools and Services
 
-A standard toolset in system engineering is key for long term quality and maintainability for system administrators. The [Home-Manager](https://nix-community.github.io/home-manager/) defines user environments that provide the look and feel for an engineers accross Linux machines. Administrators rely on homogenous set of tools, regardless where they login. Sharing a default home configuration through git enables central departments like purchasing, compliance and technology operation to provide shared services. The example [setup script](./setup) deploys a toolset on wither `x86_64-linux` or `aarch64-linux` based Chromebooks. 
+A standard toolset in system engineering is key for long term quality and maintainability for system administrators. The [Home-Manager](https://nix-community.github.io/home-manager/) defines user environments that provide the look and feel for an engineers accross Linux machines. Administrators rely on homogenous set of tools, regardless where they login. Sharing a default home configuration through git enables central departments like purchasing, compliance and technology operation to provide shared services. The example [setup script](./setup) deploys a toolset on either `x86_64-linux` or `aarch64-linux` based Chromebooks. 
 
 ```sh
 curl -L https://raw.githubusercontent.com/hcops/sandbox/main/setup | sh -s -- <x86_64-linux or aarch64-linux>
