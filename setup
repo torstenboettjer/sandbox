@@ -17,7 +17,7 @@ nix-shell -p gh --run "gh auth login -h github.com -s user && \
         gh api user/emails > ${HOME}/mails.json && \
         gh repo clone hcops/workspace"
 
-NME=$(nix-shell -p jq --run "jq -r '.name' ${HOME}/ghacc.json")
+NME=$(nix-shell -p jq --run "jq -r '.login' ${HOME}/ghacc.json")
 EML=$(nix-shell -p jq --run "jq '.[] | select(.primary == true) | .email' ${HOME}/mails.json")
 
 # Strip quotes from the mail string
