@@ -52,7 +52,7 @@ cd $HOME/sandbox/
 home-manager --version
 
 # activate home manager
-home-manager switch --flake .#$USER
+home-manager switch -b backup --flake .#$USER
 
 # Check if the file exists
 HOME_PATH="${HOME}/.config/home-manager/home.nix"
