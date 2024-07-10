@@ -23,7 +23,6 @@
   home.packages = with pkgs; [
     gh       # https://cli.github.com/manual/
     gnumake  # https://www.gnu.org/software/make/manual/make.html
-    lunarvim # https://www.lunarvim.org/
     vscode   # https://code.visualstudio.com/
     direnv   # https://direnv.net/
     devenv   # https://devenv.sh/
