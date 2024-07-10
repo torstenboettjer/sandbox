@@ -81,3 +81,10 @@ devenv init
 ```
 
 Will create the following files in a given repository: `.envrc, devenv.nix, devenv.yaml, .gitignore`. The nix file contains the system software and platform components, required to build an applications.
+
+## Contribution
+We welcome contributions to this project! Here are some ways you can contribute:
+* *Report bugs* If you find a bug, please [open an issue](https://github.com/hcops/sandbox/issues/new) with a clear description of the problem.
+* *Fix bugs* If you know how to fix a bug, submit a [pull request](https://github.com/hcops/sandbox/pull/new) with your changes.
+* *Improve documentation* If you find the documentation lacking, you can contribute improvements by editing the relevant files.
+* *Add new features* If you have an idea for a new feature, please [open an issue](https://github.com/hcops/sandbox/issues/new) to discuss it before creating a pull request.
