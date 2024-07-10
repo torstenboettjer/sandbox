@@ -51,14 +51,14 @@ The system configuration in the [flake.nix](./flake.nix). Flakes are still class
 Direnv is used to enable engineers to support multiple development projects effectively. One of the complexity driver developing enterprise services is the divergent structure in application development and service operation. Development teams are usually organized around solutions to focus on the delivery of business functionality, operation teams are organized around technologies with specialists managing systems. Direnv allows operations enigneers to ceate per-project isolated development environments and load secrets for deployment. 
 
 ```sh
-direnv allow
+$ echo "use nix" >> .envrc
+$ direnv allow
 ```
 
 The 'allow' flag authorizes direnv to automatically load and unload environment variables, when the directory is changed. It checks for the existence of a .envrc file and if the file exists, the defined variables are captured and made available in the current shell. Platform components are added to a directory, by either adding a [shell.nix](./shell.nix) or a default.nix to the project directory. 
 
 ```sh
-$ echo "use nix" >> .envrc
-$ direnv allow
+direnv allow
 ```
 
 ### Service Configuration
