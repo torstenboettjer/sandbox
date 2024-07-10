@@ -38,16 +38,17 @@ With nix being active, building a sandbox becomes a three step process:
 
 ### Common Tools and Services
 
-A standard toolset in system engineering is key for long term quality and maintainability for system administrators. The [Home-Manager](https://nix-community.github.io/home-manager/) defines user environments that provide the look and feel for an engineers accross Linux machines. Administrators rely on homogenous set of tools, regardless where they login. Sharing a default home configuration through git enables central departments like purchasing, compliance and technology operation to provide shared services. The example [setup script](./setup) deploys a toolset on either `x86_64-linux` or `aarch64-linux` based Chromebooks. 
+A standard toolset in system engineering is key for long term quality and maintainability for system administrators. The [Home-Manager](https://nix-community.github.io/home-manager/) defines user environments that provide the look and feel for an engineers accross Linux machines. Replicating the configuration via git administrators rely on the same set of tools, regardless where they login. Organizations use the home manager to define a default configuration that is confirmed by security, compliance and purchasing. The [example script](./setup) uses Github for replication and contains some basic open source tools like VS-Code, gh and jq to be deployed on either a `x86_64-linux` or `aarch64-linux` based Chromebooks. 
 
 ```sh
 curl -L https://raw.githubusercontent.com/hcops/sandbox/main/setup | sh -s -- <x86_64-linux or aarch64-linux>
 ```
 
-The home configuration is defined with the [home.nix](./home.nix) file. The github client is used to load a default configuration and ensures the use of a homogenous toolset accross of development and production environments in a team. The system configuration in the [flake.nix](./flake.nix). Flakes are still classified as experimental feature in Nix, a respective flag is appended to `/etc/nix/nix.conf`. 
+The system configuration in the [flake.nix](./flake.nix). Flakes are still classified as experimental feature in Nix, a respective flag is appended to `/etc/nix/nix.conf`. The github client is used to load the default parameter into the configuration. The home configuration is defined with the [home.nix](./home.nix) file. Beside the development tools it also setz up direnv and devenv.sh.
 
 ### Platform Components
-One of the complexity driver in the development of cloud services is the divergent structure in application development and serrvice operation. While development teams are organized around solutions to focus on the delivery of business functionality, operation teams are organized around services for efficient management and maintenance of system software. 
+
+Direnv is used to enable engineers to support multiple development projects effectively. One of the complexity driver developing enterprise services is the divergent structure in application development and service operation. Development teams are usually organized around solutions to focus on the delivery of business functionality, operation teams are organized around technologies with specialists managing systems. 
 
 Activating direnv, an environment switcher for the shell that automatically loads and unloads environment variables, when the directory is changed
 
