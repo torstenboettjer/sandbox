@@ -12,7 +12,7 @@ Developing deployment instructions for applications that run on dedicated hosts 
 
 The nix package manager allows engineers to compose purpose build operating systems and store the configuratons in a git repository to centralize management tasks, to track and roll back system configurations. Sharing configurations in a repository fosters the development of platforms with advanced compliance and security requirements without burdening application owners or development teams.
 
-![Alt text](./img/techStack.drawio.svg)
+![Alt text](./techStack.drawio.svg)
 
 * **[Home-manager](https://nixos.wiki/wiki/Home_Manager)**: Shell extension to configure user environments with the Nix package manager.
 * **[Direnv](https://direnv.net/)**: Shell extension to load and unload devenv environments automatically moving in and out of a directory.
