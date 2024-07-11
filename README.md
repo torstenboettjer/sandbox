@@ -44,18 +44,18 @@ A standard toolset in system engineering is key for long term quality and mainta
 curl -L https://raw.githubusercontent.com/hcops/sandbox/main/setup | sh -s -- <x86_64-linux or aarch64-linux>
 ```
 
-The system configuration in the [flake.nix](./flake.nix). Flakes are still classified as experimental feature in Nix, a respective flag is appended to `/etc/nix/nix.conf`. The github client is used to load the default parameter into the configuration. The home configuration is defined with the [home.nix](./home.nix) file. Beside the development tools it also sets up direnv and devenv.sh.
+The github client is used to load the default parameter into the configuration. The home configuration is defined with the [home.nix](./home.nix) file. Beside the development tools it also sets up direnv and devenv.sh. Independent from the application layer, the system layer is defined in the [flake.nix](./flake.nix). Flakes are still classified as experimental feature in Nix, a respective flag is appended to `/etc/nix/nix.conf`.
 
 ### Platform Components
 
-Direnv is a nix based application that enables engineers to support multiple development projects effectively. It isolates system configurations their dependencies in a directory and automatically loads and unloads the components, switching from one directory to another. This helps to adopt agila processes effectvely, because it addresses one of the complexity driver in developing enterprise services. The divergent structure in application development and service operation often leads to massive workload in operation. While development teams are organized around solutions to focus on the delivery of business functionality, operation teams are organized around technologies with specialists managing systems. Hence, operators required for 24x7 operation have to join multiple SCRUM teams with little time left to fulfill their main tasks. Direnv allows operations enigneers to ceate per-project environments that can be employed without their presence. Nix knows multiple concepts of defining such environments, the most common are flake.nix files, devenv comes with on devenv.nix files, for more advanced requirements overlays or package.nix should be employed.  
+Direnv is a nix based application that enables engineers to support multiple development projects effectively. It isolates system configurations their dependencies in a directory and automatically loads and unloads the components, switching from one directory to another. This helps to adopt agile processes effectvely, because it addresses one of the complexity driver in developing enterprise services. The divergent structure in application development and service operation often leads to massive workload in operation. While development teams are organized around solutions to focus on the delivery of business functionality, operation teams are organized around technologies with specialists managing systems. Hence, operators required for 24x7 operation have to join multiple SCRUM teams with little time left to fulfill their day to day tasks. A tool like direnv allows operations enigneers to ceate per-project environments and relieve system specialists. Nix supports multiple concepts of separating environment definitions. E.g. flake.nix file can be extended with nix packages, However, devenv comes with an on devenv.nix files, which in most cases serves the purpose. More advanced requirements might require the definition of overlays or a a specific package.nix, which is not covered here.  
 
 ```sh
-$ direnv allow
+echo "use devenv" >> .envrc
+direnv allow
 ```
 
-The 'allow' flag authorizes direnv to automatically load and unload environment variables, when the directory is changed. It checks for the existence of a .envrc file and if the file exists, the defined variables are captured and made available in the current shell. Platform components are added to a directory, by either adding a [shell.nix](./shell.nix) or a default.nix to the project directory. 
-
+The x.nix files are activated by appending the use command to a environment file inside a project directory. The 'allow' flag authorizes direnv to automatically load and unload environment variables, when the directory is changed. It checks for the existence of a .envrc file and if the file exists, the defined variables are captured and made available in the current shell.  
 
 ### Service Configuration
 
