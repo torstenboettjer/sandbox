@@ -46,9 +46,9 @@ curl -L https://raw.githubusercontent.com/hcops/sandbox/main/setup | sh -s -- <x
 
 The system configuration in the [flake.nix](./flake.nix). Flakes are still classified as experimental feature in Nix, a respective flag is appended to `/etc/nix/nix.conf`. The github client is used to load the default parameter into the configuration. The home configuration is defined with the [home.nix](./home.nix) file. Beside the development tools it also sets up direnv and devenv.sh.
 
-### Shell Configuration
+### Platform Components
 
-Direnv is used to enable engineers to support multiple development projects effectively. One of the complexity driver developing enterprise services is the divergent structure in application development and service operation. Development teams are usually organized around solutions to focus on the delivery of business functionality, operation teams are organized around technologies with specialists managing systems. Direnv allows operations enigneers to ceate per-project isolated development environments and load secrets for deployment. 
+Direnv is a nix based application that enables engineers to support multiple development projects effectively. It isolates system configurations their dependencies in a directory and automatically loads and unloads the components, switching from one directory to another. This helps to adopt agila processes effectvely, because it addresses one of the complexity driver in developing enterprise services. The divergent structure in application development and service operation often leads to massive workload in operation. While development teams are organized around solutions to focus on the delivery of business functionality, operation teams are organized around technologies with specialists managing systems. Hence, operators required for 24x7 operation have to join multiple SCRUM teams with little time left to fulfill their main tasks. Direnv allows operations enigneers to ceate per-project environments that can be employed without their presence. Nix knows multiple concepts of defining such environments, the most common are flake.nix files, devenv comes with on devenv.nix files, for more advanced requirements overlays or package.nix should be employed.  
 
 ```sh
 $ direnv allow
