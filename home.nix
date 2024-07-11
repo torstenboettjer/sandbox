@@ -28,6 +28,8 @@
     devenv   # https://devenv.sh/
     jq       # https://jqlang.github.io/jq/
     curl     # https://curl.se/
+    lunarvim # https://www.lunarvim.org/
+    fzf
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
