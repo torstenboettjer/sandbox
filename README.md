@@ -6,7 +6,7 @@ The engineering sandbox addresses system administrators, building cloud services
 
 The nix package manager enables engineers to compose operating systems declaratively, without abstracting the runtime environment, network and storage interface. Configuration scripts trigger provisioning processes for systems that host traditional enterprise applications. Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. A nix host configruation compromises the following components:
 
-* **[Linux Host]**: A strip down version of an the operating system that includes only the most essential components for basic functionality. 
+* **Linux Host**: A strip down version of an the operating system that includes only the most essential components for basic functionality. 
 * **[Nix Package Manager](https://nixos.org/)**: A configuration manager that enables reproducible and declarative builds of a server.
 * **[Process-compose](https://f1bonacc1.github.io/process-compose/)**: Command-line utility to facilitate the management of processes without further abstraction.
 
