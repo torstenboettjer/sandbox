@@ -51,11 +51,12 @@ The github client is used to load the default parameter into the configuration. 
 Direnv is a nix based application that enables engineers to support multiple development projects effectively. It isolates system configurations their dependencies in a directory and automatically loads and unloads the components, switching from one directory to another. This helps to adopt agile processes effectvely, because it addresses one of the complexity driver in developing enterprise services. The divergent structure in application development and service operation often leads to massive workload in operation. While development teams are organized around solutions to focus on the delivery of business functionality, operation teams are organized around technologies with specialists managing systems. Hence, operators required for 24x7 operation have to join multiple SCRUM teams with little time left to fulfill their day to day tasks. A tool like direnv allows operations enigneers to ceate per-project environments and relieve system specialists. Nix supports multiple concepts of separating environment definitions. E.g. flake.nix file can be extended with nix packages, However, devenv comes with an on devenv.nix files, which in most cases serves the purpose. More advanced requirements might require the definition of overlays or a a specific package.nix, which is not covered here.  
 
 ```sh
-echo "use devenv" >> .envrc
+# uncomment when adding flake.nix to an existing configuration
+# echo "use flake" >> .envrc
 direnv allow
 ```
 
-The x.nix files are activated by appending the use command to a environment file inside a project directory. The 'allow' flag authorizes direnv to automatically load and unload environment variables, when the directory is changed. It checks for the existence of a .envrc file and if the file exists, the defined variables are captured and made available in the current shell.  
+Files ending on *.nix are activated by appending the use command to a environment file inside a project directory. Direnv automatically reads files called default.nix or shell.nix, what might be usefull to configure the appeearance of the shell and add tools like [starship](https://starship.rs/). The 'allow' flag authorizes direnv to automatically load and unload environment variables, when the directory is changed. It checks for the existence of a .envrc file and if the file exists, the defined variables are captured and made available in the current shell.  
 
 ### Service Configuration
 
