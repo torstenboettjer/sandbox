@@ -66,7 +66,7 @@ Devenv is a tool that leverages Nix to create reproducible development environme
 devenv init
 ```
 
-Will create the following files in a given repository: `.envrc, devenv.nix, devenv.yaml, .gitignore`. The nix file contains the system software and platform components, required to build an applications.
+Will create the following files in a given repository: `.envrc, devenv.nix, devenv.yaml, .gitignore`. The nix file contains the system software and platform components, required to build an applications. Because the configuration is declarative, the entire system configuration is replicated over git repositories, which allows match the lifecycle and the technical requirements of the application code or binaries. Instantiation is triggered through "actions", configurations are shared accross teams.
 
 ## Contribution
 We welcome contributions to this project! Here are some ways you can contribute:
