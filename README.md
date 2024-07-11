@@ -4,10 +4,10 @@ The engineering sandbox addresses system administrators, building cloud services
 
 ## Technology Stack
 
-Developing configuration and provisioning scripts for systems that host traditional enterprise applications demand for declarative compositions of the operating system without abstracting the runtime environment, network and storage interface. The nix package manager solves this problem for Linux systems. Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. A host configruation compromises the following components:
+The nix package manager enables engineers to compose operating systems declaratively, without abstracting the runtime environment, network and storage interface. Configuration scripts trigger provisioning processes for systems that host traditional enterprise applications. Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. A nix host configruation compromises the following components:
 
-* **[Linux OS](https://chromeos.dev/en/linux)**: Debian VM or Container that allows developers to run Linux apps for development alongside the usual desktop and applications.
-* **[Nix Package Manager](https://nixos.org/)**: A Linux configuration manager that enables reproducible and declarative builds for virtual machines.
+* **[Linux Host]**: A strip down version of an the operating system that includes only the most essential components for basic functionality. 
+* **[Nix Package Manager](https://nixos.org/)**: A configuration manager that enables reproducible and declarative builds of a server.
 * **[Process-compose](https://f1bonacc1.github.io/process-compose/)**: Command-line utility to facilitate the management of processes without further abstraction.
 
 The nix package manager allows engineers to assemble purpose build operating systems and store the configuratons in a git repository to centralize management tasks, to track and roll back system configurations. The sandbox is meant to support engineers developing and sharing configurations on a local desktop. Given the flexibility there are more than on configuration for a development environment, combining the following three tools is merely a suggestion, that might need a review when nix further matures.
