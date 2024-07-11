@@ -1,28 +1,28 @@
 # Engineering Sandbox
 
-Building cloud services for enterprises starts with an environment that enables system engineers to develop, maintain and execute system configurations. Most cloud engineers use  Infrastructure-as-Code (IaC) and applications like Terraform to automate the provisioning processes.  However, these tools are build for immutable artifacts and employ a cloud controller like Kubernetes to orchestrate workloads in large infrastructure pools. This imposes savior limitations for system engineers working for enterprises. Enterprises cannot rely exclusively on managed infrastructure. An while cloud provider offer managed infrastructure and plaform services, mainly for web service developers, enterprise operator need an infrastructure platform that is able to provision purpose build systems for third party applications. The scope of a service delivery platform expands beyond cloud-native applications and micro-service designs with software that requires dedicated infrastructure. Applications that translate system definitions into api calls are not sufficient, a framework is needed that allows to capture dependencies on operating system level and automate deployment processes on mutable hosts, in order to ensure the uptime, security and performance of more traditional or monolothic designed systems. A declarative package manager and and process composer provides a better foundation to develop configurations that trigger system changes and match the lifecycle stage of an application without creating dependencies for application developer on specific programming languages, integration frameworks or platform services.
+The engineering sandbox addresses system administrators, building cloud services for enterprises, with a development environment for system configurations and provisioning scripts. Usually cloud engineers employ applications like Terraform for Infrastructure-as-Code (IaC). However, these tools are not necessarily addressing the issues faced by service operator in enterprise IT. Most tools were build to deploy immutable artifacts and rely on a cloud controller for the orchestration workloads in large infrastructure pools. But enterprise operator cannot run their application landscape exclusively on managed infrastructure and often need to provide purpose build systems to host third party applications. The scope of a service delivery platform expands beyond "Platform-as-a-Service" and cloud-native applications with a micro-service design only represent a subset of the software portfolio. Hence, applications that translate system definitions into api calls cannot address the operational needs sufficiently and technologies are reuqired that allow engineers to manage dependencies on operating system level with interfaces that help to manage processes on mutable hosts. A declarative package manager that enables functional deployments and process orchestrator that exposes application services provides a better foundation and allows to develop configurations that trigger system changes and match the lifecycle stage of an application without creating dependencies on specific programming languages, integration frameworks or platform services.
 
 ## Technology Stack
 
-Developing deployment instructions for applications that run on dedicated hosts demands for declarative configurations that do not abstract the runtime environment, network and storage interface. The nix package manager solves this problem for Linux systems. Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. 
+Developing configuration and provisioning scripts for systems that host traditional enterprise applications demand for declarative compositions of the operating system without abstracting the runtime environment, network and storage interface. The nix package manager solves this problem for Linux systems. Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. A host configruation compromises the following components:
 
 * **[Linux OS](https://chromeos.dev/en/linux)**: Debian VM or Container that allows developers to run Linux apps for development alongside the usual desktop and applications.
 * **[Nix Package Manager](https://nixos.org/)**: A Linux configuration manager that enables reproducible and declarative builds for virtual machines.
 * **[Process-compose](https://f1bonacc1.github.io/process-compose/)**: Command-line utility to facilitate the management of processes without further abstraction.
 
-The nix package manager allows engineers to compose purpose build operating systems and store the configuratons in a git repository to centralize management tasks, to track and roll back system configurations. Sharing configurations in a repository fosters the development of platforms with advanced compliance and security requirements without burdening application owners or development teams.
+The nix package manager allows engineers to assemble purpose build operating systems and store the configuratons in a git repository to centralize management tasks, to track and roll back system configurations. The sandbox is meant to support engineers developing and sharing configurations on a local desktop. Given the flexibility there are more than on configuration for a development environment, combining the following three tools is merely a suggestion, that might need a review when nix further matures.
 
-![Alt text](./techStack.drawio.svg)
+![Alt text](./img/techStack.drawio.svg)
 
-* **[Home-manager](https://nixos.wiki/wiki/Home_Manager)**: Shell extension to configure user environments with the Nix package manager.
-* **[Direnv](https://direnv.net/)**: Shell extension to load and unload devenv environments automatically moving in and out of a directory.
-* **[Devenv.sh](https://devenv.sh/)**: Configuration tool to define development environment declaratively by toggling basic options for nix and process-compose.
+* **[Home-manager](https://nixos.wiki/wiki/Home_Manager)**: Nix extension that pre-configures user environments with the Nix package manager.
+* **[Direnv](https://direnv.net/)**: Shell extension to load and unload system software and configurations automatically, moving in and out a directory.
+* **[Devenv.sh](https://devenv.sh/)**: Configuration tool to define development environments declaratively by toggling basic options for nix and process-compose.
 
-Using these files for development, test and production enables the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations. 
+Developing declaration files fosters the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations. Separating system definitions from the execution of deployment plans re-introduces the seperation of duties for technology and service management, necessary to address the demand for compliant use of cloud infrastructure.
 
 ## Setup
 
-Setting up a sandbox engineers need access to a git repository and a Linux VM or container. The typical desktop systems like [Windows](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS](https://chromeos.dev/en/linux) let developers to run a Linux environment without installing a second operating system. MacOS can use the Nix package manager directly and refer to  [nix-darwin](https://github.com/LnL7/nix-darwin) community project. The default recommendation for a new development environment is an avialable disk size of *80 to 120GB*, however, the size really varies from use case to use case. The package mananger is installed via command line interface. 
+For the sandbox, system engineers need a git account and a Linux VM or container. Linux subsystems on [Windows](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS](https://chromeos.dev/en/linux) are sufficient. MacOS can use the Nix package manager directly and refer to  [nix-darwin](https://github.com/LnL7/nix-darwin) community project. In this example, ChromeOS is used in combination with a Github account. The default recommendation for the size of the VM is *80 to 120GB*. However, this may vary per use case. The package mananger is installed via command line interface. 
 
 ```sh
 sh <(curl -L https://nixos.org/nix/install) --daemon --yes
@@ -34,7 +34,7 @@ Nix enables functional deployments and provides features like reproducibility, i
 exec bash && source ./.bashrc
 ```
 
-With nix being active, building a sandbox becomes a three step process: 
+After activation, building a sandbox a three step process: 
 
 ### Tools and Services
 
@@ -69,7 +69,7 @@ devenv init
 Will create the following files in a given repository: `.envrc, devenv.nix, devenv.yaml, .gitignore`. The nix file contains the system software and platform components, required to build an applications. Because the configuration is declarative, the entire system configuration is replicated over git repositories, which allows match the lifecycle and the technical requirements of the application code or binaries. Instantiation is triggered through "actions", configurations are shared accross teams.
 
 ## Contribution
-This is a small community project, that adresses issues observed in enterprise cloud adoption with nix project and the ability to enable functional deployments. We welcome any contribution! Here are some ways you can contribute:
+This is a small community project, that should help system administrators to onboard nix into the tool chain. We welcome any contribution, here are some ways you can contribute:
 * *Report bugs* If you find a bug, please [open an issue](https://github.com/hcops/sandbox/issues/new) with a clear description of the problem.
 * *Fix bugs* If you know how to fix a bug, submit a [pull request](https://github.com/hcops/sandbox/pull/new) with your changes.
 * *Improve documentation* If you find the documentation lacking, you can contribute improvements by editing the relevant files.
