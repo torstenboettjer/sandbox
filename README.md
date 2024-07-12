@@ -36,7 +36,7 @@ Nix enables functional deployments and provides features like reproducibility, i
 exec bash && source ./.bashrc
 ```
 
-After activation, building a sandbox a three step process: 
+After activation, building a sandbox is a three step process: 
 
 ### Tools and Services
 
