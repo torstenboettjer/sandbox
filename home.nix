@@ -21,16 +21,16 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    gh       # https://cli.github.com/manual/
-    gnumake  # https://www.gnu.org/software/make/manual/make.html
-    vscode   # https://code.visualstudio.com/
-    direnv   # https://direnv.net/
-    devenv   # https://devenv.sh/
-    jq       # https://jqlang.github.io/jq/
-    curl     # https://curl.se/
-    lunarvim # https://www.lunarvim.org/
-    fzf      # https://github.com/junegunn/fzf
-    zed      # https://zed.dev/
+    gh         # https://cli.github.com/manual/
+    gnumake    # https://www.gnu.org/software/make/manual/make.html
+    vscode     # https://code.visualstudio.com/
+    direnv     # https://direnv.net/
+    devenv     # https://devenv.sh/
+    jq         # https://jqlang.github.io/jq/
+    curl       # https://curl.se/
+    lunarvim   # https://www.lunarvim.org/
+    fzf        # https://github.com/junegunn/fzf
+    # zed-editor # https://zed.dev/
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
