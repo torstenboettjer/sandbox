@@ -4,21 +4,20 @@ The engineering sandbox addresses system administrators with a development envir
 
 ## Technology Stack
 
-The nix package manager enables engineers to compose operating systems declaratively, without abstracting the runtime environment, network and storage interface. Configuration scripts trigger provisioning processes for systems that host traditional enterprise applications. Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. A nix host configruation compromises the following components:
+The nix package manager enables engineers to compose operating systems declaratively, without abstracting the runtime environment, network and storage interface. Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. Configuration scripts trigger provisioning processes for systems that host traditional enterprise applications, a strip down version of an the operating system that includes only the most essential components for basic functionality is extended with two main components:
 
-* **Linux Host**: A strip down version of an the operating system that includes only the most essential components for basic functionality. 
 * **[Nix Package Manager](https://nixos.org/)**: A configuration manager that enables reproducible and declarative builds of a server.
 * **[Process-compose](https://f1bonacc1.github.io/process-compose/)**: Command-line utility to facilitate the management of processes without further abstraction.
 
-The nix package manager allows engineers to assemble purpose build operating systems and store the configuratons in a git repository to centralize management tasks, to track and roll back system configurations. The sandbox is meant to support engineers developing and sharing configurations on a local desktop. Given the flexibility there are more than on configuration for a development environment, combining the following three tools is merely a suggestion, that might need a review when nix further matures.
+The package manager allows engineers to assemble purpose build operating systems and store the configuratons in a git repository to centralize management tasks, to track and roll back system configurations. The sandbox is meant to support engineers developing and sharing configurations on a local desktop. Given the flexibility there are more than on configuration for a development environment, combining the following three tools is merely a suggestion, that might need a review when nix further matures.
 
 ![Alt text](./img/techStack.drawio.svg)
 
-* **[Home-manager](https://nixos.wiki/wiki/Home_Manager)**: Nix extension that pre-configures user environments with the Nix package manager.
-* **[Direnv](https://direnv.net/)**: Shell extension to load and unload system software and configurations automatically, moving in and out a directory.
-* **[Devenv.sh](https://devenv.sh/)**: Configuration tool to define development environments declaratively by toggling basic options for nix and process-compose.
+* **[Home-manager](https://nixos.wiki/wiki/Home_Manager)**: A nix extension that pre-configures user environments with the Nix package manager and allows teams or organizations to define a standard toolset.
+* **[Direnv](https://direnv.net/)**: A shell extension to load and unload system software and configurations automatically, moving in and out a directory, which enables system engineers to provide purpose build systems for multiple projects.
+* **[Devenv.sh](https://devenv.sh/)**: A configuration tool that allows engineers to define development environments declaratively by toggling basic options for nix and process-compose.
 
-Developing declaration files fosters the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations. Separating system definitions from the execution of deployment plans re-introduces the seperation of duties for technology and service management, necessary to address the demand for compliant use of cloud infrastructure.
+Separating system definitions from the execution of deployment plans re-introduces the seperation of duties for technology and service management, necessary to address the demand for compliant use of cloud infrastructure. Storing declaration files in one repository together with the application code fosters the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations. 
 
 ## Setup
 
