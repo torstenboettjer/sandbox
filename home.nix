@@ -29,8 +29,8 @@
     jq       # https://jqlang.github.io/jq/
     curl     # https://curl.se/
     lunarvim # https://www.lunarvim.org/
-    fzf
-    # zed      # https://zed.dev/
+    fzf      # https://github.com/junegunn/fzf
+    zed      # https://zed.dev/
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
