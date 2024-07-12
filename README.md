@@ -23,7 +23,8 @@ Storing declaration files in one repository together with the application code f
 
 ## Setup
 
-For the sandbox, system engineers need a git account and a Linux VM or container. Linux subsystems on [Windows](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS](https://chromeos.dev/en/linux) are sufficient. MacOS can use the Nix package manager directly and refer to  [nix-darwin](https://github.com/LnL7/nix-darwin) community project. In this example, ChromeOS is used in combination with a Github account. The default recommendation for the size of the VM is *80 to 120GB*. However, this may vary per use case. The package mananger is installed via command line interface. 
+For the sandbox, system engineers need a git account and a Linux VM or container, e.g. the Linux Subsystem provided with [Windows](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS](https://chromeos.dev/en/linux). The recommendation for the size of the VM is *80 to 120GB*. However, this may vary per use case. The package mananger is installed via command line interface. MacOS can use the Nix package manager directly and refer to  [nix-darwin](https://github.com/LnL7/nix-darwin) community project. 
+
 
 ```sh
 sh <(curl -L https://nixos.org/nix/install) --daemon --yes
@@ -70,7 +71,7 @@ devenv init
 Will create the following files in a given repository: `.envrc, devenv.nix, devenv.yaml, .gitignore`. The nix file contains the system software and platform components, required to build an applications. Because the configuration is declarative, the entire system configuration is replicated over git repositories, which allows match the lifecycle and the technical requirements of the application code or binaries. Instantiation is triggered through "actions", configurations are shared accross teams.
 
 ## Contribution
-This is a setup script for use a nix based sandbox environment. Contribution are welcome, e.g.:
+This is a setup script for use a nix based development environment. Contribution are welcome, e.g.:
 * *Report bugs* If you find a bug, please [open an issue](https://github.com/hcops/sandbox/issues/new) with a clear description of the problem.
 * *Fix bugs* If you know how to fix a bug, submit a [pull request](https://github.com/hcops/sandbox/pull/new) with your changes.
 * *Improve documentation* If you find the documentation lacking, you can contribute improvements by editing the relevant files.
