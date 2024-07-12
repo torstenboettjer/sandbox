@@ -48,7 +48,8 @@ install_home_manager() {
 
 
 # clone the default home-manager configuration
-nix-shell -p gh --run "gh auth login -h github.com -s user && \
+nix-shell -p gh --run "mkdir $HOME/temp/
+  gh auth login -h github.com -s user && \
   gh api user > $HOME/temp/ghusr.json && \
   gh api user/emails > $HOME/temp/ghml.json && \
   gh repo clone hcops/sandbox"
