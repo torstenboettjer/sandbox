@@ -30,10 +30,11 @@ config_nix() {
 
 # Function to set the user information in the nix config files
 user_settings() {
-  sed -i "s/_USRNAME_/${USER}/g" $HOME/workspace/home.nix 
-  sed -i "s/_GHBNAME_/${NME}/g" $HOME/workspace/home.nix
-  sed -i "s/_GHBMAIL_/${EML}/g" $HOME/workspace/home.nix 
-  sed -i "s/_SYSTEM_/${PLTFRM}/g" $HOME/workspace/flake.nix
+  sdb_dir = "${HOME/workspace"
+  sed -i "s/_USRNAME_/${USER}/g" $sdb_dir/home.nix 
+  sed -i "s/_GHBNAME_/${NME}/g" $sdb_dir/home.nix
+  sed -i "s/_GHBMAIL_/${EML}/g" $sdb_dir/home.nix 
+  sed -i "s/_SYSTEM_/${PLTFRM}/g" $sdb_dir/flake.nix
 }
 
 # Function to install home-manager
