@@ -14,7 +14,7 @@ strip_quotes() {
 
 # Function to output the used credentials
 output_credentials() {
-  echo -e "Home manager is now active, using the following configuration:\nLinux user: ${USER}\nGitHub user: ${NME}\nGitHub eMail: ${EML}"
+  echo "Home manager is now active, using the following configuration:\nLinux user: ${USER}\nGitHub user: ${NME}\nGitHub eMail: ${EML}"
 }
 
 # Function to configure the nix environment
@@ -56,7 +56,7 @@ clone_repo() {
 
   # retrieve and cache user identifier
   NME=$(nix-shell -p jq --run "jq -r '.login' ${HOME}/temp/ghusr.json")
-  local EML=$(nix-shell -p jq --run "jq '.[] | select(.primary == true) | .email' ${HOME}/temp/ghml.json")
+  EML=$(nix-shell -p jq --run "jq '.[] | select(.primary == true) | .email' ${HOME}/temp/ghml.json")
   EML=$(strip_quotes $EML)
 }
 
