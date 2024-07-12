@@ -8,8 +8,43 @@ PLTFRM=$1
 
 # Function to strip surrounding quotes from a string
 strip_quotes() {
-    echo "$1" | sed -e 's/^"//' -e 's/"$//' -e "s/^'//" -e "s/'$//"
+  echo "$1" | sed -e 's/^"//' -e 's/"$//' -e "s/^'//" -e "s/'$//"
 }
+
+# Function to output the used credentials
+output_credentials() {
+  echo -e "Home manager is now active, using the following configuration:\nLinux user: ${USER}\nGitHub user: ${NME}\nGitHub eMail: ${EML}"
+}
+
+# Function to configure the nix environment
+config_nix() {
+  # activating experimental features
+  echo "experimental-features = nix-command flakes\ntrusted-users = root ${USER}" | sudo tee -a /etc/nix/nix.conf
+  
+  # add the home-manager package channel
+  nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+  
+  # updte the home manager channel
+  nix-channel --update
+} 
+
+# Function to set the user information in the nix config files
+user_settings() {
+  sed -i "s/_USRNAME_/${USER}/g" $HOME/workspace/home.nix 
+  sed -i "s/_GHBNAME_/${NME}/g" $HOME/workspace/home.nix
+  sed -i "s/_GHBMAIL_/${EML}/g" $HOME/workspace/home.nix 
+  sed -i "s/_SYSTEM_/${PLTFRM}/g" $HOME/workspace/flake.nix
+}
+
+# Function to install home-manager
+install_home_manager() {
+  # create the first home-manager generation
+  nix-shell '<home-manager>' -A install
+
+  # add the nix path to `.bashrc`
+  echo '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.profile
+}
+
 
 # clone the default home-manager configuration
 nix-shell -p gh --run "gh auth login -h github.com -s user && \
@@ -17,47 +52,22 @@ nix-shell -p gh --run "gh auth login -h github.com -s user && \
         gh api user/emails > ${HOME}/ghml.json && \
         gh repo clone hcops/workspace"
 
+# retrieve and cache user identifier
 NME=$(nix-shell -p jq --run "jq -r '.login' ${HOME}/ghacc.json")
 EML=$(nix-shell -p jq --run "jq '.[] | select(.primary == true) | .email' ${HOME}/ghml.json")
-
-# Strip quotes from the mail string
 EML=$(strip_quotes $EML)
 
-# activating experimental features
-echo "experimental-features = nix-command flakes\ntrusted-users = root ${USER}" | sudo tee -a /etc/nix/nix.conf
-
-# add the home-manager package channel
-nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-
-# updte the home manager channel
-nix-channel --update
-
-# create the first home-manager generation
-nix-shell '<home-manager>' -A install
-
-# add the nix path to `.bashrc`
-echo '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.profile
-
-# override a placeholder in a configuration file with a variable
-sed -i "s/_USRNAME_/${USER}/g" $HOME/sandbox/home.nix 
-sed -i "s/_GHBNAME_/${NME}/g" $HOME/sandbox/home.nix
-sed -i "s/_GHBMAIL_/${EML}/g" $HOME/sandbox/home.nix 
-sed -i "s/_SYSTEM_/${PLTFRM}/g" $HOME/sandbox/flake.nix
+config_nix
+install_home_manager
+user_settings
 
 # cd $HOME/workspace/ && git add . && git commit -m "update configuration files"
-
-cd $HOME/sandbox/ 
-
-# test the installation
-home-manager --version
-
-# activate home manager
-home-manager switch -b backup --flake .#$USER
+cd $HOME/sandbox/ && home-manager switch -b backup --flake .#$USER
 
 # Check if the file exists
 HOME_PATH="${HOME}/.config/home-manager/home.nix"
 if [ -f "$HOME_PATH" ]; then
-  echo "File '$HOME_PATH' exists. Replacing..."
+  echo "File '$HOME_PATH' exists, replacing..."
   rm "$HOME_PATH"
 else
   echo "${HOME_PATH} does not exist, creating ..."
@@ -65,7 +75,7 @@ fi
 
 FLAKE_PATH="${HOME}/.config/home-manager/flake.nix"
 if [ -f "$FLAKE_PATH" ]; then
-  echo "File '$FLAKE_PATH' exists. Replacing..."
+  echo "File '$FLAKE_PATH' exists, replacing..."
   rm "$FLAKE_PATH"
 else
   echo "${FLAKE_PATH} does not exist, creating ..."
@@ -82,11 +92,6 @@ echo 'eval "$(direnv hook bash)"' >> $HOME/.bashrc
 # echo 'eval "$(direnv hook bash)"' | sudo tee -a $(readlink "$HOME/.bashrc")
 
 
-# restart nix daemon
+# restart nix daemon and return the used credentials
 sudo systemctl restart nix-daemon
-
-# return settings
-echo "Home manager is now active, using the following configuration:"
-echo "Linux user: ${USER}"
-echo "GitHub user: ${NME}"
-echo "GitHub eMail: ${EML}"
+output_credentials
