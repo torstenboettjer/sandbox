@@ -88,7 +88,8 @@
       userName = "_GHBNAME_";
       userEmail = "_GHBMAIL_";
     };
-    
+
+    # uncomment the following lines to use nix-direnv (handle with care, the original .bashrc will be replaced with a symbolic link)
     # direnv = {
     #   enable = true;
     #   enableBashIntegration = true; # see note on other shells below
