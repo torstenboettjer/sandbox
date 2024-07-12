@@ -48,10 +48,11 @@ install_home_manager() {
 
 
 # clone the default home-manager configuration
-nix-shell -p gh --run "gh auth login -h github.com -s user && \
-        gh api user > ${SOURCEDIR}/ghusr.json && \
-        gh api user/emails > ${SOURCEDIR}/ghml.json && \
-        gh repo clone hcops/sandbox"
+nix-shell -p gh --run "mkdir &HOME/temp && \
+  gh auth login -h github.com -s user && \
+  gh api user > &HOME/temp/ghusr.json && \
+  gh api user/emails > &HOME/temp/ghml.json && \
+  gh repo clone hcops/sandbox"
 
 # retrieve and cache user identifier
 NME=$(nix-shell -p jq --run "jq -r '.login' ${SOURCEDIR}/ghusr.json")
@@ -84,8 +85,8 @@ fi
 
 for config in home.nix flake.nix; do ln -s "${SOURCEDIR}/$config" "${HOME}/.config/home-manager/$config"; done
 
-# clean configration files
-for json in $SOURCEDIR/ghusr.json $SOURCEDIR/ghml.json; do rm $json; done
+# clean temp configration files
+rm -rf $HOME/temp
 
 # activate direnv
 echo 'eval "$(direnv hook bash)"' >> $HOME/.bashrc
