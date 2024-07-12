@@ -55,8 +55,8 @@ nix-shell -p gh --run "mkdir &HOME/temp && \
   gh repo clone hcops/sandbox"
 
 # retrieve and cache user identifier
-NME=$(nix-shell -p jq --run "jq -r '.login' ${SOURCEDIR}/ghusr.json")
-EML=$(nix-shell -p jq --run "jq '.[] | select(.primary == true) | .email' ${SOURCEDIR}/ghml.json")
+NME=$(nix-shell -p jq --run "jq -r '.login' &{HOME}/temp/ghusr.json")
+EML=$(nix-shell -p jq --run "jq '.[] | select(.primary == true) | .email' &{HOME}/temp/ghml.json")
 EML=$(strip_quotes $EML)
 
 config_nix
