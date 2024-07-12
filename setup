@@ -49,13 +49,13 @@ install_home_manager() {
 
 # clone the default home-manager configuration
 nix-shell -p gh --run "gh auth login -h github.com -s user && \
-  gh api user > &HOME/temp/ghusr.json && \
-  gh api user/emails > &HOME/temp/ghml.json && \
+  gh api user > $HOME/temp/ghusr.json && \
+  gh api user/emails > $HOME/temp/ghml.json && \
   gh repo clone hcops/sandbox"
 
 # retrieve and cache user identifier
-NME=$(nix-shell -p jq --run "jq -r '.login' &{HOME}/temp/ghusr.json")
-EML=$(nix-shell -p jq --run "jq '.[] | select(.primary == true) | .email' &{HOME}/temp/ghml.json")
+NME=$(nix-shell -p jq --run "jq -r '.login' ${HOME}/temp/ghusr.json")
+EML=$(nix-shell -p jq --run "jq '.[] | select(.primary == true) | .email' ${HOME}/temp/ghml.json")
 EML=$(strip_quotes $EML)
 
 config_nix
