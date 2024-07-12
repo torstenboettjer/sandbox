@@ -13,11 +13,13 @@ The package manager allows engineers to assemble purpose build operating systems
 
 ![Alt text](./img/techStack.drawio.svg)
 
+Separating system definitions from the execution of deployment plans re-introduces the seperation of duties for technology and service management, necessary to address the demand for compliant use of cloud infrastructure. 
+
 * **[Home-manager](https://nixos.wiki/wiki/Home_Manager)**: A nix extension that pre-configures user environments with the Nix package manager and allows teams or organizations to define a standard toolset.
 * **[Direnv](https://direnv.net/)**: A shell extension to load and unload system software and configurations automatically, moving in and out a directory, which enables system engineers to provide purpose build systems for multiple projects.
 * **[Devenv.sh](https://devenv.sh/)**: A configuration tool that allows engineers to define development environments declaratively by toggling basic options for nix and process-compose.
 
-Separating system definitions from the execution of deployment plans re-introduces the seperation of duties for technology and service management, necessary to address the demand for compliant use of cloud infrastructure. Storing declaration files in one repository together with the application code fosters the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations. 
+Storing declaration files in one repository together with the application code fosters the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations. 
 
 ## Setup
 
