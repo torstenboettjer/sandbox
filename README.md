@@ -15,11 +15,11 @@ Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_
 
 ## Design and Optimization
 
-The operator sandbox is meant to support engineers developing and sharing configurations. It runs on a local desktop or an a server. Given the flexibility of the nix package manager, there are more than one possible configuration for such a development environment. This proposal is focussed on ease of use and combines three tools:
+The operator sandbox is meant to support engineers developing and sharing configurations. It runs on a local desktop or an a server. Given the flexibility of the nix package manager, there are more than one possible configuration for such an environment. This proposal is focussed on ease of use and combines three tools:
 
 ![Alt text](./img/techStack.drawio.svg)
 
-Separating system definitions from the execution of deployment plans re-introduces the necessary seperation of duties for technology and service management and addresses the demand for compliant use of cloud infrastructure. 
+The sandbox is build with a layered architecture in mind that separating system definitions from the the development tools and the execution teamples. There no implications on the topology design, what helps to re-introduces the necessary seperation of duties for technology and service management. 
 
 * **[Home-manager](https://nixos.wiki/wiki/Home_Manager)**: A nix extension that pre-configures user environments with the Nix package manager and allows teams or organizations to define a standard toolset.
 * **[Direnv](https://direnv.net/)**: A shell extension to load and unload system software and configurations automatically, moving in and out a directory, which enables system engineers to provide purpose build systems for multiple projects.
