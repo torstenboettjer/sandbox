@@ -70,7 +70,7 @@ devenv init
 Will create the following files in a given repository: `.envrc, devenv.nix, devenv.yaml, .gitignore`. The nix file contains the system software and platform components, required to build an applications. Because the configuration is declarative, the entire system configuration is replicated over git repositories, which allows match the lifecycle and the technical requirements of the application code or binaries. Instantiation is triggered through "actions", configurations are shared accross teams.
 
 ## Contribution
-This is a setup script for use a nix based development environment. Contribution are welcome, e.g.:
+This is a setup script for use a nix based development sandbox to foster the adoption in the operator community. Contributions are highly welcome, e.g.:
 * *Report bugs* If you find a bug, please [open an issue](https://github.com/hcops/sandbox/issues/new) with a clear description of the problem.
 * *Fix bugs* If you know how to fix a bug, submit a [pull request](https://github.com/hcops/sandbox/pull/new) with your changes.
 * *Improve documentation* If you find the documentation lacking, you can contribute improvements by editing the relevant files.
