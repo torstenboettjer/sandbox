@@ -23,12 +23,7 @@ Separating system definitions from the execution of deployment plans re-introduc
 * **[Direnv](https://direnv.net/)**: A shell extension to load and unload system software and configurations automatically, moving in and out a directory, which enables system engineers to provide purpose build systems for multiple projects.
 * **[Devenv.sh](https://devenv.sh/)**: A configuration tool that allows engineers to define development environments declaratively by toggling basic options for nix and process-compose.
 
-Storing declaration files in one repository together with the application code fosters the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations. 
-
-## Setup
-
-For the sandbox, system engineers need a git account and a Linux VM or container, e.g. the Linux Subsystem provided with [Windows](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS](https://chromeos.dev/en/linux). The recommendation for the size of the VM is *80 to 120GB*. However, this may vary per use case. The package mananger is installed via command line interface. MacOS can use the Nix package manager directly and refer to  [nix-darwin](https://github.com/LnL7/nix-darwin) community project. 
-
+Storing declaration files in one repository together with the application code fosters the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations. Engineers need a git account and access to a virtual machine, running Linux. The simplest option is the subsystem provided with [Windows](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS](https://chromeos.dev/en/linux). The recommendation for the size is *80 to 120GB* but this varies with the use case. The package mananger is installed via command line interface. MacOS can use [nix-darwin](https://github.com/LnL7/nix-darwin) community project to arrive at the same point. 
 
 ```sh
 sh <(curl -L https://nixos.org/nix/install) --daemon --yes
@@ -40,7 +35,7 @@ Nix enables functional deployments and provides features like reproducibility, i
 exec bash && source ./.bashrc
 ```
 
-After activation, building a sandbox is a three step process: 
+After installing the package manager, building a sandbox is done in three step process: 
 
 ### Tools and Services
 
