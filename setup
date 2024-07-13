@@ -84,13 +84,11 @@ main() {
   install_home_manager
   user_settings
 
-  cd $SOURCEDIR/ && home-manager switch -b backup --flake .#$USER   # cd $SOURCEDIR/ && git add . && git commit -m "update configuration files"
-
+  cd $SOURCEDIR/ && home-manager switch -b backup --flake .#$USER
+  
   write_config
   echo 'eval "$(direnv hook bash)"' >> $HOME/.bashrc   # activate direnv
-  # change to the following lines when the the use of nix-direnv is intended, and the original .bashrc will be replaced with a symbolic link
-  # echo 'eval "$(direnv hook bash)"' | sudo tee -a $(readlink "$HOME/.bashrc")
-
+  # echo 'eval "$(direnv hook bash)"' | sudo tee -a $(readlink "$HOME/.bashrc") # alternative for nix-direnv
   sudo systemctl restart nix-daemon   # restart nix daemon and return the used credentials
   output_credentials
 }
