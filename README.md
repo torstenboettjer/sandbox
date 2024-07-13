@@ -19,7 +19,7 @@ The operator sandbox is meant to support engineers developing and sharing config
 
 ![Alt text](./img/techStack.drawio.svg)
 
-The sandbox is build with a layered architecture in mind that separating system definitions from the the development tools and the execution teamples. There no implications on the topology design, what helps to re-introduces the necessary seperation of duties for technology and service management. 
+The sandbox is build with a layered architecture in mind, separating system definitions from development tools and execution templates. It avoids any dependencies on platform tools like orchestrator or packaging. It does not touch on the topology design, what helps to re-introduces the necessary seperation of duties for technology and service management. 
 
 * **[Home-manager](https://nixos.wiki/wiki/Home_Manager)**: A nix extension that pre-configures user environments with the Nix package manager and allows teams or organizations to define a standard toolset.
 * **[Direnv](https://direnv.net/)**: A shell extension to load and unload system software and configurations automatically, moving in and out a directory, which enables system engineers to provide purpose build systems for multiple projects.
