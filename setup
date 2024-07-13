@@ -58,18 +58,12 @@ clone_repo() {
   NME=$(nix-shell -p jq --run "jq -r '.login' ${HOME}/temp/ghusr.json")
   EML=$(nix-shell -p jq --run "jq '.[] | select(.primary == true) | .email' ${HOME}/temp/ghml.json")
   EML=$(strip_quotes $EML)
+
+  # remove temp configration files
+  rm -rf $HOME/temp
 }
 
-# Define a function named "main"
-main() {
-  clone_repo
-  config_nix
-  install_home_manager
-  user_settings
-
-  # cd $SOURCEDIR/ && git add . && git commit -m "update configuration files"
-  cd $SOURCEDIR/ && home-manager switch -b backup --flake .#$USER
-
+write_config() {
   # create symbolic links to the configuration files
   for config_file in home.nix flake.nix; do
     config_path="${HOME}/.config/home-manager/$config_file"
@@ -81,17 +75,23 @@ main() {
     fi
     ln -s "${SOURCEDIR}/$config_file" "${HOME}/.config/home-manager/$config_file"; 
   done
+}
 
-  # clean temp configration files
-  rm -rf $HOME/temp
+# Define a function named "main"
+main() {
+  clone_repo
+  config_nix
+  install_home_manager
+  user_settings
 
-  # activate direnv
-  echo 'eval "$(direnv hook bash)"' >> $HOME/.bashrc
+  cd $SOURCEDIR/ && home-manager switch -b backup --flake .#$USER   # cd $SOURCEDIR/ && git add . && git commit -m "update configuration files"
+
+  write_config
+  echo 'eval "$(direnv hook bash)"' >> $HOME/.bashrc   # activate direnv
   # change to the following lines when the the use of nix-direnv is intended, and the original .bashrc will be replaced with a symbolic link
   # echo 'eval "$(direnv hook bash)"' | sudo tee -a $(readlink "$HOME/.bashrc")
 
-  # restart nix daemon and return the used credentials
-  sudo systemctl restart nix-daemon
+  sudo systemctl restart nix-daemon   # restart nix daemon and return the used credentials
   output_credentials
 }
 
