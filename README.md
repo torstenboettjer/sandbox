@@ -4,12 +4,12 @@ The operator sandbox addresses operation engineers with an environment for the d
 
 ## Target System
 
-The development of the most cloud controller and orchestrators is derived from the idea that every system can be virtualized. While this has proven to be not true in the context of enterprise IT, technologies have evolved that put even the need at question. E.g. the nix package manager enables engineers to compose operating systems declaratively, without abstracting the runtime environment, network and storage interfaces. Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. Configuration scripts trigger provisioning processes for systems that host modern containers and traditional enterprise applications. A strip down version of an the operating system that includes only the most essential components for basic functionality is extended with two main components:
+The development of the most cloud controller and orchestrators is derived from the idea that every system can be virtualized. While this has proven to be not true in the context of enterprise IT, technologies have evolved that put even the need at question. E.g. the nix package manager enables engineers to compose operating systems declaratively, without abstracting the runtime environment, network and storage interfaces. A programmable package manager allows engineers to assemble purpose build operating systems and store the configuratons in a git repository to centralize management tasks, to track and roll back system configurations. A strip down version of an the operating system that includes only the most essential components for basic functionality is extended with two main components:
 
 * **[Nix Package Manager](https://nixos.org/)**: A configuration manager that enables reproducible and declarative builds of a server.
 * **[Process-compose](https://f1bonacc1.github.io/process-compose/)**: Command-line utility to facilitate the management of processes without further abstraction.
 
-The programmable package manager allows engineers to assemble purpose build operating systems and store the configuratons in a git repository to centralize management tasks, to track and roll back system configurations. 
+Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. Configuration scripts trigger provisioning processes for systems that host modern containers and traditional enterprise applications. These scripts remain separated from topology definitions and produce artifacts that run on as dedicated server or a component of a distributed system.
 
 ## Design and Optimization
 
