@@ -11,7 +11,7 @@ The development of modern cloud controllers is derived from the idea that every 
 * **[Nix Package Manager](https://nixos.org/)**: A configuration manager that enables reproducible and declarative builds of a server.
 * **[Process-compose](https://f1bonacc1.github.io/process-compose/)**: Command-line utility to facilitate the management of processes without further abstraction.
 
-Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. Configuration scripts trigger provisioning processes for systems that host modern containers and traditional enterprise applications. These scripts remain separated from topology definitions and produce artifacts that run on as dedicated server or a component of a distributed system.
+Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. Configuration scripts trigger provisioning processes for systems that host modern containers and traditional enterprise applications. These scripts remain separated from topology definitions and produce artifacts that can run as dedicated server or as component of a distributed system.
 
 ## Design and Optimization
 
