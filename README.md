@@ -11,7 +11,7 @@ The development of cloud controller were derived from the idea that every system
 
 The programmable package manager allows engineers to assemble purpose build operating systems and store the configuratons in a git repository to centralize management tasks, to track and roll back system configurations. 
 
-## System Design and Optimization
+## Design and Optimization
 
 The operator sandbox is meant to support engineers developing and sharing configurations. It runs on a local desktop or an a server. Given the flexibility of the nix package manager, there are more than one possible configuration for such a development environment. This proposal is focussed on ease of use and combines three tools:
 
