@@ -9,7 +9,7 @@ A design neutral delivery model is based on system templates to trigger changes 
 The sandbox is using Nix, which provides access to a [large collection of packages](https://search.nixos.org/packages). Engineers need a git account and access to a virtual machine, running Linux. The simplest option is the subsystem provided with [Windows](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS](https://chromeos.dev/en/linux). The recommendation for the size is *80 to 120GB* but this varies with the use case. The package mananger is installed via command line interface. MacOS can use [nix-darwin](https://github.com/LnL7/nix-darwin) community project to arrive at the same point. 
 
 ```sh
-sh <(curl -L https://nixos.org/nix/install) --daemon --yes
+curl -sSf -L https://install.lix.systems/lix | sh -s -- install --yes
 ```
 
 Nix provides features that address requirements like reproducibility, isolation, and atomic upgrades beyond the scope of a cloud controller and is therefor a solid foundation for the development of hybrid services. Key features are ensuring a consistent package deployments through precise specification of dependencies and build instructions. To activate the package manager after installation, the shell session requires a restart.
