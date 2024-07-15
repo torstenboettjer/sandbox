@@ -20,7 +20,7 @@ exec bash && source ./.bashrc
 
 Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. Since than the open source initiative has grown to nearly a thousand developers and has gathered several thousands of contributors. The nix language allows engineers to manage dependencies on operating system level, which is the foundation to trigger provisioning processes that either configure dedicated server or produce artifacts for a cloud deployment. Storing declaration files in a repository together with the application code fosters the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations.
 
-### Blueprint
+### Foundation
 
 The sandbox is build with a layered architecture in mind, separating development tools from platform components and service configurations. It avoids any dependencies on platform orchestrators or packaging mechansims and does not touch on the topology design. This helps to re-introduces the necessary seperation of duties for technology and service operator and allows enterprises to retain control over the technology platform even when is is partially outsources to a managed service- or a cloud provider. Given the flexibility of a programmable operating system, there are more than one possible toolset to provide such an environment. This proposal is focussed on ease of use and combines the following three tools:
 
