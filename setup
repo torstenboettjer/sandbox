@@ -17,29 +17,41 @@ output_credentials() {
   echo "Home manager is now active, using the following configuration:\nLinux user: ${USER}\nGitHub user: ${NME}\nGitHub eMail: ${EML}"
 }
 
-# Function to configure the nix environment
-config_nix() {
+# Function to set the user information in the nix config files
+create_config() {
+  echo "creating config ..."
+
+  # override placeholder in home manager files
+  sed -i "s/_USRNAME_/${USER}/g" $SOURCEDIR/home.nix 
+  sed -i "s/_GHBNAME_/${NME}/g" $SOURCEDIR/home.nix
+  sed -i "s/_GHBMAIL_/${EML}/g" $SOURCEDIR/home.nix 
+  sed -i "s/_SYSTEM_/${PLTFRM}/g" $SOURCEDIR/flake.nix
+
+  # create a new home manager generation
+  cd $SOURCEDIR/ && home-manager switch -b backup --flake .#$USER
+}
+
+install_lix() {
+  echo "installing lix ..."
+
+  curl -sSf -L https://install.lix.systems/lix | sh -s -- install --no-confirm
+  . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+}
+
+# Function to install home-manager
+install_home_manager() {
+  echo "installing home manager ..."
+
   # activating experimental features
   echo "experimental-features = nix-command flakes\ntrusted-users = root ${USER}" | sudo tee -a /etc/nix/nix.conf
   
   # add the home-manager package channel
   nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
   
-  # updte the home manager channel
+  # update the home manager channel
   nix-channel --update
-} 
 
-# Function to set the user information in the nix config files
-user_settings() {
-  sed -i "s/_USRNAME_/${USER}/g" $SOURCEDIR/home.nix 
-  sed -i "s/_GHBNAME_/${NME}/g" $SOURCEDIR/home.nix
-  sed -i "s/_GHBMAIL_/${EML}/g" $SOURCEDIR/home.nix 
-  sed -i "s/_SYSTEM_/${PLTFRM}/g" $SOURCEDIR/flake.nix
-}
-
-# Function to install home-manager
-install_home_manager() {
-  # create the first home-manager generation
+# create the first home-manager generation
   nix-shell '<home-manager>' -A install
 
   # add the nix path to `.bashrc`
@@ -47,6 +59,8 @@ install_home_manager() {
 }
 
 clone_repo() {
+  echo "cloning home manager configuration ..."
+
   # clone the default home-manager configuration
   nix-shell -p gh --run "mkdir $HOME/temp/
     gh auth login -h github.com -s user && \
@@ -64,6 +78,8 @@ clone_repo() {
 }
 
 write_config() {
+  echo "writing home manager ..."
+
   # create symbolic links to the configuration files
   for config_file in home.nix flake.nix; do
     config_path="${HOME}/.config/home-manager/$config_file"
@@ -77,19 +93,22 @@ write_config() {
   done
 }
 
-# Define a function named "main"
-main() {
-  clone_repo
-  config_nix
-  install_home_manager
-  user_settings
+activate_direnv() {
+  echo "activating direnv ..."
 
-  cd $SOURCEDIR/ && home-manager switch -b backup --flake .#$USER
-  
-  write_config
   echo 'eval "$(direnv hook bash)"' >> $HOME/.bashrc   # activate direnv
   # echo 'eval "$(direnv hook bash)"' | sudo tee -a $(readlink "$HOME/.bashrc") # alternative for nix-direnv
   sudo systemctl restart nix-daemon   # restart nix daemon and return the used credentials
+}
+
+# Define a function named "main"
+main() {
+  install_lix
+  clone_repo
+  install_home_manager
+  create_config
+  write_config
+  activate_direnv
   output_credentials
 }
 
