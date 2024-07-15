@@ -18,13 +18,13 @@ Nix provides features that address requirements like reproducibility, isolation,
 exec bash && source ./.bashrc
 ```
 
-Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. Since than the open source initiative has grown to nearly a thousand developers and has gathered several thousands of contributors. The nix language allows engineers to manage dependencies on operating system level, which is the foundation to trigger provisioning processes that either configure dedicated server or produce artifacts for a cloud deployment.
+Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. Since than the open source initiative has grown to nearly a thousand developers and has gathered several thousands of contributors. The nix language allows engineers to manage dependencies on operating system level, which is the foundation to trigger provisioning processes that either configure dedicated server or produce artifacts for a cloud deployment. Storing declaration files in a repository together with the application code fosters the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations.
 
 ### Service Configuration
 
 The sandbox is build with a layered architecture in mind, separating development tools from platform components and service configurations. It avoids any dependencies on platform orchestrators or packaging mechansims and does not touch on the topology design. This helps to re-introduces the necessary seperation of duties for technology and service operator and allows enterprises to retain control over the technology platform even when is is partially outsources to a managed service- or a cloud provider. Given the flexibility of a programmable operating system, there are more than one possible toolset to provide such an environment. This proposal is focussed on ease of use and combines the following three tools:
 
-![Alt text](./img/techStack.drawio.svg)
+![High-Level Architecture for the Operator Sandbox](./img/techStack.drawio.svg)
 
 A standard toolset in system engineering is key for long term quality and maintainability for system administrators. Home-Manager is used to define a standard set of engineering tools accross the organization, direnv automatically loads a set platform components for project related work and devenv.sh adds the service configuration that can vary according to the lifecycle stage and between individuals or teams contributing to a project. 
 
@@ -38,7 +38,7 @@ The [setup script](./setup) uses Github for replication and contains some common
 curl -L https://raw.githubusercontent.com/hcops/sandbox/main/setup | sh -s -- <x86_64-linux or aarch64-linux>
 ```
 
-The default toolset is defined in the [home.nix](./home.nix) file under packages. Beside the development tools it also sets up direnv and devenv.sh. Independent from the application layer, the system layer is defined in the [flake.nix](./flake.nix). Flakes are still classified as experimental feature in Nix, a respective flag is appended to `/etc/nix/nix.conf`. It should be mentioned that there are others options defining a standardized set of tools and services, e.g. [Flakey](https://github.com/lf-/flakey-profile), which provides less automation but more control. Storing declaration files in one repository together with the application code fosters the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations. 
+The default toolset is defined in the [home.nix](./home.nix) file under *home.packages*. Beside the development tools it triggers the deployment of the downstream tools direnv and devenv.sh. The system layer is defined independent from the application layer, in [flake.nix](./flake.nix). This allows to run the same configuration on different host systems. Flakes are still classified as experimental feature, a respective flag is appended to `/etc/nix/nix.conf`. It should be mentioned that there are alternatives to define a default set of tools and services in nix, e.g. [Flakey](https://github.com/lf-/flakey-profile), which provides less automation but more control.  
 
 ### Platform Components
 
