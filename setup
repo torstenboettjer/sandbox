@@ -12,6 +12,12 @@ strip_quotes() {
   echo "$1" | sed -e 's/^"//' -e 's/"$//' -e "s/^'//" -e "s/'$//"
 }
 
+extract_system() {
+  system_info=$(nix-shell -p nix-info --run "nix-info -m" | grep 'system:' | awk '{print $3}')
+  str=${system_info//\"/}
+  str=${str//\`/}
+}
+
 # Function to output the used credentials
 output_credentials() {
   echo "Home manager is now active, using the following configuration:\nLinux user: ${USER}\nGitHub user: ${NME}\nGitHub eMail: ${EML}"
