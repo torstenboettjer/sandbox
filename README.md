@@ -23,23 +23,19 @@ exec bash && source ./.bashrc
 
 Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. Configuration scripts trigger provisioning processes for systems that host modern containers and traditional enterprise applications. The language employed for system configuration allows engineers to manage dependencies on operating system level and the process composer enables them to orchestrate services on mutable hosts. Configuration files can be used to define dedicated server or produce artifacts that run as a node in a distributed system.
 
-### Toolset
+### Service configuration
 
-The operator sandbox is meant to support engineers developing and sharing configurations. It runs on a local desktop or an a server. Given the flexibility of the nix package manager, there are more than one possible configuration for such an environment. This proposal is focussed on ease of use and combines three tools:
+The sandbox is build with a layered architecture in mind, separating development tools from platform components and service configurations. It avoids any dependencies on platform tools like orchestrator or packaging. It does not touch on the topology design, what helps to re-introduces the necessary seperation of duties for technology and service management. Given the flexibility of the nix package manager, there are more than one possible configuration for such an environment. This proposal is focussed on ease of use and combines three tools:
 
 ![Alt text](./img/techStack.drawio.svg)
 
-The sandbox is build with a layered architecture in mind, separating development tools from platform components and service configurations. It avoids any dependencies on platform tools like orchestrator or packaging. It does not touch on the topology design, what helps to re-introduces the necessary seperation of duties for technology and service management. 
+A standard toolset in system engineering is key for long term quality and maintainability for system administrators. The [Home-Manager](https://nix-community.github.io/home-manager/) defines user environments that provide the look and feel for an engineers accross Linux machines. Replicating the configuration via git administrators rely on the same set of tools, regardless where they login. Organizations use the home manager to define a default configuration that is confirmed by security, compliance and purchasing. 
 
 * **[Home-manager](https://nixos.wiki/wiki/Home_Manager)**: A nix extension that pre-configures user environments with the Nix package manager and allows teams or organizations to define a standard toolset.
 * **[Direnv](https://direnv.net/)**: A shell extension to load and unload system software and configurations automatically, moving in and out a directory, which enables system engineers to provide purpose build systems for multiple projects.
 * **[Devenv.sh](https://devenv.sh/)**: A configuration tool that allows engineers to define development environments declaratively by toggling basic options for nix and process-compose.
 
-Storing declaration files in one repository together with the application code fosters the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations. 
-
-### System Configuration
-
-A standard toolset in system engineering is key for long term quality and maintainability for system administrators. The [Home-Manager](https://nix-community.github.io/home-manager/) defines user environments that provide the look and feel for an engineers accross Linux machines. Replicating the configuration via git administrators rely on the same set of tools, regardless where they login. Organizations use the home manager to define a default configuration that is confirmed by security, compliance and purchasing. The [example script](./setup) uses Github for replication and contains some basic open source tools like VS-Code, gh and jq to be deployed on either a `x86_64-linux` or `aarch64-linux` based Chromebooks. 
+Storing declaration files in one repository together with the application code fosters the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations. The [setup script](./setup) uses Github for replication and contains some basic open source tools like VS-Code, gh and jq to be deployed on either a `x86_64-linux` or `aarch64-linux` based Chromebooks. 
 
 ```sh
 curl -L https://raw.githubusercontent.com/hcops/sandbox/main/setup | sh -s -- <x86_64-linux or aarch64-linux>
