@@ -20,7 +20,7 @@ exec bash && source ./.bashrc
 
 Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. Since than the open source initiative has grown to nearly a thousand developers and has gathered several thousands of contributors. The nix language allows engineers to manage dependencies on operating system level, which is the foundation to trigger provisioning processes that either configure dedicated server or produce artifacts for a cloud deployment. Storing declaration files in a repository together with the application code fosters the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations.
 
-### Service Configuration
+### Sandbox Composition
 
 The sandbox is build with a layered architecture in mind, separating development tools from platform components and service configurations. It avoids any dependencies on platform orchestrators or packaging mechansims and does not touch on the topology design. This helps to re-introduces the necessary seperation of duties for technology and service operator and allows enterprises to retain control over the technology platform even when is is partially outsources to a managed service- or a cloud provider. Given the flexibility of a programmable operating system, there are more than one possible toolset to provide such an environment. This proposal is focussed on ease of use and combines the following three tools:
 
@@ -52,7 +52,7 @@ direnv allow
 
 Files ending on *.nix are activated by appending the use command to a environment file inside a project directory. Direnv automatically reads files called default.nix or shell.nix, what might be usefull to configure the appeearance of the shell and add tools like [starship](https://starship.rs/). The 'allow' flag authorizes direnv to automatically load and unload environment variables, when the directory is changed. It checks for the existence of a .envrc file and if the file exists, the defined variables are captured and made available in the current shell.  
 
-### Project Delivery
+### Service Configuration
 
 Devenv is a tool that leverages Nix to create reproducible development environments, it is an extension of the Nix ecosystem, tailored for development workflows. A development environment is defined by creating a directory, setting up a git repository, and sharing the repository with other developers via Github.
 
