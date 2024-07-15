@@ -2,7 +2,7 @@
 
 The operator sandbox addresses operation engineers with an environment for the design and optimization of systems that should be migrated to a hybrid cloud. Cloud engineers usually employ a combination of applications like Terraform, Ansible and Kubernetes to automate system configurations, topology designs and container deployments. Yet configuration management systems, infrastructure-as-code and container platforms overlap significantly in functionality, these tools were developed with a different platform design in mind but serve a similar purpose. The focus is merely on provisioning and deployment automation not on process automation for operators. This works well, when all applications follow cloud-native design patterns and the entire platform is operated by a single provider. It rises complexity, when service operator manage large quantities of applications that do not adhere to a common design standard and when only a subset of an entire software portfolio can be migrated for technical, commercial or regulatory reasons. With code interpreters that do not separate system definitions and execution instructions, a separation of duties between design, implementation and operation, required to scale organizations with technology specialists is hardly possible. And a division between command and control, required to ensure regulatory compliance, security and commercial justification is very doubtful. The benefits of infrastructure as code are out of question, but a one-size-fits-all approach doesn't appear feasible in an enterprise environment. A integrated toolchain is required that delivers on the promise of continuous integrations and deployments by sharing system definitions through a common datamodel and separating execution modules along the delivery milestones like operational readiness, fulfillment and assurance. This sandbox adresses the first step and enables engineers to write code that ensures operational readiness without prescribing how and where the service will run.
 
-## Target System
+## Host System
 
 A application neutral delivery model should be based on system templates that trigger to changes match the topology and the lifecycle of an application without prescribing specific communication patterns, packaging mechanisms or orchestration services. The development of cloud controllers was originally derived from the idea that every system can be virtualized. Nevertheless, today evolving technologies raise the question, whether this is still the only way to deliver programmable infrastructure. The package managers like [Nix](https://github.com/NixOS/nix), [Guix](https://guix.gnu.org/) or [Lix](https://lix.systems/) enable engineers to compose operating systems declaratively, without abstracting the runtime environment, network and storage interfaces. A functional prgramming language allows to write templates that enable engineering teams to provide purpose build operating systems. Distributing configuratons via git allows to centralize management tasks, to track and roll back system configurations. For the sandbox, the foundation is a strip down version of the operating system that covers the most essential components for basic functionality and is extended with two main components:
 
@@ -23,7 +23,7 @@ exec bash && source ./.bashrc
 
 Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. Configuration scripts trigger provisioning processes for systems that host modern containers and traditional enterprise applications. The language employed for system configurations and provisioning scripts should not prevent engineers from managing dependencies on operating system level or orchestrating services on mutable hosts. These scripts remain separated from topology definitions and produce artifacts that can run as dedicated server or as component of a distributed system.
 
-## Design and Optimization
+## Architecture
 
 The operator sandbox is meant to support engineers developing and sharing configurations. It runs on a local desktop or an a server. Given the flexibility of the nix package manager, there are more than one possible configuration for such an environment. This proposal is focussed on ease of use and combines three tools:
 
@@ -37,7 +37,7 @@ The sandbox is build with a layered architecture in mind, separating development
 
 Storing declaration files in one repository together with the application code fosters the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations. 
 
-### Tools and Services
+### System Configuration
 
 A standard toolset in system engineering is key for long term quality and maintainability for system administrators. The [Home-Manager](https://nix-community.github.io/home-manager/) defines user environments that provide the look and feel for an engineers accross Linux machines. Replicating the configuration via git administrators rely on the same set of tools, regardless where they login. Organizations use the home manager to define a default configuration that is confirmed by security, compliance and purchasing. The [example script](./setup) uses Github for replication and contains some basic open source tools like VS-Code, gh and jq to be deployed on either a `x86_64-linux` or `aarch64-linux` based Chromebooks. 
 
@@ -59,7 +59,7 @@ direnv allow
 
 Files ending on *.nix are activated by appending the use command to a environment file inside a project directory. Direnv automatically reads files called default.nix or shell.nix, what might be usefull to configure the appeearance of the shell and add tools like [starship](https://starship.rs/). The 'allow' flag authorizes direnv to automatically load and unload environment variables, when the directory is changed. It checks for the existence of a .envrc file and if the file exists, the defined variables are captured and made available in the current shell.  
 
-### Service Configuration
+### Service Configurations
 
 Devenv is a tool that leverages Nix to create reproducible development environments, it is an extension of the Nix ecosystem, tailored for development workflows. A development environment is defined by creating a directory, setting up a git repository, and sharing the repository with other developers via Github.
 
