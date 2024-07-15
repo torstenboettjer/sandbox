@@ -31,6 +31,13 @@ create_config() {
   cd $SOURCEDIR/ && home-manager switch -b backup --flake .#$USER
 }
 
+install_lix() {
+  echo "installing lix ..."
+
+  curl -sSf -L https://install.lix.systems/lix | sh -s -- install --no-confirm
+  . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+}
+
 # Function to install home-manager
 install_home_manager() {
   echo "installing home manager ..."
@@ -96,7 +103,7 @@ activate_direnv() {
 
 # Define a function named "main"
 main() {
-  . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh`
+  install_lix
   clone_repo
   install_home_manager
   create_config
