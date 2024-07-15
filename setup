@@ -17,8 +17,20 @@ output_credentials() {
   echo "Home manager is now active, using the following configuration:\nLinux user: ${USER}\nGitHub user: ${NME}\nGitHub eMail: ${EML}"
 }
 
-# Function to configure the nix environment
-config_nix() {
+# Function to set the user information in the nix config files
+create_config() {
+  # override placeholder in home manager files
+  sed -i "s/_USRNAME_/${USER}/g" $SOURCEDIR/home.nix 
+  sed -i "s/_GHBNAME_/${NME}/g" $SOURCEDIR/home.nix
+  sed -i "s/_GHBMAIL_/${EML}/g" $SOURCEDIR/home.nix 
+  sed -i "s/_SYSTEM_/${PLTFRM}/g" $SOURCEDIR/flake.nix
+
+  # create a new home manager generation
+  cd $SOURCEDIR/ && home-manager switch -b backup --flake .#$USER
+}
+
+# Function to install home-manager
+install_home_manager() {
   # activating experimental features
   echo "experimental-features = nix-command flakes\ntrusted-users = root ${USER}" | sudo tee -a /etc/nix/nix.conf
   
@@ -27,19 +39,8 @@ config_nix() {
   
   # updte the home manager channel
   nix-channel --update
-} 
 
-# Function to set the user information in the nix config files
-user_settings() {
-  sed -i "s/_USRNAME_/${USER}/g" $SOURCEDIR/home.nix 
-  sed -i "s/_GHBNAME_/${NME}/g" $SOURCEDIR/home.nix
-  sed -i "s/_GHBMAIL_/${EML}/g" $SOURCEDIR/home.nix 
-  sed -i "s/_SYSTEM_/${PLTFRM}/g" $SOURCEDIR/flake.nix
-}
-
-# Function to install home-manager
-install_home_manager() {
-  # create the first home-manager generation
+# create the first home-manager generation
   nix-shell '<home-manager>' -A install
 
   # add the nix path to `.bashrc`
@@ -77,19 +78,19 @@ write_config() {
   done
 }
 
-# Define a function named "main"
-main() {
-  clone_repo
-  config_nix
-  install_home_manager
-  user_settings
-
-  cd $SOURCEDIR/ && home-manager switch -b backup --flake .#$USER
-  
-  write_config
+activate_direnv() {
   echo 'eval "$(direnv hook bash)"' >> $HOME/.bashrc   # activate direnv
   # echo 'eval "$(direnv hook bash)"' | sudo tee -a $(readlink "$HOME/.bashrc") # alternative for nix-direnv
   sudo systemctl restart nix-daemon   # restart nix daemon and return the used credentials
+}
+
+# Define a function named "main"
+main() {
+  clone_repo
+  install_home_manager
+  create_config
+  write_config
+  activate_direnv
   output_credentials
 }
 
