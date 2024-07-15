@@ -23,7 +23,7 @@ exec bash && source ./.bashrc
 
 Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. Configuration scripts trigger provisioning processes for systems that host modern containers and traditional enterprise applications. The language employed for system configurations and provisioning scripts should not prevent engineers from managing dependencies on operating system level or orchestrating services on mutable hosts. These scripts remain separated from topology definitions and produce artifacts that can run as dedicated server or as component of a distributed system.
 
-## Architecture
+### Toolset
 
 The operator sandbox is meant to support engineers developing and sharing configurations. It runs on a local desktop or an a server. Given the flexibility of the nix package manager, there are more than one possible configuration for such an environment. This proposal is focussed on ease of use and combines three tools:
 
