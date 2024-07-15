@@ -9,6 +9,18 @@ A application neutral delivery model should be based on system templates that tr
 * **[Nix Package Manager](https://nixos.org/)**: A configuration manager that enables reproducible and declarative builds of a server.
 * **[Process-compose](https://f1bonacc1.github.io/process-compose/)**: Command-line utility to facilitate the management of processes without further abstraction.
 
+Engineers need a git account and access to a virtual machine, running Linux. The simplest option is the subsystem provided with [Windows](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS](https://chromeos.dev/en/linux). The recommendation for the size is *80 to 120GB* but this varies with the use case. The package mananger is installed via command line interface. MacOS can use [nix-darwin](https://github.com/LnL7/nix-darwin) community project to arrive at the same point. 
+
+```sh
+sh <(curl -L https://nixos.org/nix/install) --daemon --yes
+```
+
+Nix enables functional deployments and provides features like reproducibility, isolation, and atomic upgrades. Key features is ensuring a consitent package deployments through precise specification of dependencies and build instructions. To activate the package manager, a reference is added to the shell configuration (e.g. ~/.bashrc), hence after the installation, the shell session requires a restart.
+
+```sh
+exec bash && source ./.bashrc
+```
+
 Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. Configuration scripts trigger provisioning processes for systems that host modern containers and traditional enterprise applications. The language employed for system configurations and provisioning scripts should not prevent engineers from managing dependencies on operating system level or orchestrating services on mutable hosts. These scripts remain separated from topology definitions and produce artifacts that can run as dedicated server or as component of a distributed system.
 
 ## Design and Optimization
@@ -23,19 +35,7 @@ The sandbox is build with a layered architecture in mind, separating development
 * **[Direnv](https://direnv.net/)**: A shell extension to load and unload system software and configurations automatically, moving in and out a directory, which enables system engineers to provide purpose build systems for multiple projects.
 * **[Devenv.sh](https://devenv.sh/)**: A configuration tool that allows engineers to define development environments declaratively by toggling basic options for nix and process-compose.
 
-Storing declaration files in one repository together with the application code fosters the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations. Engineers need a git account and access to a virtual machine, running Linux. The simplest option is the subsystem provided with [Windows](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS](https://chromeos.dev/en/linux). The recommendation for the size is *80 to 120GB* but this varies with the use case. The package mananger is installed via command line interface. MacOS can use [nix-darwin](https://github.com/LnL7/nix-darwin) community project to arrive at the same point. 
-
-```sh
-sh <(curl -L https://nixos.org/nix/install) --daemon --yes
-```
-
-Nix enables functional deployments and provides features like reproducibility, isolation, and atomic upgrades. Key features is ensuring a consitent package deployments through precise specification of dependencies and build instructions. To activate the package manager, a reference is added to the shell configuration (e.g. ~/.bashrc), hence after the installation, the shell session requires a restart.
-
-```sh
-exec bash && source ./.bashrc
-```
-
-After installing the package manager, building a sandbox is done in three step process: 
+Storing declaration files in one repository together with the application code fosters the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations. 
 
 ### Tools and Services
 
