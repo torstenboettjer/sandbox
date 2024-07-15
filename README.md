@@ -23,7 +23,7 @@ exec bash && source ./.bashrc
 
 Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. Configuration scripts trigger provisioning processes for systems that host modern containers and traditional enterprise applications. The language employed for system configuration allows engineers to manage dependencies on operating system level and the process composer enables them to orchestrate services on mutable hosts. Configuration files can be used to define dedicated server or produce artifacts that run as a node in a distributed system.
 
-### Service configuration
+### Service Configuration
 
 The sandbox is build with a layered architecture in mind, separating development tools from platform components and service configurations. It avoids any dependencies on platform tools like orchestrator or packaging. It does not touch on the topology design, what helps to re-introduces the necessary seperation of duties for technology and service management. Given the flexibility of the nix package manager, there are more than one possible configuration for such an environment. This proposal is focussed on ease of use and combines three tools:
 
@@ -55,7 +55,7 @@ direnv allow
 
 Files ending on *.nix are activated by appending the use command to a environment file inside a project directory. Direnv automatically reads files called default.nix or shell.nix, what might be usefull to configure the appeearance of the shell and add tools like [starship](https://starship.rs/). The 'allow' flag authorizes direnv to automatically load and unload environment variables, when the directory is changed. It checks for the existence of a .envrc file and if the file exists, the defined variables are captured and made available in the current shell.  
 
-### Service Configurations
+### Project Delivery
 
 Devenv is a tool that leverages Nix to create reproducible development environments, it is an extension of the Nix ecosystem, tailored for development workflows. A development environment is defined by creating a directory, setting up a git repository, and sharing the repository with other developers via Github.
 
