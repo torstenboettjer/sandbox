@@ -21,7 +21,7 @@ Nix enables functional deployments and provides features like reproducibility, i
 exec bash && source ./.bashrc
 ```
 
-Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. Configuration scripts trigger provisioning processes for systems that host modern containers and traditional enterprise applications. The language employed for system configurations and provisioning scripts allows engineers to manage dependencies on operating system level and the process composer enables them to orchestrate services on mutable hosts. The sandbox create configuration files for a system that runs as dedicated server or produce artifacts that run as a node in a distributed system.
+Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. Configuration scripts trigger provisioning processes for systems that host modern containers and traditional enterprise applications. The language employed for system configuration allows engineers to manage dependencies on operating system level and the process composer enables them to orchestrate services on mutable hosts. Configuration files can be used to define dedicated server or produce artifacts that run as a node in a distributed system.
 
 ### Toolset
 
