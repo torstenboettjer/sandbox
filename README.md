@@ -18,7 +18,7 @@ Nix provides features that address requirements like reproducibility, isolation,
 exec bash && source ./.bashrc
 ```
 
-Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. Since than the open source initiative has grown to nearly a thousand developers and has gathered several thousands of contributors. The nix language allows engineers to manage dependencies on operating system level, which is the foundation to trigger provisioning processes that either configure dedicated server or produce artifacts for cloud deployments.
+Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. Since than the open source initiative has grown to nearly a thousand developers and has gathered several thousands of contributors. The nix language allows engineers to manage dependencies on operating system level, which is the foundation to trigger provisioning processes that either configure dedicated server or produce artifacts for a cloud deployment.
 
 ### Service Configuration
 
