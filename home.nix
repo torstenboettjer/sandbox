@@ -24,13 +24,13 @@
     gh         # https://cli.github.com/manual/
     gnumake    # https://www.gnu.org/software/make/manual/make.html
     vscode     # https://code.visualstudio.com/
+    # lunarvim   # https://www.lunarvim.org/
+    # zed-editor # https://zed.dev/
     direnv     # https://direnv.net/
     devenv     # https://devenv.sh/
     jq         # https://jqlang.github.io/jq/
     curl       # https://curl.se/
-    lunarvim   # https://www.lunarvim.org/
     fzf        # https://github.com/junegunn/fzf
-    # zed-editor # https://zed.dev/
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
