@@ -86,6 +86,7 @@ activate_direnv() {
 
 # Define a function named "main"
 main() {
+  . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh`
   clone_repo
   install_home_manager
   create_config
