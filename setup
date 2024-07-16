@@ -4,7 +4,7 @@
 set -e
 
 # set target directory for home manager configuration
-SOURCEDIR=$HOME/sandbox
+SANDBOX=$HOME/sandbox
 
 # Function to strip surrounding quotes from a string
 strip_quotes() {
@@ -12,9 +12,9 @@ strip_quotes() {
 }
 
 extract_system() {
-        system_info=$(nix-shell -p nix-info --run "nix-info -m" | grep 'system:' | awk '{print $3}')
-        system_info=${system_info//\"/}
-        SYSINF=${system_info//\`/}
+  SYSINF=$(nix-shell -p nix-info --run "nix-info -m" | grep 'system:' | awk '{print $3}')
+  SYSINF=${SYSINF//\"/}
+  SYSINF=${SYSINF//\`/}
 }
 
 # Function to output the used credentials
@@ -30,13 +30,13 @@ create_config() {
   extract_system
   
   # override placeholder in home manager files
-  sed -i "s/_USRNAME_/${USER}/g" $SOURCEDIR/home.nix 
-  sed -i "s/_GHBNAME_/${NME}/g" $SOURCEDIR/home.nix
-  sed -i "s/_GHBMAIL_/${EML}/g" $SOURCEDIR/home.nix 
-  sed -i "s/_SYSTEM_/${SYSINF}/g" $SOURCEDIR/flake.nix
+  sed -i "s/_USRNAME_/${USER}/g" $SANDBOX/home.nix 
+  sed -i "s/_GHBNAME_/${NME}/g" $SANDBOX/home.nix
+  sed -i "s/_GHBMAIL_/${EML}/g" $SANDBOX/home.nix 
+  sed -i "s/_SYSTEM_/${SYSINF}/g" $SANDBOX/flake.nix
 
   # create a new home manager generation
-  cd $SOURCEDIR/ && home-manager switch -b backup --flake .#$USER
+  cd $SANDBOX/ && home-manager switch -b backup --flake .#$USER
 }
 
 install_lix() {
@@ -97,7 +97,7 @@ write_config() {
     else
       echo "${config_file} does not exist, creating ..."
     fi
-    ln -s "${SOURCEDIR}/$config_file" "${HOME}/.config/home-manager/$config_file"; 
+    ln -s "${SANDBOX}/$config_file" "${HOME}/.config/home-manager/$config_file"; 
   done
 }
 
