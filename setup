@@ -118,6 +118,7 @@ main() {
   write_config
   activate_direnv
   output_credentials
+  exec "${SHELL}"
 }
 
 # Call the "main" function with all the command-line arguments
