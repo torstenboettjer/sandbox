@@ -27,7 +27,7 @@ create_config() {
   echo "creating config ..."
 
   # extract system platform from nix
-  retrieve_system
+  extract_system
   
   # override placeholder in home manager files
   sed -i "s/_USRNAME_/${USER}/g" $SOURCEDIR/home.nix 
