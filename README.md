@@ -9,7 +9,7 @@ A design neutral delivery model is based on system templates to trigger changes 
 The sandbox is using Nix, which provides access to a [large collection of packages](https://search.nixos.org/packages). Engineers need a git account and access to a virtual machine, running Linux. The simplest option is the subsystem provided with [Windows](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS](https://chromeos.dev/en/linux). The recommendation for the size is *80 to 120GB* but this varies with the use case. The package mananger is installed via command line interface. MacOS can use [nix-darwin](https://github.com/LnL7/nix-darwin) community project to arrive at the same point. The [setup script](./setup) uses Github for replication and contains some common tools like VS-Code, gh and jq to be deployed on either a `x86_64-linux` or `aarch64-linux` based system. The github client is used to load the default parameter into the configuration. 
 
 ```sh
-curl -L https://raw.githubusercontent.com/hcops/sandbox/main/setup | sh -s -- x86_64-linux
+curl -L https://raw.githubusercontent.com/hcops/sandbox/main/setup | sh -s
 ```
 
 Nix provides features that address requirements like reproducibility, isolation, and atomic upgrades beyond the scope of a cloud controller and is therefor a solid foundation for the development of hybrid services. Key features are ensuring a consistent package deployments through precise specification of dependencies and build instructions. To activate the package manager after installation, the shell session requires a restart.
