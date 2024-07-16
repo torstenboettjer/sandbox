@@ -13,8 +13,8 @@ strip_quotes() {
 
 extract_system() {
   SYSINF=$(nix-shell -p nix-info --run "nix-info -m" | grep 'system:' | awk '{print $3}')
-  SYSINF=${SYSINF//\"/}
-  SYSINF=${SYSINF//\`/}
+  SYSINF=$(echo "$SYSINF" | tr -d '"')
+  SYSINF=$(echo "$SYSINF" | tr -d '`')
 }
 
 # Function to output the used credentials
