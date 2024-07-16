@@ -19,7 +19,7 @@ extract_system() {
 
 # Function to output the used credentials
 output_credentials() {
-  echo "Home manager is now active, using the following configuration:\nLinux user: ${USER}\nGitHub user: ${NME}\nGitHub eMail: ${EML}"
+  echo "The sandbox is installed, using the following configuration:\nSystem: ${SYSINF}\nLinux user: ${USER}\nGitHub user: ${NME}\nGitHub eMail: ${EML}"
 }
 
 # Function to set the user information in the nix config files
