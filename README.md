@@ -26,7 +26,7 @@ exec bash && source ~/.bashrc
 
 MacOS users cannot rely on the convenience of an isolated subsystem but refer to the [nix-darwin](https://github.com/LnL7/nix-darwin) project and arrive at the same point. Alternatively, a virtual maschine on a hypervisor can be considered. Nix provides features that address requirements like reproducibility, isolation, and atomic upgrades withour relying on an orchestrator or a controller. Nix was introduced in 2003 by [Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. It ensures consistent package deployments through specification of package dependencies and build instructions. The supporting community has grown to nearly a thousand developers and has gathered several thousands of contributors. 
 
-### Standard Toolset
+### Engineering Tools
 
 A standard toolset in system engineering is an enabler for long term quality and maintainability of the infrastructure code. In the sandbox it is deployed using **[Home-manager](https://nix-community.github.io/home-manager/)**, a nix extension that configures user environments through the `home.nix` file. Home manager supports two ways of deploying applications, programs and the packages. `programs` is always the prefered method, it refers to modules that install the software and configure system wide features when applicable. The [home manager option search](https://home-manager-options.extranix.com/) provides an overview of available programs.
 ```ǹix
