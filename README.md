@@ -28,7 +28,7 @@ MacOS users cannot rely on the convenience of an isolated subsystem but refer to
 
 ### Standard Tools
 
-A standard toolset in system engineering is an enabler for long term quality and maintainability of the infrastructure code. In the sandbox it is deployed using **[Home-manager](https://nix-community.github.io/home-manager/)**, a nix extension that configures user environments through the [home.nix](./home.nix) file. Software can be found in the Nix [package directory](https://search.nixos.org/packages) added in the *home.packages* section of the onfiguration file. 
+A standard toolset in system engineering is an enabler for long term quality and maintainability of the infrastructure code. In the sandbox it is deployed using **[Home-manager](https://nix-community.github.io/home-manager/)**, a nix extension that configures user environments through the `home.nix` file. Software can be found in the Nix [package directory](https://search.nixos.org/packages) added in the *home.packages* section of the onfiguration file. 
 
 ```nix
   home.packages = with pkgs; [
