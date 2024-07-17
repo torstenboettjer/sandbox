@@ -32,15 +32,14 @@ A standard toolset in system engineering is an enabler for long term quality and
 
 ```nix
   home.packages = with pkgs; [
+    direnv       # https://direnv.net/
+    devenv       # https://devenv.sh/
     gh           # https://cli.github.com/manual/
     gnumake      # https://www.gnu.org/software/make/manual/make.html
     vscode       # https://code.visualstudio.com/
     # lunarvim   # https://www.lunarvim.org/
     # zed-editor # https://zed.dev/
-    direnv       # https://direnv.net/
-    devenv       # https://devenv.sh/
     jq           # https://jqlang.github.io/jq/
-    curl         # https://curl.se/
     fzf          # https://github.com/junegunn/fzf
   ];
   ```
