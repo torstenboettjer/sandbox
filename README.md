@@ -44,20 +44,26 @@ A standard toolset in system engineering is an enabler for long term quality and
   ];
 ```
 
-Home manager is a shell extension, beside loading packages the appearance of the shell can be adjusted, e.g.
-
+Some packages allow fine-tune, e.g. by applying overrides like install the [Nerd Fonts](https://search.nixos.org/packages?channel=unstable&show=nerdfonts&from=0&size=50&sort=relevance&type=packages&query=nerdfonts) only with a limited number of fonts.
 
 ```nix
   home.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+  ];
+```
 
+And home manager allws engineers to write simple shell scripts directly inside th configuration liek adding a command 'my-hello' the shell.
+    # # environment:
+
+```nix
+  home.packages = with pkgs; [
     (writeShellScriptBin "my-hello" ''
       echo "Hello, ${config.home.username}!"
     '')
   ];
 ```
 
-System parameters are defined independently from the applications in [flake.nix](./flake.nix) file. This allows to manage tools independent form the host systems. Flakes are still classified as experimental feature, a respective flag is appended to `/etc/nix/nix.conf`. It should be mentioned that there are alternatives to define a default set of tools and services in nix, e.g. [Flakey](https://github.com/lf-/flakey-profile), which provides less automation but more control.  
+System parameters are defined independently from the shwll configuration in the [flake.nix](./flake.nix) file, so that tools can be managed independent from the host system. Flakes are still classified as experimental feature, a respective flag is appended to `/etc/nix/nix.conf`. It should be mentioned that there are alternatives to define a default set of tools and services in nix, e.g. [Flakey](https://github.com/lf-/flakey-profile), which provides less automation but more control.  
 
 ### Platform Components
 
