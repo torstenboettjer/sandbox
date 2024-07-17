@@ -8,7 +8,7 @@ A hybrid platform uses cloud services where appropriate without prescribing a co
 
 ## Development Environment
 
-The sandbox is meant develop and test system templates. A layered architecture addresses deployment workflows, typically found in an enterprise IT organization that separates the definition of development tools from platform components and service configurations. It avoids any dependencies on platform orchestrators or packaging mechansims and does not touch on the topology design. This helps to re-introduces the necessary seperation of duties for technology and service operator and allows enterprises to retain control over the technology platform even when is is partially outsources to a managed service- or a cloud provider. Given the flexibility of a programmable operating system, there are more than one possible toolset to provide such an environment.
+The sandbox is a development and execution environment for system templates. Deployment workflows are enabled with layered architecture that addresses a separation of concerns, typically found in enterprise IT organizations. Development tools are employed independently from platform components and service configurations. Engineers avoid implicit dependencies on platform orchestrators or packaging mechansims. This allows service operator to retain control over the technology platform even if it is partially outsourced. 
 
 ![High-Level Architecture for the Operator Sandbox](./img/techStack.drawio.svg)
 
