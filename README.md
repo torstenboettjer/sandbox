@@ -24,13 +24,29 @@ The setup script contains a default toolset with VS-Code, gh and jq already and 
 exec bash && source ~/.bashrc
 ```
 
-MacOS users cannot rely on the convenience of an isolated subsystem but refer to the [nix-darwin](https://github.com/LnL7/nix-darwin) project and arrive at the same point. Alternatively, a virtual maschine on a hypervisor can be considered. Nix provides features that address requirements like reproducibility, isolation, and atomic upgrades withour relying on an orchestrator or a controller. Nix was introduced in [2003 by Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. It ensures consistent package deployments through specification of package dependencies and build instructions. The supporting community has grown to nearly a thousand developers and has gathered several thousands of contributors. System configurations are simplified with hundrets of thousands of [prdefined packages](https://search.nixos.org/packages). 
+MacOS users cannot rely on the convenience of an isolated subsystem but refer to the [nix-darwin](https://github.com/LnL7/nix-darwin) project and arrive at the same point. Alternatively, a virtual maschine on a hypervisor can be considered. Nix provides features that address requirements like reproducibility, isolation, and atomic upgrades withour relying on an orchestrator or a controller. Nix was introduced in 2003 by [Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. It ensures consistent package deployments through specification of package dependencies and build instructions. The supporting community has grown to nearly a thousand developers and has gathered several thousands of contributors. 
 
 ### Standard Tools
 
-A standard toolset in system engineering is key for long term quality and maintainability for system administrators. **[Home-manager](https://nix-community.github.io/home-manager/)** is a nix extension that pre-configures user environments with the Nix package manager and allows teams or organizations to define a standard toolset. Home-Manager is used to define a standard set of engineering tools accross the organization, direnv automatically loads a set platform components for project related work and devenv.sh adds the service configuration that can vary according to the lifecycle stage and between individuals or teams contributing to a project. 
+A standard toolset in system engineering is an enabler for long term quality and maintainability of the infrastructure code. In the sandbox it is deployed using **[Home-manager](https://nix-community.github.io/home-manager/)**, a nix extension that configures user environments through the [home.nix](./home.nix) file. Software can be found in the Nix [package directory](https://search.nixos.org/packages) added in the *home.packages* section of the onfiguration file. 
 
-The default toolset is defined in the [home.nix](./home.nix) file under *home.packages*. Beside the development tools it triggers the deployment of the downstream tools direnv and devenv.sh. The system layer is defined independent from the application layer, in [flake.nix](./flake.nix). This allows to run the same configuration on different host systems. Flakes are still classified as experimental feature, a respective flag is appended to `/etc/nix/nix.conf`. It should be mentioned that there are alternatives to define a default set of tools and services in nix, e.g. [Flakey](https://github.com/lf-/flakey-profile), which provides less automation but more control.  
+```nix
+  home.packages = with pkgs; [
+    gh           # https://cli.github.com/manual/
+    gnumake      # https://www.gnu.org/software/make/manual/make.html
+    vscode       # https://code.visualstudio.com/
+    # lunarvim   # https://www.lunarvim.org/
+    # zed-editor # https://zed.dev/
+    direnv       # https://direnv.net/
+    devenv       # https://devenv.sh/
+    jq           # https://jqlang.github.io/jq/
+    curl         # https://curl.se/
+    fzf          # https://github.com/junegunn/fzf
+  ];
+  ```
+
+
+Beside the development tools it triggers the deployment of the downstream tools direnv and devenv.sh. The system layer is defined independent from the application layer, in [flake.nix](./flake.nix). This allows to run the same configuration on different host systems. Flakes are still classified as experimental feature, a respective flag is appended to `/etc/nix/nix.conf`. It should be mentioned that there are alternatives to define a default set of tools and services in nix, e.g. [Flakey](https://github.com/lf-/flakey-profile), which provides less automation but more control.  
 
 ### Platform Components
 
