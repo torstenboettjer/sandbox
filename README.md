@@ -42,8 +42,20 @@ A standard toolset in system engineering is an enabler for long term quality and
     jq           # https://jqlang.github.io/jq/
     fzf          # https://github.com/junegunn/fzf
   ];
-  ```
+```
 
+Home manager is a shell extension, beside loading packages the appearance of the shell can be adjusted, e.g.
+
+
+```nix
+  home.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+
+    (writeShellScriptBin "my-hello" ''
+      echo "Hello, ${config.home.username}!"
+    '')
+  ];
+```
 
 System parameters are defined independently from the applications in [flake.nix](./flake.nix) file. This allows to manage tools independent form the host systems. Flakes are still classified as experimental feature, a respective flag is appended to `/etc/nix/nix.conf`. There are alternatives to define a default set of tools and services in nix, e.g. [Flakey](https://github.com/lf-/flakey-profile), which provides less automation but more control.  
 
