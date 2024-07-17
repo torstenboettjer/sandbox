@@ -28,20 +28,30 @@ MacOS users cannot rely on the convenience of an isolated subsystem but refer to
 
 ### Standard Toolset
 
-A standard toolset in system engineering is an enabler for long term quality and maintainability of the infrastructure code. In the sandbox it is deployed using **[Home-manager](https://nix-community.github.io/home-manager/)**, a nix extension to the shell that configures user environments through the `home.nix` file. Software can be found in the Nix [package directory](https://search.nixos.org/packages) added in the *home.packages* section of the onfiguration file. Beside the development tools it triggers the deployment of the downstream tools direnv and devenv.sh. 
+A standard toolset in system engineering is an enabler for long term quality and maintainability of the infrastructure code. In the sandbox it is deployed using **[Home-manager](https://nix-community.github.io/home-manager/)**, a nix extension that configures user environments through the `home.nix` file. Home manager supports two ways of deploying applications, the `programs` and the `home.packages` section. Programs is always the prefered method, it leverages modules to install the software and configure system wide features when applicable. Referencing a application in the home section pulls the software from the Nix [package directory](https://search.nixos.org/packages). 
 
-```nix
+```ǹix
+
   home.packages = with pkgs; [
-    direnv       # https://direnv.net/
     devenv       # https://devenv.sh/
-    gh           # https://cli.github.com/manual/
     gnumake      # https://www.gnu.org/software/make/manual/make.html
-    vscode       # https://code.visualstudio.com/
     # lunarvim   # https://www.lunarvim.org/
     # zed-editor # https://zed.dev/
-    jq           # https://jqlang.github.io/jq/
-    fzf          # https://github.com/junegunn/fzf
   ];
+
+  programs = {
+    direnv.enable = true; # https://direnv.net/
+
+    vscode = {
+      enable = true; # https://code.visualstudio.com/
+      package = pkgs.vscodium;
+      enableUpdateCheck = false;
+    };
+
+    jq.enable = true;     # https://jqlang.github.io/jq/
+    fzf.enable = true;    # https://github.com/junegunn/fzf
+    gh.enable = true;     # https://cli.github.com/manual/
+  };
 ```
 
 Some packages allow fine-tune, e.g. by applying overrides like install the [Nerd Fonts](https://search.nixos.org/packages?channel=unstable&show=nerdfonts&from=0&size=50&sort=relevance&type=packages&query=nerdfonts) only with a limited number of fonts.
@@ -63,7 +73,7 @@ And home manager allws engineers to write simple shell scripts directly inside t
   ];
 ```
 
-System parameters are defined independently from the shwll configuration in the [flake.nix](./flake.nix) file, so that tools can be managed independent from the host system. Flakes are still classified as experimental feature, a respective flag is appended to `/etc/nix/nix.conf`. It should be mentioned that there are alternatives to define a default set of tools and services in nix, e.g. [Flakey](https://github.com/lf-/flakey-profile), which provides less automation but more control.  
+Beside the development tools it triggers the deployment of the downstream tools direnv and devenv.sh. System parameters are defined independently from the shwll configuration in the [flake.nix](./flake.nix) file, so that tools can be managed independent from the host system. Flakes are still classified as experimental feature, a respective flag is appended to `/etc/nix/nix.conf`. It should be mentioned that there are alternatives to define a default set of tools and services in nix, e.g. [Flakey](https://github.com/lf-/flakey-profile), which provides less automation but more control.  
 
 ### Platform Components
 
