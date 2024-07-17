@@ -45,7 +45,8 @@ A standard toolset in system engineering is an enabler for long term quality and
   };
 ```
 
-Referencing a application in the `home.packages` installs the software. Nix packages can bw found int the nix [package directory](https://search.nixos.org/packages). The command `nix-env -qaP` lists of packaes and references the available attributes. Some packages allow fine-tuning, e.g. by applying overrides like install the [Nerd Fonts](https://search.nixos.org/packages?channel=unstable&show=nerdfonts&from=0&size=50&sort=relevance&type=packages&query=nerdfonts) only with a limited number of fonts.
+Referencing a application in the `home.packages` installs the software. Nix packages can be found in the nix [package directory](https://search.nixos.org/packages). The command `nix-env -qaP` lists packages at the command line, incl. the available attributes. Some packages allow fine-tuning, e.g. by applying overrides like the [Nerd Fonts](https://search.nixos.org/packages?channel=unstable&show=nerdfonts&from=0&size=50&sort=relevance&type=packages&query=nerdfonts) package allows to override the default list of fonts. The `override` and `overrideAttrs` functions are typically used with packages that are built from source and have attributes like `src`, `buildInputs`, `makeFlags`, etc.. The home.packages section can also be used to write simple shell scripts inside the configuration like adding a 'my-hello' command.
+
 
 ```ǹix
   home.packages = with pkgs; [
@@ -54,14 +55,9 @@ Referencing a application in the `home.packages` installs the software. Nix pack
     # lunarvim   # https://www.lunarvim.org/
     # zed-editor # https://zed.dev/
 
-    (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-  ];
-```
+    # Override example
+    # (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
-And home manager allws engineers to write simple shell scripts directly inside th configuration liek adding a command 'my-hello' the shell.
-
-```nix
-  home.packages = with pkgs; [
     (writeShellScriptBin "my-hello" ''
       echo "Hello, ${config.home.username}!"
     '')
