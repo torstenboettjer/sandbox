@@ -28,8 +28,7 @@ MacOS users cannot rely on the convenience of an isolated subsystem but refer to
 
 ### Standard Toolset
 
-A standard toolset in system engineering is an enabler for long term quality and maintainability of the infrastructure code. In the sandbox it is deployed using **[Home-manager](https://nix-community.github.io/home-manager/)**, a nix extension that configures user environments through the `home.nix` file. Home manager supports two ways of deploying applications, programs and the packages. `programs` is always the prefered method, it refers to modules that install the software and configure system wide features when applicable. While NixOS user can use the command `nixos-option services` to retrieve a list of available programs, debian user can only refer to the home-manager documentation. 
-
+A standard toolset in system engineering is an enabler for long term quality and maintainability of the infrastructure code. In the sandbox it is deployed using **[Home-manager](https://nix-community.github.io/home-manager/)**, a nix extension that configures user environments through the `home.nix` file. Home manager supports two ways of deploying applications, programs and the packages. `programs` is always the prefered method, it refers to modules that install the software and configure system wide features when applicable. The [home manager option search](https://home-manager-options.extranix.com/) provides an overview of available programs.
 ```ǹix
   programs = {
     direnv.enable = true; # https://direnv.net/
@@ -46,7 +45,7 @@ A standard toolset in system engineering is an enabler for long term quality and
   };
 ```
 
-Referencing a application in the `home.packages` installs the software, pulled from the Nix [package directory](https://search.nixos.org/packages). Some packages allow fine-tune, e.g. by applying overrides like install the [Nerd Fonts](https://search.nixos.org/packages?channel=unstable&show=nerdfonts&from=0&size=50&sort=relevance&type=packages&query=nerdfonts) only with a limited number of fonts.
+Referencing a application in the `home.packages` installs the software. Nix packages can bw found int the nix [package directory](https://search.nixos.org/packages). The command `nix-env -qaP` lists of packaes and references the available attributes. Some packages allow fine-tuning, e.g. by applying overrides like install the [Nerd Fonts](https://search.nixos.org/packages?channel=unstable&show=nerdfonts&from=0&size=50&sort=relevance&type=packages&query=nerdfonts) only with a limited number of fonts.
 
 ```ǹix
   home.packages = with pkgs; [
