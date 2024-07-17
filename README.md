@@ -12,7 +12,7 @@ The sandbox is a development and execution environment for system templates. Dep
 
 ![Technology Stack](./img/techStack.drawio.svg)
 
-The development process is decentralized, configuration templates are shared via git repositories, external services can be integrated, dotfile sharing configurations enables user and secret management accross teams. Code contributors only need access to a Linux environment, a subsystem provided by [Windows](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS](https://chromeos.dev/en/linux) is sufficient. The virtual maschine requires enough space to cache the platform components of a project though. A minimum size of *80 to 120GB* is recommended - however, this really depends on the number and the complexity of the service blueprints that are being developed. 
+The development process is decentralized, configuration templates are shared via git repositories, external services can be integrated, sharing dotfiles enables administrators to manage accounts and secrets without unveiling them. Code contributors only need access to a Linux environment, a subsystem provided by [Windows](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS](https://chromeos.dev/en/linux) is sufficient. The virtual maschine requires enough space to cache the platform components of a project though. A minimum size of *80 to 120GB* is recommended - however, this really depends on the number and the complexity of the service blueprints that are being developed. 
 
 ```sh
 curl -L https://raw.githubusercontent.com/hcops/sandbox/main/setup | sh -s
