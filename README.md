@@ -28,17 +28,9 @@ MacOS users cannot rely on the convenience of an isolated subsystem but refer to
 
 ### Standard Toolset
 
-A standard toolset in system engineering is an enabler for long term quality and maintainability of the infrastructure code. In the sandbox it is deployed using **[Home-manager](https://nix-community.github.io/home-manager/)**, a nix extension that configures user environments through the `home.nix` file. Home manager supports two ways of deploying applications, the `programs` and the `home.packages` section. Programs is always the prefered method, it leverages modules to install the software and configure system wide features when applicable. Referencing a application in the home section pulls the software from the Nix [package directory](https://search.nixos.org/packages). 
+A standard toolset in system engineering is an enabler for long term quality and maintainability of the infrastructure code. In the sandbox it is deployed using **[Home-manager](https://nix-community.github.io/home-manager/)**, a nix extension that configures user environments through the `home.nix` file. Home manager supports two ways of deploying applications, programs and the packages. `programs` is always the prefered method, it refers to modules that install the software and configure system wide features when applicable. While NixOS user can use the command `nixos-option services` to retrieve a list of available programs, debian user can only refer to the home-manager documentation. 
 
 ```ǹix
-
-  home.packages = with pkgs; [
-    devenv       # https://devenv.sh/
-    gnumake      # https://www.gnu.org/software/make/manual/make.html
-    # lunarvim   # https://www.lunarvim.org/
-    # zed-editor # https://zed.dev/
-  ];
-
   programs = {
     direnv.enable = true; # https://direnv.net/
 
@@ -54,16 +46,20 @@ A standard toolset in system engineering is an enabler for long term quality and
   };
 ```
 
-Some packages allow fine-tune, e.g. by applying overrides like install the [Nerd Fonts](https://search.nixos.org/packages?channel=unstable&show=nerdfonts&from=0&size=50&sort=relevance&type=packages&query=nerdfonts) only with a limited number of fonts.
+Referencing a application in the `home.packages` installs the software, pulled from the Nix [package directory](https://search.nixos.org/packages). Some packages allow fine-tune, e.g. by applying overrides like install the [Nerd Fonts](https://search.nixos.org/packages?channel=unstable&show=nerdfonts&from=0&size=50&sort=relevance&type=packages&query=nerdfonts) only with a limited number of fonts.
 
-```nix
+```ǹix
   home.packages = with pkgs; [
+    devenv       # https://devenv.sh/
+    gnumake      # https://www.gnu.org/software/make/manual/make.html
+    # lunarvim   # https://www.lunarvim.org/
+    # zed-editor # https://zed.dev/
+
     (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
   ];
 ```
 
 And home manager allws engineers to write simple shell scripts directly inside th configuration liek adding a command 'my-hello' the shell.
-    # # environment:
 
 ```nix
   home.packages = with pkgs; [
