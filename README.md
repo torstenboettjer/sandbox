@@ -28,7 +28,7 @@ MacOS users cannot rely on the convenience of an isolated subsystem but refer to
 
 ### Standard Tools
 
-A standard toolset in system engineering is an enabler for long term quality and maintainability of the infrastructure code. In the sandbox it is deployed using **[Home-manager](https://nix-community.github.io/home-manager/)**, a nix extension that configures user environments through the `home.nix` file. Software can be found in the Nix [package directory](https://search.nixos.org/packages) added in the *home.packages* section of the onfiguration file. 
+A standard toolset in system engineering is an enabler for long term quality and maintainability of the infrastructure code. In the sandbox it is deployed using **[Home-manager](https://nix-community.github.io/home-manager/)**, a nix extension to the shell that configures user environments through the `home.nix` file. Software can be found in the Nix [package directory](https://search.nixos.org/packages) added in the *home.packages* section of the onfiguration file. Beside the development tools it triggers the deployment of the downstream tools direnv and devenv.sh. 
 
 ```nix
   home.packages = with pkgs; [
@@ -45,7 +45,7 @@ A standard toolset in system engineering is an enabler for long term quality and
   ```
 
 
-Beside the development tools it triggers the deployment of the downstream tools direnv and devenv.sh. The system layer is defined independent from the application layer, in [flake.nix](./flake.nix). This allows to run the same configuration on different host systems. Flakes are still classified as experimental feature, a respective flag is appended to `/etc/nix/nix.conf`. It should be mentioned that there are alternatives to define a default set of tools and services in nix, e.g. [Flakey](https://github.com/lf-/flakey-profile), which provides less automation but more control.  
+System parameters are defined independently from the applications in [flake.nix](./flake.nix) file. This allows to manage tools independent form the host systems. Flakes are still classified as experimental feature, a respective flag is appended to `/etc/nix/nix.conf`. There are alternatives to define a default set of tools and services in nix, e.g. [Flakey](https://github.com/lf-/flakey-profile), which provides less automation but more control.  
 
 ### Platform Components
 
