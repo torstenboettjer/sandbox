@@ -57,7 +57,7 @@ Home manager is a shell extension, beside loading packages the appearance of the
   ];
 ```
 
-System parameters are defined independently from the applications in [flake.nix](./flake.nix) file. This allows to manage tools independent form the host systems. Flakes are still classified as experimental feature, a respective flag is appended to `/etc/nix/nix.conf`. There are alternatives to define a default set of tools and services in nix, e.g. [Flakey](https://github.com/lf-/flakey-profile), which provides less automation but more control.  
+System parameters are defined independently from the applications in [flake.nix](./flake.nix) file. This allows to manage tools independent form the host systems. Flakes are still classified as experimental feature, a respective flag is appended to `/etc/nix/nix.conf`. It should be mentioned that there are alternatives to define a default set of tools and services in nix, e.g. [Flakey](https://github.com/lf-/flakey-profile), which provides less automation but more control.  
 
 ### Platform Components
 
