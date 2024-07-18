@@ -46,6 +46,10 @@ in
     # # configuration. For example, this adds a command 'mysbx' to your
     # # environment:
     (writeShellScriptBin "sync_home" ''
+      # Check whether sync repo already exist
+      repo_status=$(gh api repos/hcops/nixhome --silent --include 2>&1 | grep HTTP | awk '{print $2}')
+      echo "Status: ${repo_status}
+
       # Create the new remote repository on GitHub
       gh repo create "${gituser}/xhome" --private
 
