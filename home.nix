@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 let
-  homedir = builtins.getEnv "HOME";
-  username = builtins.getEnv "USER";
+  homedir = builtins.getEnv "${HOME}";
+  username = builtins.getEnv "${USER}";
   gituser = "_GHUSER_";
   gitemail = "_GHEMAIL_";
 in
