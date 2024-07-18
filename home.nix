@@ -4,7 +4,7 @@ let
   username = "_USRNAME_";
   gituser = "_GHUSER_";
   gitemail = "_GHEMAIL_";
-  branchname = "mysbx"
+  branchname = "mysbx";
 in
 {
   # On Generic Linux (non NixOS)
