@@ -63,7 +63,7 @@ in
       git branch "branchname"
 
       # Push the new branch to the new remote repository
-      git push "https://github.com/gituser/sbx.git" "branchname"
+      git push "https://github.com/${gituser}/sbx.git" "branchname"
 
       # Check if the branch was pushed successfully
       if [ $? -ne 0 ]; then
@@ -90,7 +90,7 @@ in
     direnv.enable = true; # https://direnv.net/
     vscode = {
       enable = true; # https://code.visualstudio.com/
-      package = pkgs.vscodium;
+      package = pkgs.vscode;
       enableUpdateCheck = false;
     };
     jq.enable = true;     # https://jqlang.github.io/jq/
