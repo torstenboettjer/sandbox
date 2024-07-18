@@ -121,7 +121,7 @@ main() {
   write_config
   activate_direnv
   output_credentials
-  exec "${SHELL}" && eval "$(direnv hook bash)"
+  # exec "${SHELL}" && eval "$(direnv hook bash)"
 }
 
 # Call the "main" function with all the command-line arguments
