@@ -56,9 +56,10 @@ in
       fi
 
       # Unlink the local repository from the current origin
-      cd ${homedir}/sandbox && git remote remove origin
+      cd ${homedir}/sandbox && rm -rf ${homedir}/sandbox/.git
 
       # Link the local repository with the new remote repository
+      git init
       git remote add origin "https://github.com/${gituser}/xhome.git"
       git push --set-upstream origin main
       git add home.nix && git commit -m "sync home.nix"
