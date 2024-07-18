@@ -1,7 +1,7 @@
 .PHONY: update
 
 update:
-	home-manager switch --flake .#torsten
+	home-manager switch -b backup --flake .#torsten
 
 
 .PHONY: clean
