@@ -47,42 +47,43 @@ in
     # # environment:
     (writeShellScriptBin "sync_home" ''
       # Check whether sync repo already exist
-      repo_status=$(gh api repos/hcops/nixhome --silent --include 2>&1 | grep HTTP | awk '{print $2}')
-      echo "Status: ${repo_status}
-
-      # Create the new remote repository on GitHub
-      gh repo create "${gituser}/xhome" --private
-
-      # Check if the repository was created successfully
-      if [ $? -ne 0 ]; then
-          echo "Failed to create the remote repository on GitHub."
-          exit 1
-      fi
-
-      # Unlink the local repository from the current origin
-      cd ${homedir}/sandbox && rm -rf ${homedir}/sandbox/.git
-
-      # Link the local repository with the new remote repository
-      git init && git branch -m main
-
-      # Add home.nix to repository
-      git add home.nix && git commit -m "sync home"
-
-      # set origin and push home.nix for synchronization accross devices
-      git remote add origin "https://github.com/${gituser}/xhome.git"
-      git push --set-upstream origin main
-
-      # Check if the branch was pushed successfully
-      if [ $? -ne 0 ]; then
-          echo "Failed to push the local repository to GitHub."
-          exit 1
-      fi
-
-      # Verify the new remote setup
-      git remote -v
-
-      echo "The sandbox directory has been linked to your xhome repository to share home.nix across devices."
-      echo "Remote repository: https://github.com/${gituser}/xhome.git"
+      if [ $(gh api repos/hcops/nixhome --silent --include 2>&1 | grep HTTP | awk '{print $2}') -ne 200 ]; then
+        # Create the new remote repository on GitHub
+        gh repo create "${gituser}/xhome" --private
+  
+        # Check if the repository was created successfully
+        if [ $? -ne 0 ]; then
+            echo "Failed to create the remote repository on GitHub."
+            exit 1
+        fi
+  
+        # Unlink the local repository from the current origin
+        cd ${homedir}/sandbox && rm -rf ${homedir}/sandbox/.git
+  
+        # Link the local repository with the new remote repository
+        git init && git branch -m main
+  
+        # Add home.nix to repository
+        git add home.nix && git commit -m "sync home"
+  
+        # set origin and push home.nix for synchronization accross devices
+        git remote add origin "https://github.com/${gituser}/xhome.git"
+        git push --set-upstream origin main
+  
+        # Check if the branch was pushed successfully
+        if [ $? -ne 0 ]; then
+            echo "Failed to push the local repository to GitHub."
+            exit 1
+        fi
+  
+        # Verify the new remote setup
+        git remote -v
+  
+        echo "The sandbox directory has been linked to your xhome repository to share home.nix across devices."
+        echo "Remote repository: https://github.com/${gituser}/xhome.git"
+    else
+      echo "Sync repo already exists!"
+    fi
     '')
   ];
 
