@@ -60,12 +60,13 @@ in
 
       # Link the local repository with the new remote repository
       git init && git branch -m main
+
+      # Add home.nix to repository
       git add home.nix && git commit -m "sync home"
+
+      # set origin and push home.nix for synchronization accross devices
       git remote add origin "https://github.com/${gituser}/xhome.git"
       git push --set-upstream origin main
-
-      # Push the new branch to the new remote repository
-      # git push "https://github.com/${gituser}/xhome.git" "main"
 
       # Check if the branch was pushed successfully
       if [ $? -ne 0 ]; then
