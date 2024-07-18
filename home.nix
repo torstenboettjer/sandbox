@@ -56,7 +56,7 @@ in
       fi
 
       # Unlink the local repository from the current origin
-      cd ${homedir}/sandbox && git remote remove origin
+      mv ${homedir}/sandbox ${homedir}/mysbx && cd ${homedir}/mysbx && git remote remove origin
 
       # Link the local repository with the new remote repository
       git remote add origin "https://github.com/${gituser}/mysbx.git"
