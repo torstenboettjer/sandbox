@@ -66,7 +66,7 @@ in
         git init && git branch -m main
   
         # Add home.nix to repository
-        git add home.nix && git commit -m "sync home"
+        git add home.nix flake.nix && git commit -m "sync home"
   
         # set origin and push home.nix for synchronization accross devices
         git remote add origin "https://github.com/${gituser}/xhome.git"
