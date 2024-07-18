@@ -56,7 +56,7 @@ delete_files "/etc/bash.bashrc.backup-before-nix" "/etc/zsh.zshrc.backup-before-
 
 # Remove Nix daemon users (if applicable)
 for user in nixbld{1..10}; do
-    sudo userdel -r $user 2>/dev/null
+    sudo userdel -r "$user" 2>/dev/null
 done
 
 # Remove Nix entries from shell profiles
