@@ -45,9 +45,41 @@ in
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
     # # environment:
-    # (writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+    (writeShellScriptBin "mysbx" ''
+      # Create the new remote repository on GitHub
+      gh repo create "${REMOTE_REPO}" --private
+
+      # Check if the repository was created successfully
+      if [ $? -ne 0 ]; then
+          echo "Failed to create the remote repository on GitHub."
+          exit 1
+      fi
+
+      # Create the new branch locally
+      git branch "${BRANCH_NAME}"
+
+      # Push the new branch to the new remote repository
+      git push "https://github.com/${REMOTE_REPO}.git" "${BRANCH_NAME}"
+
+      # Check if the branch was pushed successfully
+      if [ $? -ne 0 ]; then
+          echo "Failed to push the new branch to the remote repository."
+          exit 1
+      fi
+
+      # Unlink the local repository from the current origin
+      git remote remove origin
+
+      # Link the local repository with the new remote repository
+      git remote add origin "https://github.com/${REMOTE_REPO}.git"
+
+      # Verify the new remote setup
+      git remote -v
+
+      echo "The sandbox directory has been successfully linked to your remote repository."
+      echo "Remote repository: https://github.com/${REMOTE_REPO}.git"
+      echo "Your settings are stored in branch: ${BRANCH_NAME}"
+    '')
   ];
 
   programs = {
