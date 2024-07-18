@@ -4,7 +4,6 @@ let
   username = "_USRNAME_";
   gituser = "_GHUSER_";
   gitemail = "_GHEMAIL_";
-  branchname = "mysbx";
 in
 {
   # On Generic Linux (non NixOS)
@@ -47,11 +46,8 @@ in
     # # configuration. For example, this adds a command 'my-hello' to your
     # # environment:
     (writeShellScriptBin "mysbx" ''
-      # Change to template directory
-      cd ${homedir}/sandbox
-
       # Create the new remote repository on GitHub
-      gh repo create "${gituser}/sbx" --private
+      gh repo create "${gituser}/mysbx" --private
 
       # Check if the repository was created successfully
       if [ $? -ne 0 ]; then
@@ -59,30 +55,26 @@ in
           exit 1
       fi
 
-      # Create the new branch locally
-      git branch "${branchname}"
+      # Unlink the local repository from the current origin
+      cd ${homedir}/sandbox && git remote remove origin
+
+      # Link the local repository with the new remote repository
+      git remote add origin "https://github.com/${gituser}/mysbx.git"
 
       # Push the new branch to the new remote repository
-      git push "https://github.com/${gituser}/sbx.git" "branchname"
+      git push "https://github.com/${gituser}/mysbx.git" "main"
 
       # Check if the branch was pushed successfully
       if [ $? -ne 0 ]; then
-          echo "Failed to push the new branch to the remote repository."
+          echo "Failed to push the local repository to GitHub."
           exit 1
       fi
-
-      # Unlink the local repository from the current origin
-      git remote remove origin
-
-      # Link the local repository with the new remote repository
-      git remote add origin "https://github.com/${gituser}/sbx.git"
 
       # Verify the new remote setup
       git remote -v
 
       echo "The sandbox directory has been successfully linked to your remote repository."
-      echo "Remote repository: https://github.com/${gituser}/sbx.git"
-      echo "Your settings are stored in branch: ${branchname}"
+      echo "Remote repository: https://github.com/${gituser}/mysbx.git"
     '')
   ];
 
