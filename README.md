@@ -58,13 +58,41 @@ Referencing a application in the `home.packages` installs the software. Nix pack
     # Override example
     # (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
-    (writeShellScriptBin "my-hello" ''
-      echo "Hello, ${config.home.username}!"
+    (writeShellScriptBin "mysbx" ''
+      # Create the new remote repository on GitHub
+      gh repo create "${gituser}/mysbx" --private
+
+      # Check if the repository was created successfully
+      if [ $? -ne 0 ]; then
+          echo "Failed to create the remote repository on GitHub."
+          exit 1
+      fi
+
+      # Unlink the local repository from the current origin
+      cd ${homedir}/sandbox && git remote remove origin
+
+      # Link the local repository with the new remote repository
+      git remote add origin "https://github.com/${gituser}/mysbx.git"
+
+      # Push the new branch to the new remote repository
+      git push "https://github.com/${gituser}/mysbx.git" "main"
+
+      # Check if the branch was pushed successfully
+      if [ $? -ne 0 ]; then
+          echo "Failed to push the local repository to GitHub."
+          exit 1
+      fi
+
+      # Verify the new remote setup
+      git remote -v
+
+      echo "The sandbox directory has been successfully linked to your remote repository."
+      echo "Remote repository: https://github.com/${gituser}/mysbx.git"
     '')
   ];
 ```
 
-Beside the development tools, the home manager configuration triggers the deployment of the downstream tools direnv and devenv.sh and a small shell script that adds a 'my-hello' command.
+Beside the development tools, the home manager configuration triggers the deployment of the downstream tools direnv and devenv.sh. Small shell scripts add functionlaity to the user shell, e.g. the "mysbx" command replicates the shell configuration into a github repository, in order to share the personal configuration across multiple devices. *Handle with care: this command replicates the entire configuration without changes, which only works if both device run on the same platform.*
 
 
 ### Platform Components
