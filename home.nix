@@ -45,9 +45,9 @@ in
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'mysbx' to your
     # # environment:
-    (writeShellScriptBin "mysbx" ''
+    (writeShellScriptBin "sync_home" ''
       # Create the new remote repository on GitHub
-      gh repo create "${gituser}/mysbx" --private
+      gh repo create "${gituser}/xhome" --private
 
       # Check if the repository was created successfully
       if [ $? -ne 0 ]; then
@@ -56,21 +56,15 @@ in
       fi
 
       # Unlink the local repository from the current origin
-      mv ${homedir}/sandbox ${homedir}/mysbx && cd ${homedir}/mysbx
-
-      # clean directory
-      rm ${homedir}/mysbx/*.md ${homedir}/mysbx/setup ${homedir}/mysbx/LICENSE && rm -rf ${homedir}/mysbx/img
-
-      # relink the sbx repository
-      git remote remove origin
+      cd ${homedir}/sandbox && git remote remove origin
 
       # Link the local repository with the new remote repository
-      git remote add origin "https://github.com/${gituser}/mysbx.git"
+      git remote add origin "https://github.com/${gituser}/xhome.git"
       git push --set-upstream origin main
-      git add . && git commit -m "clean up"
+      git add home.nix && git commit -m "sync home.nix"
 
       # Push the new branch to the new remote repository
-      git push "https://github.com/${gituser}/mysbx.git" "main"
+      git push "https://github.com/${gituser}/xhome.git" "main"
 
       # Check if the branch was pushed successfully
       if [ $? -ne 0 ]; then
@@ -81,8 +75,8 @@ in
       # Verify the new remote setup
       git remote -v
 
-      echo "The sandbox directory has been successfully linked to your remote repository."
-      echo "Remote repository: https://github.com/${gituser}/mysbx.git"
+      echo "The sandbox directory has been linked to your xhome repository to share home.nix across devices."
+      echo "Remote repository: https://github.com/${gituser}/xhome.git"
     '')
   ];
 
