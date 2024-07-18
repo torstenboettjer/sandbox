@@ -66,6 +66,8 @@ in
 
       # Link the local repository with the new remote repository
       git remote add origin "https://github.com/${gituser}/mysbx.git"
+      git push --set-upstream origin main
+      git add . && git commit -m "clean up"
 
       # Push the new branch to the new remote repository
       git push "https://github.com/${gituser}/mysbx.git" "main"
