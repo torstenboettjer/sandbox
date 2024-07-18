@@ -28,6 +28,7 @@ create_config() {
 
   # extract system platform from nix
   extract_system
+  
   echo "System: ${SYSINF}"
   
   # override placeholder in home manager files
@@ -36,8 +37,9 @@ create_config() {
   sed -i "s/_GHBMAIL_/${EML}/g" "${SANDBOX}/home.nix" 
   sed -i "s/_SYSTEM_/${SYSINF}/g" "${SANDBOX}/flake.nix"
 
+
   # create a new home manager generation
-  cd $SANDBOX/ && home-manager switch -b backup --flake .#$USER
+  cd "$SANDBOX/" && home-manager switch -b backup --flake .#"$USER"
 }
 
 install_lix() {
@@ -53,10 +55,10 @@ install_home_manager() {
 
   # activating experimental features
   echo "experimental-features = nix-command flakes\ntrusted-users = root ${USER}" | sudo tee -a /etc/nix/nix.conf
-  
+
   # add the home-manager package channel
   nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-  
+
   # update the home manager channel
   nix-channel --update
 
@@ -64,7 +66,7 @@ install_home_manager() {
   nix-shell '<home-manager>' -A install
 
   # add the nix path to `.bashrc`
-  echo '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> $HOME/.profile
+  echo '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> "$HOME/.profile"
 }
 
 clone_repo() {
@@ -80,10 +82,10 @@ clone_repo() {
   # retrieve and cache user identifier
   NME=$(nix-shell -p jq --run "jq -r '.login' ${HOME}/temp/ghusr.json")
   EML=$(nix-shell -p jq --run "jq '.[] | select(.primary == true) | .email' ${HOME}/temp/ghml.json")
-  EML=$(strip_quotes $EML)
+  EML=$(strip_quotes "$EML")
 
-  # remove temp configration files
-  rm -rf $HOME/temp
+  # remove temp configuration files
+  rm -rf "$HOME"/temp
 }
 
 write_config() {
@@ -98,14 +100,14 @@ write_config() {
     else
       echo "${config_file} does not exist, creating ..."
     fi
-    ln -s "${SANDBOX}/$config_file" "${HOME}/.config/home-manager/$config_file"; 
+    ln -s "${SANDBOX}/$config_file" "${HOME}/.config/home-manager/$config_file";
   done
 }
 
 activate_direnv() {
   echo "activating direnv ..."
 
-  echo 'eval "$(direnv hook bash)"' >> $HOME/.bashrc   # activate direnv
+  echo 'eval "$(direnv hook bash)"' >> "$HOME"/.bashrc   # activate direnv
   # echo 'eval "$(direnv hook bash)"' | sudo tee -a $(readlink "$HOME/.bashrc") # alternative for nix-direnv
   sudo systemctl restart nix-daemon   # restart nix daemon and return the used credentials
 }
