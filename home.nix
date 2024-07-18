@@ -47,7 +47,7 @@ in
     # # environment:
     (writeShellScriptBin "sync_home" ''
       # Check whether sync repo already exist
-      if [ $(gh api repos/hcops/xhome --silent --include 2>&1 | grep HTTP | awk '{print $2}') -eq 200 ]; then
+      if [ $(gh api repos/hcops/xhome --silent --include 2>&1 | grep -Eo 'HTTP/[0-9\.]+ [0-9]{3}' | awk '{print $2}') -eq 200 ]; then
         echo "Sync repo already exists!"
       else
         # Create the new remote repository on GitHub
