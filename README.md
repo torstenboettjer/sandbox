@@ -92,7 +92,7 @@ Referencing a application in the `home.packages` installs the software. Nix pack
   ];
 ```
 
-Beside the development tools, the home manager configuration triggers the deployment of the downstream tools direnv and devenv.sh. Small shell scripts add functionlaity to the user shell, e.g. the "mysbx" command replicates the shell configuration into a github repository, in order to share the personal configuration across multiple devices. *Handle with care: this command replicates the entire configuration without changes to the flake.nix, which only works if both device run on the same system platform.*
+Beside the development tools, the home manager configuration triggers the deployment of the downstream tools direnv and devenv.sh. Small shell scripts add functionlaity to the user shell, e.g. the "mysbx" command replicates the shell configuration into a github repository, in order to share the personal configuration across multiple devices. *Handle with care! This command replicates the entire configuration without changes to the flake.nix, which only works if both device run on the same system platform.*
 
 
 ### Platform Components
