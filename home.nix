@@ -59,14 +59,7 @@ in
       mv ${homedir}/sandbox ${homedir}/mysbx && cd ${homedir}/mysbx
 
       # clean directory
-      rm ${homedir}/mysbx/*.md && rm -rf ${homedir}/mysbx/img
-      for inst_file in setup LICENSE; do
-        file_path="${homedir}/mysbx/${inst_file}"
-        if [ -f "$file_path" ]; then
-          echo "cleaning up ..."
-          rm "$file_path"
-        fi
-      done
+      rm ${homedir}/mysbx/*.md ${homedir}/mysbx/setup ${homedir}/mysbx/LICENSE && rm -rf ${homedir}/mysbx/img
 
       # relink the sbx repository
       git remote remove origin
