@@ -46,6 +46,10 @@ in
     # # configuration. For example, this adds a command 'my-hello' to your
     # # environment:
     (writeShellScriptBin "mysbx" ''
+      # Script variables
+      REMOTE_REPO="gituser/sbx"
+      BRANCH_NAME="mysbx"
+
       # Create the new remote repository on GitHub
       gh repo create "${REMOTE_REPO}" --private
 
