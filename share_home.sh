@@ -1,16 +1,5 @@
 #!/bin/bash
 
-# Function to check if a command exists
-command_exists() {
-    command -v "$1" >/dev/null 2>&1
-}
-
-# Check if gh and git are installed
-if ! command_exists gh || ! command_exists git; then
-    echo "Both gh and git need to be installed and available in the PATH."
-    exit 1
-fi
-
 # Variables
 NEW_REMOTE_REPO=""
 NEW_BRANCH_NAME=""
