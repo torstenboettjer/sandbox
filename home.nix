@@ -56,7 +56,20 @@ in
       fi
 
       # Unlink the local repository from the current origin
-      mv ${homedir}/sandbox ${homedir}/mysbx && cd ${homedir}/mysbx && git remote remove origin
+      mv ${homedir}/sandbox ${homedir}/mysbx && cd ${homedir}/mysbx
+
+      # clean directory
+      rm ${homedir}/mysbx/*.md && rm -rf ${homedir}/mysbx/img
+      for inst_file in setup LICENSE; do
+        file_path="${homedir}/mysbx/${inst_file}"
+        if [ -f "$file_path" ]; then
+          echo "cleaning up ..."
+          rm "$file_path"
+        fi
+      done
+
+      # relink the sbx repository
+      git remote remove origin
 
       # Link the local repository with the new remote repository
       git remote add origin "https://github.com/${gituser}/mysbx.git"
