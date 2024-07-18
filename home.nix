@@ -48,10 +48,10 @@ in
     # # environment:
     (writeShellScriptBin "mysbx" ''
       # Change to template directory
-      cd homedir/sandbox
+      cd ${homedir}/sandbox
 
       # Create the new remote repository on GitHub
-      gh repo create "gituser/sbx" --private
+      gh repo create "${gituser}/sbx" --private
 
       # Check if the repository was created successfully
       if [ $? -ne 0 ]; then
@@ -60,7 +60,7 @@ in
       fi
 
       # Create the new branch locally
-      git branch "branchname"
+      git branch "${branchname}"
 
       # Push the new branch to the new remote repository
       git push "https://github.com/${gituser}/sbx.git" "branchname"
@@ -75,14 +75,14 @@ in
       git remote remove origin
 
       # Link the local repository with the new remote repository
-      git remote add origin "https://github.com/gituser/sbx.git"
+      git remote add origin "https://github.com/${gituser}/sbx.git"
 
       # Verify the new remote setup
       git remote -v
 
       echo "The sandbox directory has been successfully linked to your remote repository."
-      echo "Remote repository: https://github.com/gituser.git"
-      echo "Your settings are stored in branch: branchname"
+      echo "Remote repository: https://github.com/${gituser}/sbx.git"
+      echo "Your settings are stored in branch: ${branchname}"
     '')
   ];
 
