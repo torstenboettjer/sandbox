@@ -43,7 +43,7 @@ in
     # (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
     # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
+    # # configuration. For example, this adds a command 'mysbx' to your
     # # environment:
     (writeShellScriptBin "mysbx" ''
       # Create the new remote repository on GitHub
