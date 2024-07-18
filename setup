@@ -28,12 +28,13 @@ create_config() {
 
   # extract system platform from nix
   extract_system
+  echo "System: ${SYSINF}"
   
   # override placeholder in home manager files
-  sed -i "s/_USRNAME_/${USER}/g" $SANDBOX/home.nix 
-  sed -i "s/_GHBNAME_/${NME}/g" $SANDBOX/home.nix
-  sed -i "s/_GHBMAIL_/${EML}/g" $SANDBOX/home.nix 
-  sed -i "s/_SYSTEM_/${SYSINF}/g" $SANDBOX/flake.nix
+  sed -i "s/_USRNAME_/${USER}/g" "${SANDBOX}/home.nix"
+  sed -i "s/_GHBNAME_/${NME}/g" "${SANDBOX}/home.nix"
+  sed -i "s/_GHBMAIL_/${EML}/g" "${SANDBOX}/home.nix" 
+  sed -i "s/_SYSTEM_/${SYSINF}/g" "${SANDBOX}/flake.nix"
 
   # create a new home manager generation
   cd $SANDBOX/ && home-manager switch -b backup --flake .#$USER
