@@ -4,6 +4,7 @@ let
   username = "_USRNAME_";
   gituser = "_GHUSER_";
   gitemail = "_GHEMAIL_";
+  branchname = "mysbx"
 in
 {
   # On Generic Linux (non NixOS)
@@ -46,12 +47,11 @@ in
     # # configuration. For example, this adds a command 'my-hello' to your
     # # environment:
     (writeShellScriptBin "mysbx" ''
-      # Script variables
-      REMOTE_REPO="gituser/sbx"
-      BRANCH_NAME="mysbx"
+      # Change to template directory
+      cd homedir/sandbox
 
       # Create the new remote repository on GitHub
-      gh repo create "${REMOTE_REPO}" --private
+      gh repo create "gituser/sbx" --private
 
       # Check if the repository was created successfully
       if [ $? -ne 0 ]; then
@@ -60,10 +60,10 @@ in
       fi
 
       # Create the new branch locally
-      git branch "${BRANCH_NAME}"
+      git branch "branchname"
 
       # Push the new branch to the new remote repository
-      git push "https://github.com/${REMOTE_REPO}.git" "${BRANCH_NAME}"
+      git push "https://github.com/gituser/sbx.git" "branchname"
 
       # Check if the branch was pushed successfully
       if [ $? -ne 0 ]; then
@@ -75,14 +75,14 @@ in
       git remote remove origin
 
       # Link the local repository with the new remote repository
-      git remote add origin "https://github.com/${REMOTE_REPO}.git"
+      git remote add origin "https://github.com/gituser/sbx.git"
 
       # Verify the new remote setup
       git remote -v
 
       echo "The sandbox directory has been successfully linked to your remote repository."
-      echo "Remote repository: https://github.com/${REMOTE_REPO}.git"
-      echo "Your settings are stored in branch: ${BRANCH_NAME}"
+      echo "Remote repository: https://github.com/gituser.git"
+      echo "Your settings are stored in branch: branchname"
     '')
   ];
 
