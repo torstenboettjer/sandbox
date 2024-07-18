@@ -33,8 +33,8 @@ create_config() {
   
   # override placeholder in home manager files
   sed -i "s/_USRNAME_/${USER}/g" "${SANDBOX}/home.nix"
-  sed -i "s/_GHBNAME_/${NME}/g" "${SANDBOX}/home.nix"
-  sed -i "s/_GHBMAIL_/${EML}/g" "${SANDBOX}/home.nix" 
+  sed -i "s/_GHUSER_/${NME}/g" "${SANDBOX}/home.nix"
+  sed -i "s/_GHEMAIL_/${EML}/g" "${SANDBOX}/home.nix" 
   sed -i "s/_SYSTEM_/${SYSINF}/g" "${SANDBOX}/flake.nix"
 
 
