@@ -4,6 +4,7 @@ let
   username = "_USRNAME_";
   gituser = "_GHUSER_";
   gitemail = "_GHEMAIL_";
+  homerepo = "sync_home"
 in
 {
   # On Generic Linux (non NixOS)
@@ -47,11 +48,11 @@ in
     # # environment:
     (writeShellScriptBin "sync_home" ''
       # Check whether sync repo already exist
-      if [ $(gh api repos/hcops/xhome --silent --include 2>&1 | grep -Eo 'HTTP/[0-9\.]+ [0-9]{3}' | awk '{print $2}') -eq 200 ]; then
+      if [ $(gh api repos/hcops/${homerepo} --silent --include 2>&1 | grep -Eo 'HTTP/[0-9\.]+ [0-9]{3}' | awk '{print $2}') -eq 200 ]; then
         echo "Sync repo already exists!"
       else
         # Create the new remote repository on GitHub
-        gh repo create "${gituser}/xhome" --private
+        gh repo create "${gituser}/${homerepo}" --private
   
         # Check if the repository was created successfully
         #if [ $? -ne 0 ]; then
@@ -66,10 +67,10 @@ in
         git init && git branch -m main
   
         # Add home.nix to repository
-        git add home.nix flake.nix && git commit -m "sync home"
+        git add . && git commit -m "sync home"
   
         # set origin and push home.nix for synchronization accross devices
-        git remote add origin "https://github.com/${gituser}/xhome.git"
+        git remote add origin "https://github.com/${gituser}/${homerepo}.git"
         git push --set-upstream origin main
   
         # Check if the branch was pushed successfully
@@ -81,8 +82,8 @@ in
         # Verify the new remote setup
         #git remote -v
   
-        #echo "The sandbox directory has been linked to your xhome repository to share home.nix across devices."
-        #echo "Remote repository: https://github.com/${gituser}/xhome.git"
+        #echo "The sandbox directory has been linked to your ${homerepo} repository to share the nix configuration across devices."
+        #echo "Remote repository: https://github.com/${gituser}/${homerepo}.git"
     fi
     '')
   ];
