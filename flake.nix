@@ -13,6 +13,7 @@
   outputs = { nixpkgs, home-manager, ... }:
     let
       lib = nixpkgs.lib;
+      # system = builtins.currentSystem;
       system = "_SYSTEM_";
       pkgs = import nixpkgs { inherit system; };
     in {
