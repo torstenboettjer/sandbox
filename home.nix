@@ -4,7 +4,7 @@ let
   username = "_USRNAME_";
   gituser = "_GHUSER_";
   gitemail = "_GHEMAIL_";
-  syncrepo = "home_sync"
+  syncrepo = "home_sync";
 in
 {
   # On Generic Linux (non NixOS)
@@ -65,6 +65,9 @@ in
   
         # Link the local repository with the new remote repository
         git init && git branch -m main
+
+        # Add .gitignore to repository that ignores all files except home.nix
+        echo "*" > .gitignore && echo "!home.nix" >> .gitignore
   
         # Add home.nix to repository
         git add . && git commit -m "sync home"
@@ -82,8 +85,8 @@ in
         # Verify the new remote setup
         #git remote -v
   
-        #echo "The sandbox directory has been linked to your ${homerepo} repository to share the nix configuration across devices."
-        #echo "Remote repository: https://github.com/${gituser}/${homerepo}.git"
+        #echo "The sandbox directory has been linked to the ${syncrepo} repository in the ${gituser} account in order to share the nix configuration across devices."
+        #echo "Remote repository: https://github.com/${gituser}/${syncrepo}.git"
     fi
     '')
   ];
