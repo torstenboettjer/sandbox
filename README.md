@@ -8,7 +8,7 @@ Cloud infrastructure is a managed service, build on a programmable platform that
 
 ## Development Environment
 
-The sandbox is a development and execution environment for system templates. Deployment workflows are enabled with layered architecture that addresses a separation of concerns, typically found in an enterprise IT organization. Development tools are employed independently from platform components and service configurations. Engineers avoid implicit dependencies on platform orchestrators or packaging mechansims. This allows service operator to retain control over the technology platform even if it is partially outsourced. 
+The sandbox is a development for system templates and execution environment for service blueprints. Deployment workflows are enabled with layered architecture that addresses a separation of concerns, typically found in an enterprise IT organization. Development tools are employed independently from platform components and service configurations. Engineers avoid implicit dependencies on platform orchestrators or packaging mechansims. This allows service operator to retain control over the technology platform even if it is partially outsourced. 
 
 ![Technology Stack](./img/techStack.drawio.svg)
 
