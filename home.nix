@@ -4,7 +4,7 @@ let
   username = "_USRNAME_";
   gituser = "_GHUSER_";
   gitemail = "_GHEMAIL_";
-  homerepo = "sync_home"
+  syncrepo = "home_sync"
 in
 {
   # On Generic Linux (non NixOS)
@@ -48,11 +48,11 @@ in
     # # environment:
     (writeShellScriptBin "sync_home" ''
       # Check whether sync repo already exist
-      if [ $(gh api repos/hcops/${homerepo} --silent --include 2>&1 | grep -Eo 'HTTP/[0-9\.]+ [0-9]{3}' | awk '{print $2}') -eq 200 ]; then
+      if [ $(gh api repos/hcops/${syncrepo} --silent --include 2>&1 | grep -Eo 'HTTP/[0-9\.]+ [0-9]{3}' | awk '{print $2}') -eq 200 ]; then
         echo "Sync repo already exists!"
       else
         # Create the new remote repository on GitHub
-        gh repo create "${gituser}/${homerepo}" --private
+        gh repo create "${gituser}/${syncrepo}" --private
   
         # Check if the repository was created successfully
         #if [ $? -ne 0 ]; then
@@ -61,7 +61,7 @@ in
         #fi
   
         # Unlink the local repository from the current origin
-        cd ${homedir}/sandbox && rm -rf ${homedir}/sandbox/.git
+        cd ${homedir}/sandbox && rm -rf ${syncrepo}/sandbox/.git
   
         # Link the local repository with the new remote repository
         git init && git branch -m main
@@ -70,7 +70,7 @@ in
         git add . && git commit -m "sync home"
   
         # set origin and push home.nix for synchronization accross devices
-        git remote add origin "https://github.com/${gituser}/${homerepo}.git"
+        git remote add origin "https://github.com/${gituser}/${syncrepo}.git"
         git push --set-upstream origin main
   
         # Check if the branch was pushed successfully
