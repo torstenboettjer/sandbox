@@ -10,7 +10,7 @@ Declarative package managers like [Guix](https://guix.gnu.org/) or [Nix](https:/
 
 ## Development Environment
 
-The sandbox is a development for system templates and execution environment for service blueprints. Deployment workflows are enabled with layered architecture that addresses a separation of concerns, typically found in an enterprise IT organization. Development tools are employed independently from platform components and service configurations. Engineers avoid implicit dependencies on platform orchestrators or packaging mechansims. This allows service operator to retain control over the technology platform even if it is partially outsourced. The development process is decentralized, configuration templates are shared via git repositories, external services can be integrated, sharing dotfiles enables administrators to manage accounts and secrets without unveiling them. 
+The architecture of the sandbox enables system engineers to develop service blueprints including platform components but without prescribing an operations model. Development tools are employed independently from platform components and service configurations. Engineers avoid implicit dependencies on platform orchestrators or packaging mechansims. This allows service operator to retain control over the technology platform even if it is partially outsourced. The development process is decentralized, configuration templates are shared via git repositories, external services can be integrated, sharing dotfiles enables administrators to manage accounts and secrets without unveiling them. 
 
 ![Technology Stack](./img/techStack.drawio.svg)
 
