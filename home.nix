@@ -53,7 +53,7 @@ in
 
       # Check whether sync repo already exist
       if [ $(gh api repos/${gituser}/$PROJECT --silent --include 2>&1 | grep -Eo 'HTTP/[0-9\.]+ [0-9]{3}' | awk '{print $2}') -eq 200 ]; then
-        echo "project already exists!"
+        echo "project $PROJECT already exists!"
       else
         # Create the new remote repository on GitHub
         gh repo create "${gituser}/$PROJECT" --private
