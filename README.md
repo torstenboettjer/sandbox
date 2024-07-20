@@ -91,7 +91,7 @@ Referencing a application in the `home.packages` installs the software. Nix pack
   ];
 ```
 
-Beside the development tools, the home manager configuration triggers the deployment of the downstream tools direnv and devenv.sh. Small shell scripts add functionlaity to the user shell, e.g. the "create_project /<name/>" command creates a new project that is linked to a github repository.
+Beside the development tools, the home manager configuration triggers the deployment of the downstream tools direnv and devenv.sh. Small shell scripts add functionlaity to the user shell, e.g. the "create_project \<name\>" command creates a new project that is linked to a github repository.
 
 
 ### Platform Components
