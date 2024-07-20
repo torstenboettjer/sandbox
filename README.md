@@ -58,41 +58,40 @@ Referencing a application in the `home.packages` installs the software. Nix pack
     # Override example
     # (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
-    (writeShellScriptBin "mysbx" ''
-      # Create the new remote repository on GitHub
-      gh repo create "${gituser}/mysbx" --private
+    (writeShellScriptBin "create_project" ''
+      # capture the project name with a first argument
+      PROJECT=$1
 
-      # Check if the repository was created successfully
-      if [ $? -ne 0 ]; then
-          echo "Failed to create the remote repository on GitHub."
-          exit 1
-      fi
-
-      # Unlink the local repository from the current origin
-      cd ${homedir}/sandbox && git remote remove origin
-
-      # Link the local repository with the new remote repository
-      git remote add origin "https://github.com/${gituser}/mysbx.git"
-
-      # Push the new branch to the new remote repository
-      git push "https://github.com/${gituser}/mysbx.git" "main"
-
-      # Check if the branch was pushed successfully
-      if [ $? -ne 0 ]; then
-          echo "Failed to push the local repository to GitHub."
-          exit 1
-      fi
-
-      # Verify the new remote setup
-      git remote -v
-
-      echo "The sandbox directory has been successfully linked to your remote repository."
-      echo "Remote repository: https://github.com/${gituser}/mysbx.git"
+      # Check whether sync repo already exist
+      if [ $(gh api repos/${gituser}/$PROJECT --silent --include 2>&1 | grep -Eo 'HTTP/[0-9\.]+ [0-9]{3}' | awk '{print $2}') -eq 200 ]; then
+        echo "project $PROJECT already exists!"
+      else
+        # Create the new remote repository on GitHub
+        gh repo create "${gituser}/$PROJECT" --private
+  
+        # Check if the repository was created successfully
+        if [ $? -ne 0 ]; then
+            echo "Failed to create the remote repository on GitHub."
+            exit 1
+        fi
+  
+        # create projects directory if it doesn't exist
+        mkdir -p ${projectdir} && cd ${projectdir}
+  
+        # Clone the project repository with gh
+        gh repo clone ${gituser}/$PROJECT
+  
+        # Verify the new remote setup
+        cd ${projectdir}/$PROJECT && git remote -v
+  
+        echo "The $PROJECT repository has been created."
+        echo "Remote repository: https://github.com/${gituser}/$PROJECT.git"
+    fi
     '')
   ];
 ```
 
-Beside the development tools, the home manager configuration triggers the deployment of the downstream tools direnv and devenv.sh. Small shell scripts add functionlaity to the user shell, e.g. the "mysbx" command replicates the shell configuration into a github repository, in order to share the personal configuration across multiple devices. *Handle with care! This command replicates the entire configuration without changes to the flake.nix, which only works if both device run on the same system platform.*
+Beside the development tools, the home manager configuration triggers the deployment of the downstream tools direnv and devenv.sh. Small shell scripts add functionlaity to the user shell, e.g. the "create_project <name>" command creates a new project that is linked to a github repository.
 
 
 ### Platform Components
