@@ -46,47 +46,34 @@ in
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'mysbx' to your
     # # environment:
-    (writeShellScriptBin "sync_home" ''
+    (writeShellScriptBin "create_project" ''
+      # capture the project name with a first argument
+      PROJECT=$1
+
       # Check whether sync repo already exist
-      if [ $(gh api repos/hcops/${syncrepo} --silent --include 2>&1 | grep -Eo 'HTTP/[0-9\.]+ [0-9]{3}' | awk '{print $2}') -eq 200 ]; then
-        echo "Sync repo already exists!"
+      if [ $(gh api repos/${gituser}/$PROJECT --silent --include 2>&1 | grep -Eo 'HTTP/[0-9\.]+ [0-9]{3}' | awk '{print $2}') -eq 200 ]; then
+        echo "project already exists!"
       else
         # Create the new remote repository on GitHub
-        gh repo create "${gituser}/${syncrepo}" --private
+        gh repo create "${gituser}/$PROJECT" --private
   
         # Check if the repository was created successfully
-        #if [ $? -ne 0 ]; then
-        #    echo "Failed to create the remote repository on GitHub."
-        #    exit 1
-        #fi
+        if [ $? -ne 0 ]; then
+            echo "Failed to create the remote repository on GitHub."
+            exit 1
+        fi
   
-        # Unlink the local repository from the current origin
-        cd ${homedir}/sandbox && rm -rf ${syncrepo}/sandbox/.git
+        # create projects directory if it doesn't exist
+        mkdir -p ${projectdir} && cd ${projectdir}
   
-        # Link the local repository with the new remote repository
-        git init && git branch -m main
-
-        # Add .gitignore to repository that ignores all files except home.nix
-        echo "*" > .gitignore && echo "!home.nix" >> .gitignore
-  
-        # Add home.nix to repository
-        git add . && git commit -m "sync home"
-  
-        # set origin and push home.nix for synchronization accross devices
-        git remote add origin "https://github.com/${gituser}/${syncrepo}.git"
-        git push --set-upstream origin main
-  
-        # Check if the branch was pushed successfully
-        #if [ $? -ne 0 ]; then
-        #    echo "Failed to push the local repository to GitHub."
-        #    exit 1
-        #fi
+        # Clone the project repository with gh
+        gh repo clone ${gituser}/$PROJECT
   
         # Verify the new remote setup
-        #git remote -v
+        cd ${projectdir}/$PROJECT && git remote -v
   
-        #echo "The sandbox directory has been linked to the ${syncrepo} repository in the ${gituser} account in order to share the nix configuration across devices."
-        #echo "Remote repository: https://github.com/${gituser}/${syncrepo}.git"
+        echo "The $PROJECT repository has been created."
+        echo "Remote repository: https://github.com/${gituser}/$PROJECT.git"
     fi
     '')
   ];
