@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 let
-  homedir = "/home/_USRNAME_";
   username = "_USRNAME_";
+  homedir = "/home/_USRNAME_";
+  projectdir = "${homedir}/projects";
   gituser = "_GHUSER_";
   gitemail = "_GHEMAIL_";
   syncrepo = "home_sync";
