@@ -14,13 +14,13 @@ The sandbox is a development for system templates and execution environment for 
 
 ![Technology Stack](./img/techStack.drawio.svg)
 
-Code contributors only need access to a Linux environment, a subsystem provided by [Windows](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS](https://chromeos.dev/en/linux) is sufficient. The virtual maschine requires enough space to cache the platform components of a project though. A minimum size of *80 to 120GB* is recommended - however, this really depends on the number and the complexity of the service blueprints that are being developed. 
+Code contributors only need access to a Linux environment, a subsystem provided by [Windows](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS](https://chromeos.dev/en/linux) is sufficient. The virtual maschine requires enough space to cache the platform components of a project though. A minimum size of *80 to 120GB* is recommended - however, this really depends on the number and the complexity of the service blueprints that are being developed. The setup script contains a default toolset with VS-Code, gh and jq already and uses Github for code sharing. The github client is also used to load default parameter into the configuration. 
 
 ```sh
 curl -L https://raw.githubusercontent.com/hcops/sandbox/main/setup | sh -s
 ```
 
-The setup script contains a default toolset with VS-Code, gh and jq already and uses Github for code sharing. The github client is also used to load default parameter into the configuration. Automations are based on Nix, using the [Lix](https://lix.systems/)  package manager, a fork from the original nix package manager that is a bit more user friendly. The nix language allows engineers to manage dependencies on operating system level and trigger provisioning processes that either configure dedicated server or produce virtual artifacts. Storing declaration files in a repository together with the application code fosters the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations. To activate the package manager after installation, the shell session requires a restart. 
+The script installs the [Lix](https://lix.systems/)  package manager, a fork from the original nix package manager. System configurations are written in nix. The nix language allows engineers to manage dependencies on operating system level and trigger provisioning processes that either configure dedicated server or produce virtual artifacts. Storing declaration files in a repository together with the application code fosters the development of consistent blueprints that provide similar advantages like immutable infrastructure without introducing the same limitations. To activate the package manager after installation, the shell session requires a restart. 
 
 ```sh
 exec bash && source ~/.bashrc
