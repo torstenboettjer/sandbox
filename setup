@@ -4,7 +4,7 @@
 set -e
 
 # set target directory for home manager configuration
-SANDBOX=$HOME/sandbox
+TOOLSDIR="${HOME}/tools"
 
 # Function to strip surrounding quotes from a string
 strip_quotes() {
@@ -32,14 +32,14 @@ create_config() {
   echo "System: ${SYSINF}"
   
   # override placeholder in home manager files
-  sed -i "s/_USRNAME_/${USER}/g" "${SANDBOX}/home.nix"
-  sed -i "s/_GHUSER_/${NME}/g" "${SANDBOX}/home.nix"
-  sed -i "s/_GHEMAIL_/${EML}/g" "${SANDBOX}/home.nix" 
-  sed -i "s/_SYSTEM_/${SYSINF}/g" "${SANDBOX}/flake.nix"
+  sed -i "s/_USRNAME_/${USER}/g" "${TOOLSDIR}/home.nix"
+  sed -i "s/_GHUSER_/${NME}/g" "${TOOLSDIR}/home.nix"
+  sed -i "s/_GHEMAIL_/${EML}/g" "${TOOLSDIR}/home.nix" 
+  sed -i "s/_SYSTEM_/${SYSINF}/g" "${TOOLSDIR}/flake.nix"
 
 
   # create a new home manager generation
-  cd "$SANDBOX/" && home-manager switch -b backup --flake .#"$USER"
+  cd "$TOOLSDIR/" && home-manager switch -b backup --flake .#"$USER"
 }
 
 install_lix() {
@@ -77,7 +77,7 @@ clone_repo() {
     gh auth login -h github.com -s user && \
     gh api user > $HOME/temp/ghusr.json && \
     gh api user/emails > $HOME/temp/ghml.json && \
-    gh repo clone hcops/sandbox"
+    gh repo clone hcops/sandbox ${TOOLSDIR}"
 
   # retrieve and cache user identifier
   NME=$(nix-shell -p jq --run "jq -r '.login' ${HOME}/temp/ghusr.json")
@@ -100,7 +100,7 @@ write_config() {
     else
       echo "${config_file} does not exist, creating ..."
     fi
-    ln -s "${SANDBOX}/$config_file" "${HOME}/.config/home-manager/$config_file";
+    ln -s "${TOOLSDIR}/$config_file" "${HOME}/.config/home-manager/$config_file";
   done
 }
 
