@@ -5,7 +5,6 @@ let
   projectdir = "${homedir}/projects";
   gituser = "_GHUSER_";
   gitemail = "_GHEMAIL_";
-  syncrepo = "home_sync";
 in
 {
   # On Generic Linux (non NixOS)
