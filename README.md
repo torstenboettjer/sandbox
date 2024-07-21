@@ -47,7 +47,7 @@ A standard toolset in system engineering is an enabler for long term quality and
   };
 ```
 
-Referencing a application in the `home.packages` installs additional software packages. Nix packages are published in a [package directory](https://search.nixos.org/packages). The command `nix-env -qaP` lists packages incl. the available attributes at the command line. An `override` and `overrideAttrs` function enables engineers to build packages from source by processing attributes like `src`, `buildInputs`, `makeFlags`, etc.. Some packages use overrides for fine-tuning like a [fonts package](https://search.nixos.org/packages?channel=unstable&show=nerdfonts&from=0&size=50&sort=relevance&type=packages&query=nerdfonts) that allows to adjust the default list of fonts. 
+Referencing a application in the `home.packages` installs additional software packages. Nix packages are published in a [package directory](https://search.nixos.org/packages). The command `nix-env -qaP` lists packages incl. the available attributes at the command line. `Override` and `overrideAttrs` function enables engineers to build packages from source by processing attributes like `src`, `buildInputs`, `makeFlags`, etc.. Some packages use overrides for fine-tuning like a [fonts package](https://search.nixos.org/packages?channel=unstable&show=nerdfonts&from=0&size=50&sort=relevance&type=packages&query=nerdfonts) that allows to adjust the default list of fonts. 
 
 
 ```ǹix
