@@ -4,7 +4,7 @@ The operator sandbox provides an development and execution environment for opera
 
 ## Target Platform
 
-A hybrid platform uses cloud services where appropriate but without prescribing a specific system design for the entire application portfolio. The delivery model distinguishes between dedicated- and dsitributed systems where controllers are either provided by the physical resource or exposed through an orchestrator. A public cloud is a managed platform, build on a programmable infrastructure with an orchestrator that provisions virtual artifacts. Resources controller that are developed, maintained on managed by the provider, service operator cannot build services with direct access to a resource. The implications on the application design are best described in the [Twelve-Factor](https://12factor.net/) manifesto. For software that does not meet these criteria, a different delivery model is required. 
+A hybrid platform uses cloud services where appropriate but without prescribing a specific system design for the entire application portfolio. The delivery model distinguishes between dedicated- and distributed systems where controllers are either provided by the physical resource or exposed through an orchestrator. A public cloud is a managed platform, build on a programmable infrastructure with an orchestrator that provisions virtual artifacts. Resources controller that are developed, maintained on managed by the provider, service operator cannot build services with direct access to a resource. The implications on the application design are best described in the [Twelve-Factor](https://12factor.net/) manifesto. For software that does not meet these criteria, a different delivery model is required. 
 
 ## Host System
 
