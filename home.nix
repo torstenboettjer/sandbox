@@ -48,33 +48,50 @@ in
     # # environment:
     (writeShellScriptBin "create_project" ''
       # capture the project name with a first argument
-      PROJECT=$1
+      PROJECTNAME=$1
+
+      # check whether the project directory already exists locally
+      if [ -d ${projectdir}/$PROJECTNAME ]; then
+          echo "Project directory already exists! Attempting to clone ..."
+      else
+        # create projects directory if it doesn't exist
+        mkdir -p ${projectdir} && cd ${projectdir}
+      fi
 
       # Check whether sync repo already exist
-      if [ $(gh api repos/${gituser}/$PROJECT --silent --include 2>&1 | grep -Eo 'HTTP/[0-9\.]+ [0-9]{3}' | awk '{print $2}') -eq 200 ]; then
-        echo "project $PROJECT already exists!"
+      if [ $(gh api repos/${gituser}/$PROJECTNAME --silent --include 2>&1 | grep -Eo 'HTTP/[0-9\.]+ [0-9]{3}' | awk '{print $2}') -eq 200 ]; then
+        echo "cloning the existing $PROJECTNAME project ..."
+
+        # Clone the project repository with gh
+        gh repo clone ${gituser}/$PROJECTNAME ${projectdir}/$PROJECTNAME
       else
+        #create a new repository from a template
+
+        echo "Creating the $PROJECTNAME project from template ${projecttpl} ..."
+
+        # Clone the project template repository with gh
+        gh repo clone ${projecttpl} ${projectdir}/$PROJECTNAME
+
         # Create the new remote repository on GitHub
-        gh repo create "${gituser}/$PROJECT" --private
+        gh repo create "${gituser}/$PROJECTNAME" --private
   
         # Check if the repository was created successfully
         if [ $? -ne 0 ]; then
             echo "Failed to create the remote repository on GitHub."
             exit 1
         fi
-  
-        # create projects directory if it doesn't exist
-        mkdir -p ${projectdir} && cd ${projectdir}
-  
-        # Clone the project repository with gh
-        gh repo clone ${gituser}/$PROJECT
-  
-        # Verify the new remote setup
-        cd ${projectdir}/$PROJECT && git remote -v
-  
-        echo "The $PROJECT repository has been created."
-        echo "Remote repository: https://github.com/${gituser}/$PROJECT.git"
-    fi
+
+        # unlink the template remote repository
+        cd ${projectdir}/$PROJECTNAME && git remote remove origin
+
+        # Add "${gituser}/$PROJECTNAME" as new remote repository
+        cd ${projectdir}/$PROJECTNAME && git remote add origin "https://github.com/${gituser}/$PROJECTNAME.git" && git push --set-upstream origin main
+      fi
+
+      # Verify the new remote setup
+      cd ${projectdir}/$PROJECTNAME && git remote -v
+
+      echo "Remote repository: https://github.com/${gituser}/$PROJECTNAME.git"
     '')
   ];
 
