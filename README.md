@@ -108,13 +108,13 @@ The development of system templates is simplified using **[direnv](https://diren
 direnv allow
 ```
 
-While for system related development projects [flake.nix](./flake.nix) file can be extended, in cloud projects the host system and the platform components should be separated. Flakes are still classified as experimental feature, a respective flag is appended to `/etc/nix/nix.conf`. Instead engineers need the freedom determine the configuration together wiht a selection of system software components during the development phase. Nix supports multiple concepts of separating environment definitions, and direnv only requires a rerference to the configuration file in .envrc. 
+Entering a directory for the first time, a flag needs to be set, that allows direnv to monitor chnages in the configuration and to load the defined tools automatically. It checks for the existence of a .envrc file and if the file exists, the defined variables are captured and made available in the current shell. Nix supports multiple concepts of separating environment definitions, and direnv only requires a rerference to the configuration file in .envrc. Developing services, engineers need the freedom determine a platform configuration together with the system configuration. Therefore `devenv.nix` file combines platform configurations and system definitions in a single file. Once the templates are complete and the configuration is tested, platform components are moved into a flake and *.envrc* is extended
 
 ```sh
 echo "use flake" >> .envrc
 ```
 
-Files ending on *.nix are activated by appending the use command to a environment file inside a project directory. Direnv automatically reads files called default.nix or shell.nix, what might be useful to configure the appeearance of the shell and add tools like [starship](https://starship.rs/). The 'allow' flag authorizes direnv to automatically load and unload environment variables, when the directory is changed. It checks for the existence of a .envrc file and if the file exists, the defined variables are captured and made available in the current shell.  
+Flakes are still classified as experimental feature, a respective flag is appended to `/etc/nix/nix.conf` during the installation. 
 
 ### Service Configuration
 
