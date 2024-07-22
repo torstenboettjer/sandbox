@@ -47,7 +47,7 @@ in
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'mysbx' to your
     # # environment:
-    (writeShellScriptBin "create_project" ''
+    (writeShellScriptBin "project" ''
       # capture the project name with a first argument
       PROJECTNAME=$1
 
