@@ -108,7 +108,7 @@ The development of system templates is simplified using **[direnv](https://diren
 direnv allow
 ```
 
-Entering a directory for the first time, a flag needs to be set, that allows direnv to monitor chnages in the configuration and to load the defined tools automatically. It checks for the existence of a .envrc file and if the file exists, the defined variables are captured and made available in the current shell. Nix supports multiple concepts of separating environment definitions, and direnv only requires a rerference to the configuration file in .envrc. Developing services, engineers need the freedom determine a platform configuration together with the system configuration. Therefore `devenv.nix` file combines platform configurations and system definitions in a single file. 
+Entering a directory for the first time, a flag needs to be set, that allows direnv to monitor chnages in the configuration and to load the defined tools automatically. It checks for the existence of a .envrc file and if the file exists, the defined variables are captured and made available in the current shell. Nix supports multiple concepts of separating environment definitions, and direnv only requires a rerference to the configuration file in .envrc. Developing services, engineers need the freedom determine a platform configuration together with the system configuration. Therefore [devenv.nix](https://github.com/hcops/template/tree/main/devenv.nix) file combines platform configurations and system definitions in a single file. The default project template includes a [PostgreSQL](https://www.postgresql.org/) server and the [Rust toolchain](https://www.rust-lang.org/). 
 
 ```sh
 echo "use flake" >> .envrc
@@ -117,7 +117,7 @@ Once the templates are complete and the configuration is tested, platform compon
 
 ### Service Configuration
 
-New projects are based on a [default template](https://github.com/hcops/template/tree/main) that includes a [PostgreSQL](https://www.postgresql.org/) server and the [Rust toolchain](https://www.rust-lang.org/). **[Devenv.sh](https://devenv.sh/)** is a configuration tool that allows engineers to define development environments declaratively by toggling basic options for nix and process-compose. Devenv leverages Nix to create reproducible development environments, it is an extension of the Nix ecosystem, tailored for development workflows. A development environment is defined by creating a directory, setting up a git repository, and sharing the repository with other developers via Github.
+**[Devenv.sh](https://devenv.sh/)** is a configuration tool that allows engineers to define development environments declaratively by toggling basic options for nix and process-compose. Devenv leverages Nix to create reproducible development environments, it is an extension of the Nix ecosystem, tailored for development workflows. A development environment is defined by creating a directory, setting up a git repository, and sharing the repository with other developers via Github.
 
 ```sh
 devenv init
