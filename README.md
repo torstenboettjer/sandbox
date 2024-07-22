@@ -18,13 +18,13 @@ Code contributors only need access to a Linux environment, a subsystem provided 
 curl -L https://raw.githubusercontent.com/hcops/sandbox/main/setup | sh -s
 ```
 
-The script installs the [Lix](https://lix.systems/)  package manager, a fork from the original nix package manager. System configurations are written in the nix language that allows engineers to manage dependencies on operating system level and trigger provisioning processes dedicated server or produce virtual artifacts. Storing declaration files in a repository together with the application code fosters the development of consistent blueprints and provides similar advantages like immutable infrastructure without introducing the same limitations. To activate the package manager after installation, the shell session requires a restart. MacOS users cannot rely on the convenience of an isolated subsystem but refer to the [nix-darwin](https://github.com/LnL7/nix-darwin) project and arrive at the same point. Alternatively, a virtual maschine on a hypervisor can be considered. 
+The script installs the [Lix](https://lix.systems/)  package manager, a fork from the original nix package manager. System configurations are written in the nix language that allows engineers to manage dependencies on operating system level and trigger provisioning processes dedicated server or produce virtual artifacts. Storing declaration files in a repository together with the application code fosters the development of consistent blueprints and provides similar advantages like immutable infrastructure without introducing the same limitations. Nix was introduced in 2003 by [Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. Managing packets programmatically ensures reproducibility, isolation, and atomic upgrades with consistent package deployments through specification of package dependencies and build instructions. To activate the package manager after installation, the shell session requires a restart. 
 
 ```sh
 exec bash && source ~/.bashrc
 ```
 
-A programmable package manager provides features that address requirements like reproducibility, isolation, and atomic upgrades withour relying on an orchestrator or a cloud control plane. Nix was introduced in 2003 by [Eelco Dolstra](https://en.wikipedia.org/wiki/Nix_(package_manager)) to create a reliable system for software deployments. It ensures consistent package deployments through specification of package dependencies and build instructions. The supporting community has grown to nearly a thousand developers and has gathered several thousands of contributors. 
+MacOS users cannot rely on the convenience of an isolated subsystem but refer to the [nix-darwin](https://github.com/LnL7/nix-darwin) project and arrive at the same point. Alternatively, a virtual maschine on a hypervisor can be considered. 
 
 ### Engineering Tools
 
