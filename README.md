@@ -113,7 +113,7 @@ Entering a directory for the first time, a flag needs to be set, that allows dir
 ```sh
 echo "use flake" >> .envrc
 ```
-Once the templates are complete and the configuration is tested, platform components can be moved into a flake and *.envrc* is extended. Flakes are still classified as experimental feature, a respective flag is appended to `/etc/nix/nix.conf` during the installation. 
+Once the templates are complete and the configuration is tested, platform components can be moved into a flake and *.envrc* is extended, e.g. to store the configuration without development tools in a service catalog and to prepare the deployment on a production system. Flakes are still classified as experimental feature, a respective flag is appended to `/etc/nix/nix.conf` during the installation process. 
 
 ### Service Configuration
 
