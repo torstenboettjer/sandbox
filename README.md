@@ -91,7 +91,7 @@ Referencing a application in the `home.packages` also installs additional softwa
   ];
 ```
 
-The package section also allows to enhance the shell with small scripts. E.g. a "project \<name\>" pulls the code from a project repository, which allows DevOps team to rely on the version control system for the onboarding of new members. It should be mentioned that there are alternatives to define a default set of tools and services in nix, e.g. [Flakey](https://github.com/lf-/flakey-profile), which provides less automation but more control.
+The package section also allows to enhance the shell with small scripts. E.g. a "project \<name\>" pulls the code from a project repository, which allows DevOps team to rely on the version control system for the onboarding of new members. It should be mentioned though that home manager is not the only option to define a default set of development tools and services with nix, e.g. [Flakey](https://github.com/lf-/flakey-profile), which provides less automation but more control.
 
 
 ### Platform Composition
