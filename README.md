@@ -108,13 +108,12 @@ The development of system templates is simplified using **[direnv](https://diren
 direnv allow
 ```
 
-Entering a directory for the first time, a flag needs to be set, that allows direnv to monitor chnages in the configuration and to load the defined tools automatically. It checks for the existence of a .envrc file and if the file exists, the defined variables are captured and made available in the current shell. Nix supports multiple concepts of separating environment definitions, and direnv only requires a rerference to the configuration file in .envrc. Developing services, engineers need the freedom determine a platform configuration together with the system configuration. Therefore `devenv.nix` file combines platform configurations and system definitions in a single file. Once the templates are complete and the configuration is tested, platform components are moved into a flake and *.envrc* is extended
+Entering a directory for the first time, a flag needs to be set, that allows direnv to monitor chnages in the configuration and to load the defined tools automatically. It checks for the existence of a .envrc file and if the file exists, the defined variables are captured and made available in the current shell. Nix supports multiple concepts of separating environment definitions, and direnv only requires a rerference to the configuration file in .envrc. Developing services, engineers need the freedom determine a platform configuration together with the system configuration. Therefore `devenv.nix` file combines platform configurations and system definitions in a single file. 
 
 ```sh
 echo "use flake" >> .envrc
 ```
-
-Flakes are still classified as experimental feature, a respective flag is appended to `/etc/nix/nix.conf` during the installation. 
+Once the templates are complete and the configuration is tested, platform components can be moved into a flake and *.envrc* is extended. Flakes are still classified as experimental feature, a respective flag is appended to `/etc/nix/nix.conf` during the installation. 
 
 ### Service Configuration
 
