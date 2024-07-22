@@ -4,6 +4,7 @@ let
   homedir = "/home/_USRNAME_";
   projectdir = "${homedir}/projects";
   gituser = "_GHUSER_";
+  projecttpl = "${gituser}/template";
   gitemail = "_GHEMAIL_";
 in
 {
