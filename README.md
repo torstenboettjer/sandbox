@@ -8,7 +8,7 @@ Declarative package managers like [Guix](https://guix.gnu.org/) or [Nix](https:/
 
 ### Development Environment
 
-The layered architecture of the sandbox enables system engineers to develop service blueprints without prescribing an infrastructure platform or an operating model. Development tools are employed independently from platform components and service configurations. Engineers avoid implicit dependencies on orchestrators and/or packaging mechansims. Application developers retain the freedom to employ system software, while service operator regain full control over the technology platform - even if it is partially outsourced to a cloud provider. The development process is decentralized, configuration templates are shared via git repositories, external services can be integrated, sharing dotfiles enables administrators to manage accounts and secrets without unveiling them. 
+The layered architecture of the sandbox enables system engineers to develop service blueprints without prescribing an infrastructure platform or an operating model. Development tools are employed independently from platform components and service configurations. Application developers retain the freedom to employ system software, while service operator regain full control over the technology platform - even if it is partially outsourced to a cloud provider. The service design avoids implicit dependencies on orchestrators and/or packaging mechansims. While the development process is decentralized, configuration templates are shared via git repositories. External services can be integrated, sharing dotfiles which enables administrators to provide accounts and secrets in a controled fashion. 
 
 ![Technology Stack](./img/techStack.drawio.svg)
 
