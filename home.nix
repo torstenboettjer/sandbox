@@ -117,7 +117,7 @@ in
         rust-lang.rust-analyzer
         serayuzgur.crates
         njpwerner.autodocstring
-        team.vscode-icons
+        # team.vscode-icons
         dandric.vscode-jq
       ];
     };
