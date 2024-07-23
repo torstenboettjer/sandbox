@@ -118,7 +118,7 @@ in
         serayuzgur.crates
         njpwerner.autodocstring
         # team.vscode-icons
-        dandric.vscode-jq
+        # dandric.vscode-jq
       ];
     };
     jq.enable = true;     # https://jqlang.github.io/jq/
