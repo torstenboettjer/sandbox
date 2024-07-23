@@ -111,14 +111,11 @@ in
         github.copilot-chat
         ritwickdey.liveserver
         ms-vscode.makefile-tools
-        # neo4j-extensions.neo4j-for-vscode
         jnoortheen.nix-ide
         esbenp.prettier-vscode
         rust-lang.rust-analyzer
-        serayuzgur.crates
+        fill-labs.dependi
         njpwerner.autodocstring
-        # team.vscode-icons
-        # dandric.vscode-jq
       ];
     };
     jq.enable = true;     # https://jqlang.github.io/jq/
