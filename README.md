@@ -131,6 +131,9 @@ clippy, rust-formater
 devenv up
 ```
 
+* devenv test
+* devenv container build
+
 Will create the following files in a given repository: `.envrc, devenv.nix, devenv.yaml, .gitignore`. The nix file contains the system software and platform components, required to build an applications. Because the configuration is declarative, the entire system configuration is replicated over git repositories, which allows match the lifecycle and the technical requirements of the application code or binaries. Instantiation is triggered through "actions", configurations are shared across teams.
 
 ## Contribution
