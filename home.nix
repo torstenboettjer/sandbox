@@ -111,7 +111,7 @@ in
         github.copilot-chat
         ritwickdey.liveserver
         ms-vscode.makefile-tools
-        neo4j-extensions.neo4j-for-vscode
+        # neo4j-extensions.neo4j-for-vscode
         jnoortheen.nix-ide
         esbenp.prettier-vscode
         rust-lang.rust-analyzer
