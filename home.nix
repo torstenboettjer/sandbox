@@ -102,6 +102,24 @@ in
       enable = true; # https://code.visualstudio.com/
       package = pkgs.vscode;
       enableUpdateCheck = false;
+      extensions = with pkgs.vscode-extensions; [
+        dracula-theme.theme-dracula
+        yzhang.markdown-all-in-one
+        redhat.vscode-yaml
+        hediet.vscode-drawio
+        github.copilot
+        github.copilot-chat
+        ritwickdey.liveserver
+        ms-vscode.makefile-tools
+        neo4j-extensions.neo4j-for-vscode
+        jnoortheen.nix-ide
+        esbenp.prettier-vscode
+        rust-lang.rust-analyzer
+        serayuzgur.crates
+        njpwerner.autodocstring
+        team.vscode-icons
+        dandric.vscode-jq
+      ];
     };
     jq.enable = true;     # https://jqlang.github.io/jq/
     fzf.enable = true;    # https://github.com/junegunn/fzf
