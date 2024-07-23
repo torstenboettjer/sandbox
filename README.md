@@ -119,6 +119,14 @@ Once the templates are complete and the configuration is tested, platform compon
 
 **[Devenv.sh](https://devenv.sh/)** is a configuration tool that allows engineers to define development environments declaratively by toggling basic options for nix and process-compose. Devenv leverages Nix to create reproducible development environments, it is an extension of the Nix ecosystem, tailored for development workflows. A development environment is defined by creating a directory, setting up a git repository, and sharing the repository with other developers via Github.
 
+**Process**
+1.  Select a runtime
+2.  Define the processes
+(e.g. watch directory for changes and run a program - cargo watch)
+3. Define Precommit Hooks
+clippy, rust-formater
+
+
 ```sh
 devenv up
 ```
