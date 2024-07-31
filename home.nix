@@ -35,7 +35,7 @@ in
   home.packages = with pkgs; [
     devenv       # https://devenv.sh/
     gnumake      # https://www.gnu.org/software/make/manual/make.html
-    udocker      # https://indigo-dc.gitbook.io/udocker
+    # udocker      # https://indigo-dc.gitbook.io/udocker
     # lunarvim   # https://www.lunarvim.org/
     # zed-editor # https://zed.dev/
 
