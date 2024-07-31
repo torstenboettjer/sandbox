@@ -113,10 +113,6 @@ in
         ritwickdey.liveserver
         ms-vscode.makefile-tools
         jnoortheen.nix-ide
-        esbenp.prettier-vscode
-        rust-lang.rust-analyzer
-        fill-labs.dependi
-        njpwerner.autodocstring
       ];
     };
     jq.enable = true;     # https://jqlang.github.io/jq/
