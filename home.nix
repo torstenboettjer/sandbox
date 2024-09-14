@@ -30,14 +30,17 @@ in
   # release notes.
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
+  # Set the backup file extension
+  # home-manager.backupFileExtension = "backup";
+
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
     devenv       # https://devenv.sh/
     gnumake      # https://www.gnu.org/software/make/manual/make.html
-    # udocker      # https://indigo-dc.gitbook.io/udocker
+    element-desktop
+    tgpt #https://github.com/aandrew-me/tgpt
     # lunarvim   # https://www.lunarvim.org/
-    # zed-editor # https://zed.dev/
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -76,7 +79,7 @@ in
 
         # Create the new remote repository on GitHub
         gh repo create "${gituser}/$PROJECTNAME" --private
-  
+
         # Check if the repository was created successfully
         if [ $? -ne 0 ]; then
             echo "Failed to create the remote repository on GitHub."
@@ -98,10 +101,26 @@ in
   ];
 
   programs = {
-    direnv.enable = true; # https://direnv.net/
+    direnv = { # https://direnv.net/
+        enable = true;
+        enableBashIntegration = true; # see note on other shells below
+        nix-direnv.enable = true;
+    };
+    git = {
+      enable = true;
+      userName = gituser;
+      userEmail = gitemail;
+    };
+    jq.enable = true;     # https://jqlang.github.io/jq/
+    fzf.enable = true;    # https://github.com/junegunn/fzf
+    gh.enable = true;     # https://cli.github.com/manual/
+    chromium = {
+      enable = true;
+      package = pkgs.google-chrome;
+    };
     vscode = {
       enable = true; # https://code.visualstudio.com/
-      package = pkgs.vscode;
+      package = pkgs.vscode.fhs;
       enableUpdateCheck = false;
       extensions = with pkgs.vscode-extensions; [
         dracula-theme.theme-dracula
@@ -113,12 +132,19 @@ in
         ritwickdey.liveserver
         ms-vscode.makefile-tools
         jnoortheen.nix-ide
+        esbenp.prettier-vscode
+        rust-lang.rust-analyzer
+        fill-labs.dependi
+        njpwerner.autodocstring
+        continue.continue
       ];
     };
-    jq.enable = true;     # https://jqlang.github.io/jq/
-    fzf.enable = true;    # https://github.com/junegunn/fzf
-    gh.enable = true;     # https://cli.github.com/manual/
+    bash.enable = true;
   };
+
+  imports = [
+    ./captivebrowser.nix
+  ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -153,24 +179,6 @@ in
   #
   home.sessionVariables = {
     # EDITOR = "emacs";
-  };
-
-  # Configure git
-  programs = {
-    git = {
-      enable = true;
-      userName = gituser;
-      userEmail = gitemail;
-    };
-
-    # uncomment the following lines to use nix-direnv (handle with care, the original .bashrc will be replaced with a symbolic link)
-    # direnv = {
-    #   enable = true;
-    #   enableBashIntegration = true; # see note on other shells below
-    #   nix-direnv.enable = true;
-    # };
-
-    # bash.enable = true;
   };
 
   # Let Home Manager install and manage itself.
