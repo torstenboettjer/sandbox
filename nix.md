@@ -1,5 +1,7 @@
 # NixOS Installation
 
+Channel Intro: https://jorel.dev/NixOS4Noobs/channels
+
 ## Update channels
 
 ```bash
