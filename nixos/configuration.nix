@@ -117,6 +117,9 @@
 
   # List services that you want to enable:
 
+  # https://wiki.nixos.org/wiki/Ollama
+  services.ollama.enable = true;
+
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
