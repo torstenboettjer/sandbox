@@ -41,6 +41,17 @@ Adding allowed users to [configuration.nix](https://nixos.org/manual/nixos/stabl
 nix.settings.trusted-users = [ "root" "@wheel" ];
 ```
 
+Run the install script
+```nix
+nix-shell '<home-manager>' -A install
+```
+
+Add home-manager to the profile
+
+```sh
+echo '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> ~/.profile
+```
+
 System und home-manager upgrade:
 
 ```sh
