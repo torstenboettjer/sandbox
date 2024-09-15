@@ -1,7 +1,7 @@
 # NixOS Installation
 
 
-## Update channels
+## Prepare the system
 
 [Channel Intro](https://jorel.dev/NixOS4Noobs/channels)
 
@@ -32,18 +32,20 @@ Channelsrefresh (root und der user)
 sudo nix-channel --update && nix-channel --update
 ```
 
-Adding allowed users to [configuration.nix](https://nixos.org/manual/nixos/stable/options.html#opt-nix.settings.allowed-users)
-
-```nix
-nix.settings.trusted-users = [ "root" "@wheel" ];
-```
-
 System und home-manager upgrade:
 
 ```sh
 sudo nixos-rebuild switch && home-manager switch 
 ```
 
+## Install Home-Manager
+
+
+Adding allowed users to [configuration.nix](https://nixos.org/manual/nixos/stable/options.html#opt-nix.settings.allowed-users)
+
+```nix
+nix.settings.trusted-users = [ "root" "@wheel" ];
+```
 
 Housekeeping (!):
 ```nix
