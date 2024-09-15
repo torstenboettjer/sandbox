@@ -34,6 +34,10 @@ sudo nix-channel --update && nix-channel --update
 
 Adding allowed users to [configuration.nix](https://nixos.org/manual/nixos/stable/options.html#opt-nix.settings.allowed-users)
 
+```nix
+nix.settings.trusted-users = [ "root" "@wheel" ];
+```
+
 System und home-manager upgrade:
 
 ```sh
@@ -42,12 +46,12 @@ sudo nixos-rebuild switch && home-manager switch
 
 
 Housekeeping (!):
-```sh
+```nix
 nix-system-clean(){ sudo nix-env --delete-generations old; sudo nix-store --gc --print-roots | egrep -v "^(/nix/var|/run/\w+-system|\{memory|/proc)"; sudo nix-collect-garbage -d; sudo nix-store --optimise; sudo nixos-rebuild boot; }
 ```
 und
 
-```sh
+```nix
 nix-user-clean(){ nix-env --delete-generations old; nix-store --gc --print-roots | egrep -v "^(/nix/var|/run/\w+-system|\{memory|/proc)"; nix-collect-garbage -d; }
 ```
 
