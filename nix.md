@@ -32,6 +32,8 @@ Channelsrefresh (root und der user)
 sudo nix-channel --update && nix-channel --update
 nix-channel --update && nix-channel --update
 ```
+**Adding allowed users to *configuration.nix***
+https://nixos.org/manual/nixos/stable/options.html#opt-nix.settings.allowed-users
 
 System und home-manager upgrade:
 
