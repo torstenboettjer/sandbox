@@ -32,12 +32,6 @@ Channelsrefresh (root und der user)
 sudo nix-channel --update && nix-channel --update
 ```
 
-System und home-manager upgrade:
-
-```sh
-sudo nixos-rebuild switch && home-manager switch 
-```
-
 ## Install Home-Manager
 
 
@@ -47,7 +41,15 @@ Adding allowed users to [configuration.nix](https://nixos.org/manual/nixos/stabl
 nix.settings.trusted-users = [ "root" "@wheel" ];
 ```
 
-Housekeeping (!):
+System und home-manager upgrade:
+
+```sh
+sudo nixos-rebuild switch && home-manager switch 
+```
+
+
+## Housekeeping
+
 ```nix
 nix-system-clean(){ sudo nix-env --delete-generations old; sudo nix-store --gc --print-roots | egrep -v "^(/nix/var|/run/\w+-system|\{memory|/proc)"; sudo nix-collect-garbage -d; sudo nix-store --optimise; sudo nixos-rebuild boot; }
 ```
