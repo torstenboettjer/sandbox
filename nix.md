@@ -1,5 +1,5 @@
 # NixOS Installation
-
+For the base install, download the latest [NixOS](https://nixos.org/download/#download-nixos) image and create a bootable USB [flash drive](https://nixos.org/manual/nixos/stable/index.html#sec-booting-from-usb). 
 
 ## Prepare the system
 
