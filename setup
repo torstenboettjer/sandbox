@@ -118,7 +118,7 @@ main() {
   clone_repo
   install_home_manager
   create_config
-  write_config
+  # write_config
   # activate_direnv
   # output_credentials
   # exec "${SHELL}" && eval "$(direnv hook bash)"
