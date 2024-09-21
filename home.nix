@@ -114,10 +114,10 @@ in
     jq.enable = true;     # https://jqlang.github.io/jq/
     fzf.enable = true;    # https://github.com/junegunn/fzf
     gh.enable = true;     # https://cli.github.com/manual/
-    chromium = {
-      enable = true;
-      package = pkgs.google-chrome;
-    };
+    # chromium = {
+    #   enable = true;
+    #   package = pkgs.google-chrome;
+    # };
     vscode = {
       enable = true; # https://code.visualstudio.com/
       package = pkgs.vscode.fhs;
