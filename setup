@@ -39,7 +39,7 @@ create_config() {
 
 
   # create a new home manager generation
-  # cd "$TOOLSDIR/" && home-manager switch -b backup --flake .#"$USER"
+  cd "$TOOLSDIR/" && home-manager switch -b backup --flake .#"$USER"
 }
 
 install_lix() {
@@ -118,10 +118,10 @@ main() {
   clone_repo
   install_home_manager
   create_config
-  # write_config
-  # activate_direnv
-  # output_credentials
-  # exec "${SHELL}" && eval "$(direnv hook bash)"
+  write_config
+  activate_direnv
+  output_credentials
+  exec "${SHELL}" && eval "$(direnv hook bash)"
 }
 
 # Call the "main" function with all the command-line arguments
