@@ -39,7 +39,7 @@ create_config() {
 
 
   # create a new home manager generation
-  cd "$TOOLSDIR/" && home-manager switch -b backup --flake .#"$USER"
+  # cd "$TOOLSDIR/" && home-manager switch -b backup --flake .#"$USER"
 }
 
 install_lix() {
