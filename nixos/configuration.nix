@@ -10,9 +10,12 @@
     <nixos-hardware/apple/macbook-pro/14-1>
       ./hardware-configuration.nix
       ./config/powersave.nix
+      # ./config/captivebrowser.nix
     ];
 
   hardware.firmware = [ pkgs.linux-firmware ];
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -30,7 +33,11 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+    };
+  };
 
   nix.settings.trusted-users = [ "root" "@wheel" ];
 
@@ -45,9 +52,6 @@
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
-  # Wayland support for chromium and vsc
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
@@ -59,10 +63,16 @@
   # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
 
+  # Preserve display manager configuration at restart
+  systemd.services.display-manager.restartIfChanged = false;
+
+  # Wayland support for chromium and vsc
+  # environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # only required for the MBP 14-1 configuration
+  # MBP configuration
   systemd.services.disable-nvme-d3cold = {
     description = "Disables d3cold on the NVME controller";
     before      = [ "suspend.target" ];
@@ -90,8 +100,8 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.torsten = {
     isNormalUser = true;
-    home = "/home/_USRNAME_";
-    description = "_FIRSTandLASTNAME_";
+    home = "/home/torsten";
+    description = "Torsten Boettjer";
     extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       firefox
@@ -102,9 +112,10 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
-    zed-editor # https://zed.dev/
+    # zed-editor # https://zed.dev/
+    rustup
+    gcc
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -117,11 +128,11 @@
 
   # List services that you want to enable:
 
-  # https://wiki.nixos.org/wiki/Ollama
-  services.ollama.enable = true;
-
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
+
+  # https://ollama.com/
+  services.ollama.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -152,5 +163,4 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "24.05"; # Did you read the comment?
-
 }
