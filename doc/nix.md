@@ -52,13 +52,6 @@ Add home-manager to the profile
 echo '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> ~/.profile
 ```
 
-System und home-manager upgrade:
-
-```sh
-sudo nixos-rebuild switch && home-manager switch 
-```
-
-
 ## Housekeeping
 
 ```nix
@@ -70,4 +63,8 @@ und
 nix-user-clean(){ nix-env --delete-generations old; nix-store --gc --print-roots | egrep -v "^(/nix/var|/run/\w+-system|\{memory|/proc)"; nix-collect-garbage -d; }
 ```
 
+## System und home-manager upgrade:
 
+```sh
+sudo nixos-rebuild switch && home-manager switch 
+```
