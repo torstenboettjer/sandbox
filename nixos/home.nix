@@ -57,6 +57,7 @@ in
     gnomeExtensions.lan-ip-address
     gnomeExtensions.printers
     gnomeExtensions.vitals
+    gnomeExtensions.desktop-icons-ng-ding
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -134,6 +135,108 @@ in
       enable = true;
       package = pkgs.google-chrome;
     };
+    foot = {
+        enable = true;
+        package = pkgs.foot;
+        settings = { # Examples: https://codeberg.org/dnkl/foot/src/branch/master/foot.ini
+          main = {
+            # shell=$SHELL (if set, otherwise user's default shell from /etc/passwd)
+            term = "foot";
+            app-id = "foot"; # globally set wayland app-id. Default values are "foot" and "footclient" for desktop and server mode
+            title = "foot";
+            locked-title = "no";
+            font = "monospace:size=11";
+            # font=monospace:size=8
+            # font-bold = <bold variant of regular font>
+            # font-italic = <italic variant of regular font>
+            # font-bold-italic = <bold+italic variant of regular font>
+            # font-size-adjustment = 0.5
+            # line-height = <font metrics>
+            # letter-spacing = 0
+            # horizontal-letter-offset = 0
+            # vertical-letter-offset = 0
+            # underline-offset = <font metrics>
+            # underline-thickness = <font underline thickness>
+            # strikeout-thickness = <font strikeout thickness>
+            # box-drawings-uses-font-glyphs = "no"
+            # dpi-aware = "no"
+
+            initial-window-size-pixels = "1920x1536";
+            # initial-window-size-chars=<COLSxROWS>
+            initial-window-mode= "windowed";
+            pad = "5x5";   # optionally append 'center'
+            resize-by-cells = "yes";
+            # resize-keep-grid = "yes";
+            # resize-delay-ms=100
+
+            # bold-text-in-bright=no
+            # word-delimiters=,│`|:"'()[]{}<>
+          };
+
+          environment = {
+            name = "NixOS";
+          };
+
+          cursor = {
+            color = "111111 cccccc";
+          };
+
+          colors = {
+            #alpha = 1.0;
+            #background = "282c34";
+            #foreground = "9da39d";
+            #flash = "90b061";
+            #flash-alpha = 0.5;
+            foreground = "979eab";
+            background = "282c34";
+            regular0 = "282c34";   # black
+            regular1 = "e06c75";   # red
+            regular2 = "98c379";   # green
+            regular3 = "e5c07b";   # yellow
+            regular4 = "61afef";   # blue
+            regular5 = "be5046";   # magenta
+            regular6 = "56b6c2";   # cyan
+            regular7 = "979eab";   # white
+            bright0 = "393e48";    # bright black
+            bright1 = "d19a66";    # bright red
+            bright2 = "56b6c2";    # bright green
+            bright3 = "e5c07b";    # bright yellow
+            bright4 = "61afef";    # bright blue
+            bright5 = "be5046";    # bright magenta
+            bright6 = "56b6c2";    # bright cyan
+            bright7 = "abb2bf";    # bright white
+            # selection-foreground = "282c34";
+            # selection-background = "979eab";
+          };
+
+          scrollback = {
+          lines = 1000;
+          # multiplier=3.0;
+          indicator-position = "relative";
+          # indicator-format="";
+          };
+
+          mouse = {
+            hide-when-typing = "yes";
+          };
+
+          csd = {
+            # preferred=server
+            size = 26;
+            font = "monspace";
+            color = "32363e";
+            hide-when-maximized = "no";
+            double-click-to-maximize = "yes";
+            border-width = 1;
+            border-color = "5c6370";
+            button-width = 26;
+            button-color = "abb2bf";
+            button-minimize-color = "292d34";
+            button-maximize-color = "292d34";
+            button-close-color = "c678dd";
+          };
+        };
+    };
     zed-editor = {
       enable = true;
       #package = pkgs.zed-editor;
@@ -195,7 +298,7 @@ in
       };
     };
     vscode = {
-      enable = true; # https://code.visualstudio.com/
+      enable = true; # https://code.visualstudio.com/.visualstudio.com/
       package = pkgs.vscode-fhs;
       enableUpdateCheck = false;
       extensions = with pkgs.vscode-extensions; [
@@ -218,6 +321,12 @@ in
         "editor.fontFamily" = "'Jetbrains Mono', 'monospace'";
         "workbench.colorTheme" = "Atomize";
         "git.autofetch" = true;
+        "autoDocstring.docstringFormat" = "google";
+        "dependi.go.enabled" = true;
+        "dependi.rust.enabled" = true;
+        "dependi.python.enabled" = true;
+        "liveServer.settings.port" = 5500;
+        "nix.enableLanguageServer" = false;
         };
     };
     bash.enable = true;
