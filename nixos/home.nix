@@ -199,6 +199,7 @@ in
       package = pkgs.vscode-fhs;
       enableUpdateCheck = false;
       extensions = with pkgs.vscode-extensions; [
+        emroussel.atomize-atom-one-dark-theme
         yzhang.markdown-all-in-one
         redhat.vscode-yaml
         ritwickdey.liveserver
@@ -215,7 +216,7 @@ in
         # General
         "window.titleBarStyle" = "custom";
         "editor.fontFamily" = "'Jetbrains Mono', 'monospace'";
-        "workbench.colorTheme" = "Atom One Dark";
+        "workbench.colorTheme" = "Atomize";
         "git.autofetch" = true;
         };
     };
