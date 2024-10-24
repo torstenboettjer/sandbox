@@ -43,9 +43,10 @@ in
     devenv       # https://devenv.sh/
     gnumake      # https://www.gnu.org/software/make/manual/make.html
     element-desktop
-    tgpt #https://github.com/aandrew-me/tgpt
+    nixd # https://github.com/nix-community/nixd.git
+    tgpt # https://github.com/aandrew-me/tgpt
     # lunarvim   # https://www.lunarvim.org/
-    zed-editor # https://zed-editor.org/
+    # zed-editor # https://zed-editor.org/
 
     # Gonme extensions
     gnomeExtensions.arcmenu
@@ -133,6 +134,66 @@ in
       enable = true;
       package = pkgs.google-chrome;
     };
+    zed-editor = {
+      enable = true;
+      #package = pkgs.zed-editor;
+      extensions = [ "rainbow-csv" "sql" "gemini" "nix" "graphql" "python" "rust" "xy-zed" "make" "marksman" "yaml"];
+      userKeymaps = [{
+        context = "Workspace";
+        bindings = {
+          ctrl-shift-t = "workspace::NewTerminal";
+        };
+      }];
+      userSettings = {
+        features = {
+          copilot = false;
+          inline_completion_provider = "supermaven";
+        };
+        telemetry = {
+          metrics = false;
+        };
+        vim_mode = false;
+        assistant = {
+          default_model = {
+            provider = "openai";
+            model = "gpt-4o";
+          };
+          version = "2";
+          default_open_ai_model = null;
+          provider = {
+            name = "openai";
+            default_model = "gpt-3.5-turbo";
+          };
+        };
+        inlay_hints = {
+          enabled = true;
+          show_type_hints = true;
+          show_parameter_hints = true;
+          show_other_hints = true;
+        };
+        lsp = {
+          rust-analyzer = {
+            binary = {
+              path = "{pkgs.rust-analyzer}/bin/rust-analyzer";
+            };
+            initialization_options = {
+              inlayHints = {
+                maxLength = null;
+                lifetimeElisionHints = {
+                  enable = "skip_trivial";
+                  useParameterNames = true;
+                };
+                closureReturnTypeHints = {
+                  enable = "always";
+                };
+              };
+            };
+          };
+        };
+        ui_font_size = 16;
+        buffer_font_size = 16;
+      };
+    };
     vscode = {
       enable = true; # https://code.visualstudio.com/
       package = pkgs.vscode-fhs;
@@ -153,8 +214,9 @@ in
       userSettings = {
         # General
         "window.titleBarStyle" = "custom";
-        "editor.fontFamily" = "'Jetbrains Mono', 'monospace', monospace";
+        "editor.fontFamily" = "'Jetbrains Mono', 'monospace'";
         "workbench.colorTheme" = "Atom One Dark";
+        "git.autofetch" = true;
         };
     };
     bash.enable = true;
