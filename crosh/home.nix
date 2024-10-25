@@ -1,11 +1,12 @@
 { config, pkgs, lib, ... }:
 let
-  username = "_USRNAME_";
-  homedir = "/home/_USRNAME_";
-  projectdir = "${homedir}/projects";
-  gituser = "_GHUSER_";
+  username = "torsten";
+  homedir = "/home/${username}";
+  projectdir = "${homedir}/ditio";
+  gituser = "torstenboettjer";
+  gitorg = "ditiocloud";
   projecttpl = "${gituser}/template";
-  gitemail = "_GHEMAIL_";
+  gitemail = "torsten.boettjer@gmail.com";
 in
 {
   # On Generic Linux (non NixOS)
@@ -28,7 +29,7 @@ in
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "24.05"; # Please read the comment before changing.
+  home.stateVersion = "24.11"; # Please read the comment before changing.
 
   # Set the backup file extension
   # home-manager.backupFileExtension = "backup";
@@ -38,9 +39,9 @@ in
   home.packages = with pkgs; [
     devenv       # https://devenv.sh/
     gnumake      # https://www.gnu.org/software/make/manual/make.html
-    element-desktop
-    tgpt #https://github.com/aandrew-me/tgpt
-    # lunarvim   # https://www.lunarvim.org/
+    tgpt         # https://github.com/aandrew-me/tgpt
+    lunarvim     # https://www.lunarvim.org/
+    nano
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -64,11 +65,11 @@ in
       fi
 
       # Check whether sync repo already exist
-      if [ $(gh api repos/${gituser}/$PROJECTNAME --silent --include 2>&1 | grep -Eo 'HTTP/[0-9\.]+ [0-9]{3}' | awk '{print $2}') -eq 200 ]; then
+      if [ $(gh api repos/${gitorg}/$PROJECTNAME --silent --include 2>&1 | grep -Eo 'HTTP/[0-9\.]+ [0-9]{3}' | awk '{print $2}') -eq 200 ]; then
         echo "cloning the existing $PROJECTNAME project ..."
 
         # Clone the project repository with gh
-        gh repo clone ${gituser}/$PROJECTNAME ${projectdir}/$PROJECTNAME
+        gh repo clone ${gitorg}/$PROJECTNAME ${projectdir}/$PROJECTNAME
       else
         #create a new repository from a template
 
@@ -78,7 +79,7 @@ in
         gh repo clone ${projecttpl} ${projectdir}/$PROJECTNAME
 
         # Create the new remote repository on GitHub
-        gh repo create "${gituser}/$PROJECTNAME" --private
+        gh repo create "${gitorg}/$PROJECTNAME" --private
 
         # Check if the repository was created successfully
         if [ $? -ne 0 ]; then
@@ -89,18 +90,19 @@ in
         # unlink the template remote repository
         cd ${projectdir}/$PROJECTNAME && git remote remove origin
 
-        # Add "${gituser}/$PROJECTNAME" as new remote repository
-        cd ${projectdir}/$PROJECTNAME && git remote add origin "https://github.com/${gituser}/$PROJECTNAME.git" && git push --set-upstream origin main
+        # Add "${gitorg}/$PROJECTNAME" as new remote repository
+        cd ${projectdir}/$PROJECTNAME && git remote add origin "https://github.com/${gitorg}/$PROJECTNAME.git" && git push --set-upstream origin main
       fi
 
       # Verify the new remote setup
       cd ${projectdir}/$PROJECTNAME && git remote -v
 
-      echo "Remote repository: https://github.com/${gituser}/$PROJECTNAME.git"
+      echo "Remote repository: https://github.com/${gitorg}/$PROJECTNAME.git"
     '')
   ];
 
   programs = {
+    home-manager.enable = true; # Let home-manager install and manage itself
     direnv = { # https://direnv.net/
         enable = true;
         enableBashIntegration = true; # see note on other shells below
@@ -114,21 +116,112 @@ in
     jq.enable = true;     # https://jqlang.github.io/jq/
     fzf.enable = true;    # https://github.com/junegunn/fzf
     gh.enable = true;     # https://cli.github.com/manual/
-    # chromium = {
-    #   enable = true;
-    #   package = pkgs.google-chrome;
-    # };
+    foot = {
+        enable = true;
+        package = pkgs.foot;
+        settings = { # Examples: https://codeberg.org/dnkl/foot/src/branch/master/foot.ini
+          main = {
+            # shell=$SHELL (if set, otherwise user's default shell from /etc/passwd)
+            term = "foot";
+            app-id = "foot"; # globally set wayland app-id. Default values are "foot" and "footclient" for desktop and server mode
+            title = "foot";
+            locked-title = "no";
+            font = "monospace:size=11";
+            # font=monospace:size=8
+            # font-bold = <bold variant of regular font>
+            # font-italic = <italic variant of regular font>
+            # font-bold-italic = <bold+italic variant of regular font>
+            # font-size-adjustment = 0.5
+            # line-height = <font metrics>
+            # letter-spacing = 0
+            # horizontal-letter-offset = 0
+            # vertical-letter-offset = 0
+            # underline-offset = <font metrics>
+            # underline-thickness = <font underline thickness>
+            # strikeout-thickness = <font strikeout thickness>
+            # box-drawings-uses-font-glyphs = "no"
+            # dpi-aware = "no"
+
+            initial-window-size-pixels = "1920x1536";
+            # initial-window-size-chars=<COLSxROWS>
+            initial-window-mode= "windowed";
+            pad = "5x5";   # optionally append 'center'
+            resize-by-cells = "yes";
+            # resize-keep-grid = "yes";
+            # resize-delay-ms=100
+
+            # bold-text-in-bright=no
+            # word-delimiters=,│`|:"'()[]{}<>
+          };
+
+          cursor = {
+            color = "111111 cccccc";
+          };
+
+          colors = {
+            #alpha = 1.0;
+            #background = "282c34";
+            #foreground = "9da39d";
+            #flash = "90b061";
+            #flash-alpha = 0.5;
+            foreground = "979eab";
+            background = "282c34";
+            regular0 = "282c34";   # black
+            regular1 = "e06c75";   # red
+            regular2 = "98c379";   # green
+            regular3 = "e5c07b";   # yellow
+            regular4 = "61afef";   # blue
+            regular5 = "be5046";   # magenta
+            regular6 = "56b6c2";   # cyan
+            regular7 = "979eab";   # white
+            bright0 = "393e48";    # bright black
+            bright1 = "d19a66";    # bright red
+            bright2 = "56b6c2";    # bright green
+            bright3 = "e5c07b";    # bright yellow
+            bright4 = "61afef";    # bright blue
+            bright5 = "be5046";    # bright magenta
+            bright6 = "56b6c2";    # bright cyan
+            bright7 = "abb2bf";    # bright white
+            # selection-foreground = "282c34";
+            # selection-background = "979eab";
+          };
+
+          scrollback = {
+          lines = 1000;
+          # multiplier=3.0;
+          indicator-position = "relative";
+          # indicator-format="";
+          };
+
+          mouse = {
+            hide-when-typing = "yes";
+          };
+
+          csd = {
+            # preferred=server
+            size = 26;
+            font = "monspace";
+            color = "32363e";
+            hide-when-maximized = "no";
+            double-click-to-maximize = "yes";
+            border-width = 1;
+            border-color = "5c6370";
+            button-width = 26;
+            button-color = "abb2bf";
+            button-minimize-color = "292d34";
+            button-maximize-color = "292d34";
+            button-close-color = "c678dd";
+          };
+        };
+    };      
     vscode = {
-      enable = true; # https://code.visualstudio.com/
-      package = pkgs.vscode.fhs;
+      enable = true; # https://code.visualstudio.com/.visualstudio.com/
+      package = pkgs.vscode;
       enableUpdateCheck = false;
       extensions = with pkgs.vscode-extensions; [
-        dracula-theme.theme-dracula
+        emroussel.atomize-atom-one-dark-theme
         yzhang.markdown-all-in-one
         redhat.vscode-yaml
-        hediet.vscode-drawio
-        github.copilot
-        github.copilot-chat
         ritwickdey.liveserver
         ms-vscode.makefile-tools
         jnoortheen.nix-ide
@@ -137,10 +230,32 @@ in
         fill-labs.dependi
         njpwerner.autodocstring
         continue.continue
+        mechatroner.rainbow-csv
       ];
+      # Settings
+      userSettings = {
+        # General
+        "window.titleBarStyle" = "custom";
+        "workbench.colorTheme" = "Atomize";
+        "git.autofetch" = true;
+        "autoDocstring.docstringFormat" = "google";
+        "dependi.go.enabled" = true;
+        "dependi.rust.enabled" = true;
+        "dependi.python.enabled" = true;
+        "liveServer.settings.port" = 5500;
+        "nix.enableLanguageServer" = false;
+        };
     };
     bash.enable = true;
   };
+
+  #nixpkgs.config = {
+  #  allowUnfree = true;
+    # Workaround for https://github.com/nix-community/home-manager/issues/2942
+  #  allowUnfreePredicate = _: true;
+  #};
+  # Nicely reload system units when changing configs
+  systemd.user.startServices = "sd-switch";
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -173,10 +288,4 @@ in
   #
   #  /etc/profiles/per-user/torsten/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = {
-    # EDITOR = "emacs";
-  };
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
 }
