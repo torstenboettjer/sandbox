@@ -304,6 +304,7 @@ in
       extensions = with pkgs.vscode-extensions; [
         emroussel.atomize-atom-one-dark-theme
         yzhang.markdown-all-in-one
+        mechatroner.rainbow-csv
         redhat.vscode-yaml
         ritwickdey.liveserver
         ms-vscode.makefile-tools
