@@ -26,12 +26,6 @@ nix-channel --list
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 ```
 
-Channelsrefresh (root und der user)
-
-```sh
-sudo nix-channel --update && nix-channel --update
-```
-
 ## Install Home-Manager
 
 
@@ -61,6 +55,12 @@ und
 
 ```nix
 nix-user-clean(){ nix-env --delete-generations old; nix-store --gc --print-roots | egrep -v "^(/nix/var|/run/\w+-system|\{memory|/proc)"; nix-collect-garbage -d; }
+```
+
+## Channel Refresh (root und der user)
+
+```sh
+sudo nix-channel --update && nix-channel --update
 ```
 
 ## System und home-manager upgrade:
