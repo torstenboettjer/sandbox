@@ -42,7 +42,7 @@ in
   home.packages = with pkgs; [
     devenv       # https://devenv.sh/
     gnumake      # https://www.gnu.org/software/make/manual/make.html
-    element-desktop
+    element-desktop-wayland   # https://element.io/
     nixd # https://github.com/nix-community/nixd.git
     tgpt # https://github.com/aandrew-me/tgpt
     # lunarvim   # https://www.lunarvim.org/
@@ -116,6 +116,22 @@ in
       echo "Remote repository: https://github.com/${gitorg}/$PROJECTNAME.git"
     '')
   ];
+
+  xdg.desktopEntries.element-desktop-wayland = {
+      name = "element-desktop-wayland";
+      genericName = "Matrix Client";
+      exec = "element-desktop -- %u";
+      terminal = false;
+      icon = "element-desktop";
+  };
+
+  xdg.desktopEntries.foot = {
+      name = "foot";
+      genericName = "Terminal";
+      exec = "foot -- %u";
+      terminal = false;
+      icon = "foot";
+  };
 
   programs = {
     direnv = { # https://direnv.net/
