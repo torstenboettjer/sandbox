@@ -4,6 +4,11 @@
 
 { config, lib, pkgs, ... }:
 
+let
+  monitorsXmlContent = builtins.readFile /home/torsten/.config/monitors.xml;
+  monitorsConfig = pkgs.writeText "gdm_monitors.xml" monitorsXmlContent;
+in
+
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -44,6 +49,11 @@
   # needed for store VS Code auth token
   services.gnome.gnome-keyring.enable = true;
 
+  # Monitor settings for entry screen
+  systemd.tmpfiles.rules = [
+    "L+ /run/gdm/.config/monitors.xml - - - - ${monitorsConfig}"
+  ];
+
   # Select internationalisation properties.
   # i18n.defaultLocale = "en_US.UTF-8";
   # console = {
@@ -51,6 +61,9 @@
   #   keyMap = "us";
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
+
+  # Enable experimental features
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
