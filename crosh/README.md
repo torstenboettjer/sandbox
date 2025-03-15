@@ -19,5 +19,5 @@ nix run \
 
 ```sh
 nix-channel --update
-nix-env --upgrade --attr devenv -f https://github.com/NixOS/nixpkgs/tarball/nixpkgs-unstable
+home-manager switch
 ```
