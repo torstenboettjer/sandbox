@@ -1,69 +1,82 @@
 # Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
+# your system.  Help is available in the configuration.nix(5) man page
+# and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   monitorsXmlContent = builtins.readFile /home/torsten/.config/monitors.xml;
-  monitorsConfig = pkgs.writeText "gdm_monitors.xml" monitorsXmlContent;
+  # monitorsConfig = pkgs.writeText "gdm_monitors.xml" monitorsXmlContent;
 in
 
 {
   imports =
     [ # Include the results of the hardware scan.
-    <nixos-hardware/apple/macbook-pro/14-1>
       ./hardware-configuration.nix
       ./config/powersave.nix
-      # ./config/captivebrowser.nix
     ];
 
-  hardware.firmware = [ pkgs.linux-firmware ];
+  hardware.firmware = [
+    pkgs.linux-firmware
+  ];
+  hardware.enableAllFirmware=true;
+  hardware.enableRedistributableFirmware = true;
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
+  hardware.alsa.enablePersistence = true;
 
-  # Use the systemd-boot EFI boot loader.
+  boot.extraModprobeConfig = ''
+    options snd-intel-dspcfg dsp_driver=3
+    options i915 enable_dpcd_backlight=1
+  '';
+
+  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "xmobile"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  # Enable Realtek audio card on chromebook
 
-  # Set your time zone.
-  time.timeZone = "Europe/Amsterdam";
+  networking.hostName = "lindar"; # Define your hostname.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-    };
-  };
+  # Enable networking
+  networking.networkmanager.enable = true;
 
+  # Set your time zone.
+  time.timeZone = "Europe/Amsterdam";
+
+  # Set trusted users
   nix.settings.trusted-users = [ "root" "@wheel" ];
 
   # needed for store VS Code auth token
   services.gnome.gnome-keyring.enable = true;
 
   # Monitor settings for entry screen
-  systemd.tmpfiles.rules = [
-    "L+ /run/gdm/.config/monitors.xml - - - - ${monitorsConfig}"
-  ];
-
-  # Select internationalisation properties.
-  # i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
+  #systemd.tmpfiles.rules = [
+    #"L+ /run/gdm/.config/monitors.xml - - - - ${monitorsConfig}"
+  #];
 
   # Enable experimental features
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "nl_NL.UTF-8";
+    LC_IDENTIFICATION = "nl_NL.UTF-8";
+    LC_MEASUREMENT = "nl_NL.UTF-8";
+    LC_MONETARY = "nl_NL.UTF-8";
+    LC_NAME = "nl_NL.UTF-8";
+    LC_NUMERIC = "nl_NL.UTF-8";
+    LC_PAPER = "nl_NL.UTF-8";
+    LC_TELEPHONE = "nl_NL.UTF-8";
+    LC_TIME = "nl_NL.UTF-8";
+  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -73,62 +86,62 @@ in
   services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
+  services.xserver.xkb = {
+    layout = "de";
+    variant = "nodeadkeys";
+  };
+
+  # Configure console keymap
+  console.keyMap = "de-latin1-nodeadkeys";
 
   # Preserve display manager configuration at restart
   systemd.services.display-manager.restartIfChanged = false;
 
-  # Wayland support for chromium and vsc
-  # environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # MBP configuration
-  systemd.services.disable-nvme-d3cold = {
-    description = "Disables d3cold on the NVME controller";
-    before      = [ "suspend.target" ];
-    path        = [ pkgs.bash pkgs.coreutils ];
-    serviceConfig.Type = "oneshot";
-    serviceConfig.ExecStart = "${./disable-nvme-d3cold.sh}";
-    serviceConfig.TimeoutSec = 0;
-    wantedBy = [ "multi-user.target" "suspend.target" ];
+  # services.pulseaudio.enable = true;
+
+  # Enable sound with pipewire.
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    audio.enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = false;
+    wireplumber.enable = true;
   };
 
-  # Enable sound.
-  # hardware.pulseaudio.enable = true;
-  # OR
-  # services.pipewire = {
-  #   enable = true;
-  #   pulse.enable = true;
-  # };
-
   # Enable touchpad support (enabled default in most desktopManager).
-  services.libinput.enable = true;
-
-  # Enable dynamic link libraries for VSCODE
-  programs.nix-ld.enable = true;
+  # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.torsten = {
     isNormalUser = true;
-    home = "/home/torsten";
     description = "Torsten Boettjer";
-    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      firefox
-      tree
+    #  thunderbird
     ];
   };
+
+  # Install firefox.
+  programs.firefox.enable = true;
+  programs.captive-browser = {
+    enable = true;
+    interface = "wlp0s20f3";
+  };
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
-    # zed-editor # https://zed.dev/
-    rustup
-    gcc
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -144,36 +157,17 @@ in
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
-  # https://ollama.com/
-  services.ollama.enable = true;
-
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  # system.copySystemConfiguration = true;
-
-  # This option defines the first version of NixOS you have installed on this particular machine,
-  # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
-  #
-  # Most users should NEVER change this value after the initial install, for any reason,
-  # even if you've upgraded your system to a new NixOS release.
-  #
-  # This value does NOT affect the Nixpkgs version your packages and OS are pulled from,
-  # so changing it will NOT upgrade your system - see https://nixos.org/manual/nixos/stable/#sec-upgrading for how
-  # to actually do that.
-  #
-  # This value being lower than the current NixOS release does NOT mean your system is
-  # out of date, out of support, or vulnerable.
-  #
-  # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
-  # and migrated your data accordingly.
-  #
-  # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = "24.05"; # Did you read the comment?
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "24.11"; # Did you read the comment?
 }
