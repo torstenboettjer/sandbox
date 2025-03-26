@@ -1,11 +1,9 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, ... }:
 let
   username = "torsten";
   homedir = "/home/${username}";
-  projectdir = "${homedir}/ditio";
   gituser = "torstenboettjer";
-  gitorg = "ditiocloud";
-  projecttpl = "${gituser}/template";
+  #gitorg = "rescile";
   gitemail = "torsten.boettjer@gmail.com";
 in
 {
@@ -29,24 +27,20 @@ in
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "24.05"; # Please read the comment before changing.
+  home.stateVersion = "24.11"; # Please read the comment before changing.
 
   # Set the backup file extension
   # home-manager.backupFileExtension = "backup";
-
-  # Import external Nix files
-  imports = ["${homedir}/.config/home-manager/tools/captivebrowser.nix"];
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
     devenv       # https://devenv.sh/
     gnumake      # https://www.gnu.org/software/make/manual/make.html
-    element-desktop-wayland   # https://element.io/
     nixd # https://github.com/nix-community/nixd.git
     tgpt # https://github.com/aandrew-me/tgpt
-    # lunarvim   # https://www.lunarvim.org/
-    # zed-editor # https://zed-editor.org/
+    lunarvim   # https://www.lunarvim.org/
+    gdrive3    # https://github.com/glotlabs/gdrive
 
     # Gonme extensions
     gnomeExtensions.arcmenu
@@ -68,71 +62,7 @@ in
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'mysbx' to your
     # # environment:
-    (writeShellScriptBin "project" ''
-      # capture the project name with a first argument
-      PROJECTNAME=$1
-
-      # check whether the project directory already exists locally
-      if [ -d ${projectdir}/$PROJECTNAME ]; then
-          echo "Project directory already exists! Attempting to clone ..."
-      else
-        # create projects directory if it doesn't exist
-        mkdir -p ${projectdir} && cd ${projectdir}
-      fi
-
-      # Check whether sync repo already exist
-      if [ $(gh api repos/${gitorg}/$PROJECTNAME --silent --include 2>&1 | grep -Eo 'HTTP/[0-9\.]+ [0-9]{3}' | awk '{print $2}') -eq 200 ]; then
-        echo "cloning the existing $PROJECTNAME project ..."
-
-        # Clone the project repository with gh
-        gh repo clone ${gitorg}/$PROJECTNAME ${projectdir}/$PROJECTNAME
-      else
-        #create a new repository from a template
-
-        echo "Creating the $PROJECTNAME project from template ${projecttpl} ..."
-
-        # Clone the project template repository with gh
-        gh repo clone ${projecttpl} ${projectdir}/$PROJECTNAME
-
-        # Create the new remote repository on GitHub
-        gh repo create "${gitorg}/$PROJECTNAME" --private
-
-        # Check if the repository was created successfully
-        if [ $? -ne 0 ]; then
-            echo "Failed to create the remote repository on GitHub."
-            exit 1
-        fi
-
-        # unlink the template remote repository
-        cd ${projectdir}/$PROJECTNAME && git remote remove origin
-
-        # Add "${gitorg}/$PROJECTNAME" as new remote repository
-        cd ${projectdir}/$PROJECTNAME && git remote add origin "https://github.com/${gitorg}/$PROJECTNAME.git" && git push --set-upstream origin main
-      fi
-
-      # Verify the new remote setup
-      cd ${projectdir}/$PROJECTNAME && git remote -v
-
-      echo "Remote repository: https://github.com/${gitorg}/$PROJECTNAME.git"
-    '')
   ];
-
-  xdg.desktopEntries.element-desktop-wayland = {
-      name = "element-desktop-wayland";
-      genericName = "Matrix Client";
-      exec = "element-desktop -- %u";
-      terminal = false;
-      icon = "element-desktop";
-  };
-
-  xdg.desktopEntries.foot = {
-      name = "foot";
-      genericName = "Terminal";
-      exec = "foot -- %u";
-      terminal = false;
-      icon = "foot";
-  };
-
   programs = {
     direnv = { # https://direnv.net/
         enable = true;
@@ -147,111 +77,28 @@ in
     jq.enable = true;     # https://jqlang.github.io/jq/
     fzf.enable = true;    # https://github.com/junegunn/fzf
     gh.enable = true;     # https://cli.github.com/manual/
+    ghostty = {
+      enable = true;
+      enableZshIntegration = true;
+      settings = {
+        background-blur-radius = 20;
+        theme = "catppuccin-mocha";
+        #theme = "dark:catppuccin-mocha,light:catppuccin-latte";
+        window-theme = "ghostty";
+        #background-opacity = 0.8;
+        minimum-contrast = 1.1;
+        font-family = "Arimo";
+        font-size = 10;
+        keybind = [
+          "ctrl+h=goto_split:left"
+          "ctrl+l=goto_split:right"
+        ];
+        copy-on-select = "clipboard";
+      };
+    };  # https://ghostty.org/
     chromium = {
       enable = true;
       package = pkgs.google-chrome;
-    };
-    foot = {
-        enable = true;
-        package = pkgs.foot;
-        settings = { # Examples: https://codeberg.org/dnkl/foot/src/branch/master/foot.ini
-          main = {
-            # shell=$SHELL (if set, otherwise user's default shell from /etc/passwd)
-            term = "foot";
-            app-id = "foot"; # globally set wayland app-id. Default values are "foot" and "footclient" for desktop and server mode
-            title = "foot";
-            locked-title = "no";
-            font = "monospace:size=11";
-            # font=monospace:size=8
-            # font-bold = <bold variant of regular font>
-            # font-italic = <italic variant of regular font>
-            # font-bold-italic = <bold+italic variant of regular font>
-            # font-size-adjustment = 0.5
-            # line-height = <font metrics>
-            # letter-spacing = 0
-            # horizontal-letter-offset = 0
-            # vertical-letter-offset = 0
-            # underline-offset = <font metrics>
-            # underline-thickness = <font underline thickness>
-            # strikeout-thickness = <font strikeout thickness>
-            # box-drawings-uses-font-glyphs = "no"
-            # dpi-aware = "no"
-
-            initial-window-size-pixels = "1920x1536";
-            # initial-window-size-chars=<COLSxROWS>
-            initial-window-mode= "windowed";
-            pad = "5x5";   # optionally append 'center'
-            resize-by-cells = "yes";
-            # resize-keep-grid = "yes";
-            # resize-delay-ms=100
-
-            # bold-text-in-bright=no
-            # word-delimiters=,│`|:"'()[]{}<>
-          };
-
-          environment = {
-            name = "NixOS";
-          };
-
-          cursor = {
-            color = "111111 cccccc";
-          };
-
-          colors = {
-            #alpha = 1.0;
-            #background = "282c34";
-            #foreground = "9da39d";
-            #flash = "90b061";
-            #flash-alpha = 0.5;
-            foreground = "979eab";
-            background = "282c34";
-            regular0 = "282c34";   # black
-            regular1 = "e06c75";   # red
-            regular2 = "98c379";   # green
-            regular3 = "e5c07b";   # yellow
-            regular4 = "61afef";   # blue
-            regular5 = "be5046";   # magenta
-            regular6 = "56b6c2";   # cyan
-            regular7 = "979eab";   # white
-            bright0 = "393e48";    # bright black
-            bright1 = "d19a66";    # bright red
-            bright2 = "56b6c2";    # bright green
-            bright3 = "e5c07b";    # bright yellow
-            bright4 = "61afef";    # bright blue
-            bright5 = "be5046";    # bright magenta
-            bright6 = "56b6c2";    # bright cyan
-            bright7 = "abb2bf";    # bright white
-            # selection-foreground = "282c34";
-            # selection-background = "979eab";
-          };
-
-          scrollback = {
-          lines = 1000;
-          # multiplier=3.0;
-          indicator-position = "relative";
-          # indicator-format="";
-          };
-
-          mouse = {
-            hide-when-typing = "yes";
-          };
-
-          csd = {
-            # preferred=server
-            size = 26;
-            font = "monspace";
-            color = "32363e";
-            hide-when-maximized = "no";
-            double-click-to-maximize = "yes";
-            border-width = 1;
-            border-color = "5c6370";
-            button-width = 26;
-            button-color = "abb2bf";
-            button-minimize-color = "292d34";
-            button-maximize-color = "292d34";
-            button-close-color = "c678dd";
-          };
-        };
     };
     zed-editor = {
       enable = true;
@@ -264,6 +111,11 @@ in
         };
       }];
       userSettings = {
+        theme = {
+            mode = "dark";
+            light = "Catppuccin Latte";
+            dark = "Catppuccin Mocha";
+        };
         features = {
           copilot = false;
           inline_completion_provider = "supermaven";
@@ -273,16 +125,24 @@ in
         };
         vim_mode = false;
         assistant = {
-          default_model = {
-            provider = "openai";
-            model = "gpt-4o";
-          };
-          version = "2";
-          default_open_ai_model = null;
-          provider = {
-            name = "openai";
-            default_model = "gpt-3.5-turbo";
-          };
+            enabled = true;
+            version = "2";
+            default_open_ai_model = null;
+            ### PROVIDER OPTIONS
+            ### zed.dev models { claude-3-5-sonnet-latest } requires github connected
+            ### anthropic models { claude-3-5-sonnet-latest claude-3-haiku-latest claude-3-opus-latest  } requires API_KEY
+            ### copilot_chat models { gpt-4o gpt-4 gpt-3.5-turbo o1-preview } requires github connected
+            default_model = {
+                provider = "zed.dev";
+                model = "claude-3-5-sonnet-latest";
+            };
+
+            # inline_alternatives = [
+            #   {
+            #     provider = "copilot_chat";
+            #     model = "gpt-3.5-turbo";
+            #   }
+            # ];
         };
         inlay_hints = {
           enabled = true;
@@ -290,25 +150,26 @@ in
           show_parameter_hints = true;
           show_other_hints = true;
         };
-        lsp = {
-          rust-analyzer = {
-            binary = {
-              path = "{pkgs.rust-analyzer}/bin/rust-analyzer";
-            };
-            initialization_options = {
-              inlayHints = {
-                maxLength = null;
-                lifetimeElisionHints = {
-                  enable = "skip_trivial";
-                  useParameterNames = true;
-                };
-                closureReturnTypeHints = {
-                  enable = "always";
-                };
-              };
-            };
-          };
-        };
+        # lsp = {
+        #   rust-analyzer = {
+        #     binary = {
+        #       path = "{pkgs.rust-analyzer}/bin/rust-analyzer";
+        #     };
+        #     initialization_options = {
+        #       inlayHints = {
+        #         maxLength = null;
+        #         lifetimeElisionHints = {
+        #           enable = "skip_trivial";
+        #           useParameterNames = true;
+        #         };
+        #         closureReturnTypeHints = {
+        #           enable = "always";
+        #         };
+        #       };
+        #     };
+        #   };
+        # };
+        ui_font_family = "Arimo";
         ui_font_size = 16;
         buffer_font_size = 16;
       };
@@ -316,8 +177,8 @@ in
     vscode = {
       enable = true; # https://code.visualstudio.com/.visualstudio.com/
       package = pkgs.vscode-fhs;
-      enableUpdateCheck = false;
-      extensions = with pkgs.vscode-extensions; [
+      profiles.default.enableUpdateCheck = false;
+      profiles.default.extensions = with pkgs.vscode-extensions; [
         emroussel.atomize-atom-one-dark-theme
         yzhang.markdown-all-in-one
         mechatroner.rainbow-csv
@@ -329,10 +190,9 @@ in
         rust-lang.rust-analyzer
         fill-labs.dependi
         njpwerner.autodocstring
-        continue.continue
       ];
       # Settings
-      userSettings = {
+      profiles.default.userSettings = {
         # General
         "window.titleBarStyle" = "custom";
         "editor.fontFamily" = "'Jetbrains Mono', 'monospace'";
@@ -430,10 +290,6 @@ in
   #
   #  /etc/profiles/per-user/torsten/etc/profile.d/hm-session-vars.sh
   #
-
-  home.sessionVariables = {
-      NIXOS_OZONE_WL = "1"; # For using VS Code and Brave under Wayland
-    };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
