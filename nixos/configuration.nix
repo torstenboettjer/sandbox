@@ -13,7 +13,7 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./config/powersave.nix
+      ./modules/powersave.nix
     ];
 
   hardware.firmware = [
@@ -142,6 +142,7 @@ in
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
+    home-manager
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

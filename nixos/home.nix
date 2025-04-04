@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 let
   username = "torsten";
   homedir = "/home/${username}";
@@ -41,6 +41,7 @@ in
     tgpt # https://github.com/aandrew-me/tgpt
     lunarvim   # https://www.lunarvim.org/
     gdrive3    # https://github.com/glotlabs/gdrive
+    inputs.claude-desktop.packages.${pkgs.system}.default
 
     # Gonme extensions
     gnomeExtensions.arcmenu
