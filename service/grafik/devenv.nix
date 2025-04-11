@@ -11,6 +11,7 @@
     inkscape
     scribus
     krita
+    gephi
   ];
 
   # https://devenv.sh/languages/
