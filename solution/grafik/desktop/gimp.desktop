@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=GIMP
+Exec=/home/torsten/.nix-profile/bin/gimp %U
+GenericName=Image Editor
+Icon=/home/torsten/.nix-profile/share/icons/hicolor/scalable/apps/gimp.svg
+X-GNOME-FullName=Image Editor
+Comment=GNU Image Manipulation Program
+Categories=Graphics;2DGraphics;RasterGraphics;Photography;
+Terminal=false
+MimeType=image/bmp;image/gif;image/jpeg;image/png;image/svg+xml;image/tiff;image/x-xcf;application/postscript;application/pdf;
+StartupNotify=true
+Keywords=Photo;Image;Editing;Graphics;Design;GIMP;

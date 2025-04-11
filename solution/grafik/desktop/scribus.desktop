@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Scribus
+Exec=/home/torsten/.nix-profile/bin/scribus %F
+GenericName=Desktop Publishing Application
+Icon=/home/torsten/.nix-profile/share/icons/hicolor/scalable/apps/scribus.svg
+Comment=Open-source Desktop Publishing Software
+Categories=Office;Publishing;Graphics;
+Terminal=false
+MimeType=application/vnd.scribus;application/pdf;image/png;image/jpeg;image/tiff;
+StartupNotify=true
+Keywords=Publishing;Layout;Design;Desktop Publishing;DTP;Scribus;

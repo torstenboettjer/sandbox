@@ -1,0 +1,20 @@
+[Desktop Entry]
+Name=Visual Studio Code
+Comment=Code Editing. Redefined.
+GenericName=Text Editor
+X-GNOME-FullName=Visual Studio Code Editor
+Exec=/home/torsten/.nix-profile/bin/code %u
+Terminal=false
+Icon=/home/torsten/.nix-profile/share/icons/hicolor/scalable/apps/code.svg
+Type=Application
+StartupNotify=false
+StartupWMClass=Code
+Categories=Utility;TextEditor;Development;IDE;
+MimeType=text/plain;inode/directory;
+Actions=new-empty-window;
+Keywords=vscode;
+
+[Desktop Action new-empty-window]
+Name=New Empty Window
+Exec=/usr/share/code/code --no-sandbox --new-window %F
+Icon=com.visualstudio.code
