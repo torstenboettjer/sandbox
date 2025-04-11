@@ -8,7 +8,7 @@ A layered architecture allows system engineers to design service blueprints that
 
 ## System Configuration
 
-The sandbox utilizes a package manager, such as [Nix](https://github.com/NixOS/nix), [Lix](https://lix.systems/) or [Tvix](https://tvix.dev/), to assemble a set of solution components. Packages load additional software without providing configuration options. Nix packages are listed at the [package directory](https://search.nixos.org/packages) and the command `nix-env -qaP` provides a list incl. available attributes for sripting. `Override` and `overrideAttrs` functions enable engineers to build packages from source by processing attributes like `src`, `buildInputs`, `makeFlags`, etc.. Some packages use overrides for fine-tuning like a [fonts package](https://search.nixos.org/packages?channel=unstable&show=nerdfonts&from=0&size=50&sort=relevance&type=packages&query=nerdfonts) that allows to filter default list of fonts, what saves time and space. Engineers define [system configurations](https://nix.dev/tutorials/packaging-existing-software.html) using declarative files, ensuring isolated dependencies and creating clean, reproducible systems without the overhead of virtual machines or containers. The functional [programming language](https://nix.dev/tutorials/nix-language.html) defines and automates provisioning processes for specialized systems via executable templates. 
+The sandbox utilizes a package manager, such as [Nix](https://github.com/NixOS/nix), [Lix](https://lix.systems/) or [Tvix](https://tvix.dev/), to assemble a set of solution components. Packages load additional software without providing configuration options. Nix packages are listed at the [package directory](https://search.nixos.org/packages) and the command `nix-env -qaP` provides a list incl. available attributes for sripting. `Override` and `overrideAttrs` functions enable engineers to build packages from source by processing attributes like `src`, `buildInputs`, `makeFlags`, etc.. Some packages use overrides for fine-tuning like a [fonts package](https://search.nixos.org/packages?channel=unstable&show=nerdfonts&from=0&size=50&sort=relevance&type=packages&query=nerdfonts) that allows to filter default list of fonts, what saves time and space. Engineers define [system configurations](https://nix.dev/tutorials/packaging-existing-software.html) using declarative files, ensuring isolated dependencies and creating clean, reproducible systems without the overhead of virtual machines or containers. The functional [programming language](https://nix.dev/tutorials/nix-language.html) defines and automates provisioning processes for specialized systems via executable templates. The package section also enhances the shell with shell scripts for the command line (CLI). 
 
 ```ǹix
 home.packages = with pkgs; [
@@ -27,12 +27,6 @@ Service composition base templates are managed using [**Home-Manager**](https://
 
 
 Home manager is extended with [**Direnv**](https://direnv.net/), a tool that extends default- with user specific configurationa and dynamically loads or unloads system configurations based on directory changes. Nix's virtual filesystem ensures dependency isolation between software packages, enhancing stability. Direnv uses the .envrc file to reference configurations that automatically trigger provisioning. Upon entering a directory for the first time, a flag must be set to allow Direnv to monitor configuration changes and load the defined tools. Subsequently, Direnv checks for the .envrc file and, if present, makes the defined variables available in the current shell. While Nix offers various methods for separating environment definitions, Direnv only requires a reference to the configuration file within .envrc.
-
-
-
-
-
-The package section also enhances the shell with small scripts. E.g. the "project \<name\>" command pulls the code from a project repository. DevOps team can rely on a version control system for the onboarding of new members, which makes it easier to collaborate with external resources in an enterprise environment. It should be mentioned that home-manager is not the only extension that can be used to define a default set of tools, [Flakey](https://github.com/lf-/flakey-profile) is another option, which provides less automation but more control.
 
 ### Development Tools
 
