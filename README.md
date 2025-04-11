@@ -8,80 +8,33 @@ A layered architecture allows system engineers to design service blueprints that
 
 ## System Configuration
 
-The sandbox utilizes a package manager, such as [Nix](https://github.com/NixOS/nix), [Lix](https://lix.systems/) or [Tvix](https://tvix.dev/), to assemble a set of solution components. Engineers define [system configurations](https://nix.dev/tutorials/packaging-existing-software.html) using declarative files, ensuring isolated dependencies and creating clean, reproducible systems without the overhead of virtual machines or containers. The functional [programming language](https://nix.dev/tutorials/nix-language.html) defines and automates provisioning processes for specialized systems via executable templates. At its core, the sandbox employs a minimal Linux operating system, providing only essential hardware communication components. A dynamic package loader, governed by application platform requirements, then adds necessary packages using templates, eliminating the need for external orchestrators, custom packaging, or specific communication patterns. This approach allows operations teams to centrally manage system designs while delegating deployment, and to track and revert system configurations like immutable artifacts, all without abstracting the runtime environment, network, or storage interfaces. The default system is a NixOS server, however access to a Linux container like the [Windows Subsystem](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS Shell](https://chromeos.dev/en/linux) is sufficient. Virtual environments require enough space to cache the platform components, a minimum size of *80 to 120GB* is recommended. Nevertheless, this really depends on the number and the complexity of the service blueprints that are being developed. MacOS users can either rely on a virtual to maintain an isolated subsystem or utilize to [Nix Darwin](https://github.com/LnL7/nix-darwin) project. 
+The sandbox utilizes a package manager, such as [Nix](https://github.com/NixOS/nix), [Lix](https://lix.systems/) or [Tvix](https://tvix.dev/), to assemble a set of solution components. Packages load additional software without providing configuration options. Nix packages are listed at the [package directory](https://search.nixos.org/packages) and the command `nix-env -qaP` provides a list incl. available attributes for sripting. `Override` and `overrideAttrs` functions enable engineers to build packages from source by processing attributes like `src`, `buildInputs`, `makeFlags`, etc.. Some packages use overrides for fine-tuning like a [fonts package](https://search.nixos.org/packages?channel=unstable&show=nerdfonts&from=0&size=50&sort=relevance&type=packages&query=nerdfonts) that allows to filter default list of fonts, what saves time and space. 
+
+```ǹix
+home.packages = with pkgs; [
+  devenv       # https://devenv.sh/
+  gnumake      # https://www.gnu.org/software/make/manual/make.html
+  # lunarvim   # https://www.lunarvim.org/
+  # zed-editor # https://zed.dev/
+];
+```
+
+Engineers define [system configurations](https://nix.dev/tutorials/packaging-existing-software.html) using declarative files, ensuring isolated dependencies and creating clean, reproducible systems without the overhead of virtual machines or containers. The functional [programming language](https://nix.dev/tutorials/nix-language.html) defines and automates provisioning processes for specialized systems via executable templates. At its core, the sandbox employs a minimal Linux operating system, providing only essential hardware communication components. A dynamic package loader, governed by application platform requirements, then adds necessary packages using templates, eliminating the need for external orchestrators, custom packaging, or specific communication patterns. This approach allows operations teams to centrally manage system designs while delegating deployment, and to track and revert system configurations like immutable artifacts, all without abstracting the runtime environment, network, or storage interfaces. The default system is a NixOS server, however access to a Linux container like the [Windows Subsystem](https://learn.microsoft.com/en-us/windows/wsl/about) or [ChromeOS Shell](https://chromeos.dev/en/linux) is sufficient. Virtual environments require enough space to cache the platform components, a minimum size of *80 to 120GB* is recommended. Nevertheless, this really depends on the number and the complexity of the service blueprints that are being developed. MacOS users can either rely on a virtual to maintain an isolated subsystem or utilize to [Nix Darwin](https://github.com/LnL7/nix-darwin) project. 
 
 ## Service Composition
 
-Service composition base templates are managed using [**Home-Manager**](https://nix-community.github.io/home-manager/), a tool that allows users to declaratively manage their home directory including environment settings. It provides a structured way to organize and maintain dotfiles for various applications that reside in a user's home directory and enables the installation of solution-specific software packages, separate from system-wide installations to support customized software environments that do affecting the system configuration. Home manager is extended with [**Direnv**](https://direnv.net/), a tool that extends default- with user specific configurationa and dynamically loads or unloads system configurations based on directory changes. Nix's virtual filesystem ensures dependency isolation between software packages, enhancing stability. Direnv uses the .envrc file to reference configurations that automatically trigger provisioning. Upon entering a directory for the first time, a flag must be set to allow Direnv to monitor configuration changes and load the defined tools. Subsequently, Direnv checks for the .envrc file and, if present, makes the defined variables available in the current shell. While Nix offers various methods for separating environment definitions, Direnv only requires a reference to the configuration file within .envrc.
+Service composition base templates are managed using [**Home-Manager**](https://nix-community.github.io/home-manager/), a tool that allows users to declaratively manage their home directory including environment settings. It provides a structured way to organize and maintain dotfiles for various applications that reside in a user's home directory and enables the installation of solution-specific software packages, separate from system-wide installations to support customized software environments that do affecting the system configuration. Home manager supports two ways of deploying applications, programs and packages. For a develoment environment `programs` are the prefered method, nix modules that install the software and configure system wide features. Home manager [option search](https://home-manager-options.extranix.com/) lists all available programs for engineers.
 
-### Development Tools
 
-A standard toolset in system engineering is an enabler for long term quality and maintainability of the infrastructure code. In the sandbox it is activated using **[Home-manager](https://nix-community.github.io/home-manager/)**, a nix extension that configures user environments through the `home.nix` file. Home manager supports two ways of deploying applications, programs and packages. For a develoment environment `programs` are the prefered method, nix modules that install the software and configure system wide features. Home manager [option search](https://home-manager-options.extranix.com/) lists all available programs for engineers.
+Home manager is extended with [**Direnv**](https://direnv.net/), a tool that extends default- with user specific configurationa and dynamically loads or unloads system configurations based on directory changes. Nix's virtual filesystem ensures dependency isolation between software packages, enhancing stability. Direnv uses the .envrc file to reference configurations that automatically trigger provisioning. Upon entering a directory for the first time, a flag must be set to allow Direnv to monitor configuration changes and load the defined tools. Subsequently, Direnv checks for the .envrc file and, if present, makes the defined variables available in the current shell. While Nix offers various methods for separating environment definitions, Direnv only requires a reference to the configuration file within .envrc.
 
-```ǹix
-  programs = {
-    direnv.enable = true; # https://direnv.net/
 
-    vscode = {
-      enable = true; # https://code.visualstudio.com/
-      package = pkgs.vscodium;
-      enableUpdateCheck = false;
-    };
 
-    jq.enable = true;     # https://jqlang.github.io/jq/
-    fzf.enable = true;    # https://github.com/junegunn/fzf
-    gh.enable = true;     # https://cli.github.com/manual/
-  };
-```
 
-Packages load additional software without providing configuration options. Nix packages are listed at the [package directory](https://search.nixos.org/packages) and the command `nix-env -qaP` provides a list incl. available attributes for sripting. `Override` and `overrideAttrs` functions enable engineers to build packages from source by processing attributes like `src`, `buildInputs`, `makeFlags`, etc.. Some packages use overrides for fine-tuning like a [fonts package](https://search.nixos.org/packages?channel=unstable&show=nerdfonts&from=0&size=50&sort=relevance&type=packages&query=nerdfonts) that allows to filter default list of fonts, what saves time and space. 
-
-```ǹix
-  home.packages = with pkgs; [
-    devenv       # https://devenv.sh/
-    gnumake      # https://www.gnu.org/software/make/manual/make.html
-    # lunarvim   # https://www.lunarvim.org/
-    # zed-editor # https://zed.dev/
-
-    # Override example
-    # (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    (writeShellScriptBin "create_project" ''
-      # capture the project name with a first argument
-      PROJECT=$1
-
-      # Check whether sync repo already exist
-      if [ $(gh api repos/${gituser}/$PROJECT --silent --include 2>&1 | grep -Eo 'HTTP/[0-9\.]+ [0-9]{3}' | awk '{print $2}') -eq 200 ]; then
-        echo "project $PROJECT already exists!"
-      else
-        # Create the new remote repository on GitHub
-        gh repo create "${gituser}/$PROJECT" --private
-  
-        # Check if the repository was created successfully
-        if [ $? -ne 0 ]; then
-            echo "Failed to create the remote repository on GitHub."
-            exit 1
-        fi
-  
-        # create projects directory if it doesn't exist
-        mkdir -p ${projectdir} && cd ${projectdir}
-  
-        # Clone the project repository with gh
-        gh repo clone ${gituser}/$PROJECT
-  
-        # Verify the new remote setup
-        cd ${projectdir}/$PROJECT && git remote -v
-  
-        echo "The $PROJECT repository has been created."
-        echo "Remote repository: https://github.com/${gituser}/$PROJECT.git"
-    fi
-    '')
-  ];
-```
 
 The package section also enhances the shell with small scripts. E.g. the "project \<name\>" command pulls the code from a project repository. DevOps team can rely on a version control system for the onboarding of new members, which makes it easier to collaborate with external resources in an enterprise environment. It should be mentioned that home-manager is not the only extension that can be used to define a default set of tools, [Flakey](https://github.com/lf-/flakey-profile) is another option, which provides less automation but more control.
 
-### Service Configuration
+### Development Tools
 
 **[Devenv.sh](https://devenv.sh/)** is a configuration tool that allows engineers to define development environments declaratively by toggling basic options for nix and process-compose. Devenv leverages Nix to create reproducible development environments, it is an extension of the Nix ecosystem, tailored for development workflows. A development environment is defined by creating a directory, setting up a git repository, and sharing the repository with other developers via Github.
 
