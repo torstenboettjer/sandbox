@@ -12,19 +12,7 @@ The sandbox utilizes a package manager, such as [Nix](https://github.com/NixOS/n
 
 ## Service Composition
 
-Service composition base templates are managed using [**Home-Manager**](https://nix-community.github.io/home-manager/), with [**Direnv**](https://direnv.net/) support added for convenient version control and development-layer blueprint configuration delegation. This setup also serves as a testing ground for integrating new tools. Direnv, a shell extension, dynamically loads and unloads system configurations based on directory changes. Nix's virtual filesystem ensures dependency isolation between software packages, enhancing stability. Direnv uses the .envrc file to reference configurations that automatically trigger provisioning. Upon entering a directory for the first time, a flag must be set to allow Direnv to monitor configuration changes and load the defined tools. Subsequently, Direnv checks for the .envrc file and, if present, makes the defined variables available in the current shell. While Nix offers various methods for separating environment definitions, Direnv only requires a reference to the configuration file within .envrc.
-
-```sh
-direnv allow
-```
-
-
-Developing services, engineers need the freedom determine a platform configuration together with the system configuration. Therefore [devenv.nix](https://github.com/hcops/template/tree/main/devenv.nix) file combines platform configurations and system definitions in a single file. The default project template includes a [PostgreSQL](https://www.postgresql.org/) server and the [Rust toolchain](https://www.rust-lang.org/). 
-
-```sh
-echo "use flake" >> .envrc
-```
-Once the templates are complete and the configuration is tested, platform components can be moved into a flake and *.envrc* is extended, e.g. to store the configuration without development tools in a service catalog and to prepare the deployment on a production system. Flakes are still classified as experimental feature, a respective flag is appended to `/etc/nix/nix.conf` during the installation process. 
+Service composition base templates are managed using [**Home-Manager**](https://nix-community.github.io/home-manager/), a tool that allows users to declaratively manage their home directory including environment settings. It provides a structured way to organize and maintain dotfiles for various applications that reside in a user's home directory and enables the installation of solution-specific software packages, separate from system-wide installations to support customized software environments that do affecting the system configuration. Home manager is extended with [**Direnv**](https://direnv.net/), a tool that extends default- with user specific configurationa and dynamically loads or unloads system configurations based on directory changes. Nix's virtual filesystem ensures dependency isolation between software packages, enhancing stability. Direnv uses the .envrc file to reference configurations that automatically trigger provisioning. Upon entering a directory for the first time, a flag must be set to allow Direnv to monitor configuration changes and load the defined tools. Subsequently, Direnv checks for the .envrc file and, if present, makes the defined variables available in the current shell. While Nix offers various methods for separating environment definitions, Direnv only requires a reference to the configuration file within .envrc.
 
 ### Development Tools
 
