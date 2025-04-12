@@ -1,6 +1,6 @@
 # Engineering Sandbox
 
-> Careful, this repo is Work-in-Progress!
+> Work-in-Progress!
 
 I use this repository to create an engineering sandbox that establishes an isolated, local environment where service developers can build and test integrations between business applications without affecting production systems. The sandbox focuses on solution compositions that model specific business processes. Relying on a declarative package manager, deployment functions are defined in a functional, system-configuration language and distributed through git repositories, what simplifies the transition from development and testing to production. System declarations eliminate the need for configuration and deployment tools like Ansible and Terraform, and do not obligate the use of a platform orchestrators like Kubernetes but empower operators to decide on the optimal delivery method based on the operational context. Unlike traditional infrastructure-as-code and platform automation tools that merge application requirements, system definitions, and implementation instructions in a single code base, system modules keep application requirements separate from system- and cloud-provider dependencies to enable operators enforcing security policies and validating regulatory compliance before launching a service.
 
