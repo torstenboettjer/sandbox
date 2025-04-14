@@ -35,6 +35,13 @@ Home manager is extended with [**Direnv**](https://direnv.net/), a tool that ext
 devenv up
 ```
 
+## Tools
+
+* [NixOS](https://nixos.org/)
+* [Home Manager](https://nix-community.github.io/home-manager/)
+* [Devenv.sh](https://devenv.sh/)
+* [Direnv](https://direnv.net/)
+
 ## Contribution
 * *Add features* If you have an idea for a new feature, please [open an issue](https://github.com/hcops/sandbox/issues/new) to discuss it before creating a pull request.
 * *Report bugs* If you find a bug, please [open an issue](https://github.com/hcops/sandbox/issues/new) with a clear description of the problem.
