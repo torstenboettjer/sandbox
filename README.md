@@ -2,7 +2,14 @@
 
 > Work-in-Progress!
 
-This repository describes the build process for an isolated, local environment where service developers can build and test service compositions for hybrid cloud deployments. The sandbox focuses on solution compositions that model specific business processes. Relying on a declarative package manager, deployment functions are defined in a functional, system-configuration language and distributed through git repositories, what simplifies the transition from development and testing to production. System declarations eliminate the need for configuration and deployment tools like Ansible and Terraform, and do not obligate the use of a platform orchestrators like Kubernetes but empower operators to decide on the optimal delivery method based on the operational context. Unlike traditional infrastructure-as-code and platform automation tools that merge application requirements, system definitions, and implementation instructions in a single code base, system modules keep application requirements separate from system- and cloud-provider dependencies to enable operators enforcing security policies and validating regulatory compliance before launching a service.
+This repository describes the build process for an isolated, local environment where service developers can build and test service compositions for hybrid cloud deployments. The sandbox focuses on solution compositions that model specific business processes. The project aims to address the follwong design principles:
+
+* Independence from any orchestration tools or hosting services that dictate the operating model for a service in production
+* Flexible system configruation that support separate roll-outs using different hardware platforms
+* Package distribution via a chache that provides supply chain control for non-interactive unattended updates
+* Declarative system configurations that enable fast roll back in case of a malfunction 
+
+A declarative package manager like nix enables deployment functions that are defined in a functional, system-configuration language and can be distributed through git repositories. This simplifies code shareing and eases the transition from development and testing to production. System declarations eliminate the need for configuration and deployment tools like Ansible and Terraform, and do not obligate the use of a platform orchestrators like Kubernetes but empower operators to decide on the optimal delivery method based on the operational context. Unlike traditional infrastructure-as-code and platform automation tools that merge application requirements, system definitions, and implementation instructions in a single code base, system modules keep application requirements separate from system- and cloud-provider dependencies to enable operators enforcing security policies and validating regulatory compliance before launching a service.
 
 ![Technology Stack](./img/diagrams-sandbox.drawio.svg)
 
