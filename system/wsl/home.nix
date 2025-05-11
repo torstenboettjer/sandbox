@@ -2,9 +2,7 @@
 let
   username = "_USRNAME_";
   homedir = "/home/_USRNAME_";
-  projectdir = "${homedir}/projects";
   gituser = "_GHUSER_";
-  projecttpl = "${gituser}/template";
   gitemail = "_GHEMAIL_";
 in
 {
@@ -28,7 +26,7 @@ in
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "24.05"; # Please read the comment before changing.
+  home.stateVersion = "24.11"; # Please read the comment before changing.
 
   # Set the backup file extension
   # home-manager.backupFileExtension = "backup";
