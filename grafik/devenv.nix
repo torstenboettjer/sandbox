@@ -5,13 +5,14 @@
   env.GREET = "Desktop Publishing Tools";
 
   # https://devenv.sh/packages/
-  packages = with pkgs; [ 
+  packages = with pkgs; [
     git
     gimp
     inkscape
     scribus
     krita
-    gephi
+    #gephi
+    imagemagick
   ];
 
   # https://devenv.sh/languages/

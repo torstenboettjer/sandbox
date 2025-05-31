@@ -172,13 +172,6 @@ in
     ];
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
-  programs.captive-browser = {
-    enable = true;
-    interface = "wlp0s20f3";
-  };
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -190,7 +183,34 @@ in
     home-manager
     alsa-utils
     pavucontrol
+    direnv
   ];
+
+  # Install firefox.
+  programs.firefox.enable = true;
+
+  # Enable captive browser for public WiFi login
+  programs.captive-browser = {
+    enable = true;
+    interface = "wlp0s20f3";
+  };
+
+  # Use zsh
+  users.defaultUserShell = pkgs.zsh;
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    syntaxHighlighting.enable = true;
+    shellAliases = {
+      ll = "ls -l";
+      edit = "sudo -e";
+      update = "sudo nixos-rebuild switch";
+      # Keep the history for searchability
+      histFile = "/etc/nixos/history";
+    };
+  };
+
+  programs.zsh.interactiveShellInit = ''eval "$(direnv hook zsh)"'';
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

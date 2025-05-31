@@ -1,5 +1,5 @@
 {
-  description = "My NixOS system configuration";
+  description = "NixOS system configuration";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -19,10 +19,11 @@
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
-    nixosConfigurations."lindar" = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.lindar = nixpkgs.lib.nixosSystem {
       system = system;
       modules = [
         ./configuration.nix
+        # ./modules/python-env.nix  # Import my Python module
         home-manager.nixosModules.home-manager
         {
           home-manager.useUserPackages = true;
