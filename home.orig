@@ -29,17 +29,17 @@ in
   # Set the backup file extension
   # home-manager.backupFileExtension = "backup";
 
-  # Import other modules
+  # Import program modules
   imports = [
-    ./modules/programs/obsidian.nix
-    ./modules/programs/claude.nix
+    ./modules/services/github.nix
+    # ./modules/programs/obsidian.nix
+    # ./modules/programs/claude.nix
     ./modules/programs/zed.nix
-    ./modules/programs/vscode.nix
+    # ./modules/programs/vscode.nix
     ./modules/programs/ghostty.nix
-    ./modules/programs/github.nix
     #./modules/programs/gimp.nix
-    ./modules/programs/inkscape.nix
-    ./modules/programs/gephi.nix
+    # ./modules/programs/inkscape.nix
+    # ./modules/programs/gephi.nix
     #./modules/programs/scribus.nix
     #./modules/programs/krita.nix
   ];
@@ -49,10 +49,10 @@ in
   home.packages = with pkgs; [
     devenv       # https://devenv.sh/
     gnumake      # https://www.gnu.org/software/make/manual/make.html
-    nixd # https://github.com/nix-community/nixd.git
-    tgpt # https://github.com/aandrew-me/tgpt
-    lunarvim   # https://www.lunarvim.org/
-    gdrive3    # https://github.com/glotlabs/gdrive
+    nixd         # https://github.com/nix-community/nixd.git
+    tgpt         # https://github.com/aandrew-me/tgpt
+    lunarvim     # https://www.lunarvim.org/
+    gdrive3      # https://github.com/glotlabs/gdrive
     nix-prefetch
     caffeine-ng
 
@@ -97,15 +97,15 @@ in
   dconf.settings = {
     "org/gnome/shell" = {
       disable-user-extensions = false;
-      enabled-extensions = [
-        pkgs.gnomeExtensions.arcmenu.extensionUuid
-        pkgs.gnomeExtensions.bluetooth-quick-connect.extensionUuid
-        pkgs.gnomeExtensions.clipboard-history.extensionUuid
-        pkgs.gnomeExtensions.dash-to-dock.extensionUuid
-        pkgs.gnomeExtensions.gsconnect.extensionUuid
-        pkgs.gnomeExtensions.lan-ip-address.extensionUuid
-        pkgs.gnomeExtensions.printers.extensionUuid
-        pkgs.gnomeExtensions.vitals.extensionUuid
+      enabled-extensions = with pkgs.gnomeExtensions; [
+        arcmenu.extensionUuid
+        bluetooth-quick-connect.extensionUuid
+        clipboard-history.extensionUuid
+        dash-to-dock.extensionUuid
+        gsconnect.extensionUuid
+        lan-ip-address.extensionUuid
+        printers.extensionUuid
+        vitals.extensionUuid
       ];
     };
     "org/gnome/desktop/peripherals/mouse" = {

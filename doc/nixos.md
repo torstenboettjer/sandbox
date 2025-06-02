@@ -1,5 +1,5 @@
 # NixOS Installation
-For the base install, download the latest [NixOS](https://nixos.org/download/#download-nixos) image and create a bootable USB [flash drive](https://nixos.org/manual/nixos/stable/index.html#sec-booting-from-usb). 
+For the base install, download the latest [NixOS](https://nixos.org/download/#download-nixos) image and create a bootable USB [flash drive](https://nixos.org/manual/nixos/stable/index.html#sec-booting-from-usb).
 
 ## Prepare the system
 
@@ -19,7 +19,7 @@ sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
 User:
 
 ```sh
-nix-channel --list 
+nix-channel --list
 ```
 
 ```sh
@@ -70,5 +70,6 @@ sudo nix-channel --update && nix-channel --update
 ## System und home-manager upgrade:
 
 ```sh
-sudo nixos-rebuild switch && home-manager switch 
+cd /etc/nixos && sudo nix flake update
+update
 ```
