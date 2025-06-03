@@ -1,17 +1,17 @@
 # Engineering Sandbox
 
-This repository serves as foundation for operation engineers who aim to share resource compositions for the development of hybrid cloud services. Resource compositions combine hosted applications with application containers that will be deployed in a cloud. The sandbox is build, using NixOS, however runs alos on other platforms like WSL (Windows), CROSH (ChromeOS) or MacOS using the nix package manager.
+This repository provides an opinionated and foundational configuration, designed to empower operations and cloud engineers in effortlessly setting up developer sandboxes. It streamlines the development of hybrid cloud services by enabling clear resource compositions that combine existing hosted applications with containerized applications destined for cloud deployment. While the core sandbox environment is built using NixOS for robust and reproducible setups, its flexibility allows it to run seamlessly across various platforms. Developers can leverage this framework on Windows (via WSL), ChromeOS (via CROSH), and macOS by utilizing the Nix package manager.
 
 #### Design Criteria
 
-* Independence from any orchestration tools or hosting services that dictate the operating model for a service in production
-* Flexible system configruation that support separate roll-outs using different hardware platforms
-* Package distribution via a chache that provides supply chain control for non-interactive unattended updates
-* Declarative system configurations that enable fast roll back in case of a malfunction
+* Independence from any orchestration tools or hosting services that dictate the operating model for a service in production.
+* Flexible system configuration enabling independent rollouts across diverse hardware platforms.
+* Secure package distribution via a cache, ensuring supply chain control for non-interactive, unattended updates.
+* Declarative system configurations that enable fast roll back in case of a malfunction.
 
 ## Technology Stack
 
-The nix packet manager enables software deployments through a functional system-configuration language and can be distributed through git repositories. This simplifies code shareing and eases the transition from development and testing to production. System declarations eliminate the need for configuration and deployment tools like Ansible and Terraform, and do not obligate the use of a platform orchestrators like Kubernetes but empower operators to decide on the optimal delivery method based on the operational context. Unlike traditional infrastructure-as-code and platform automation tools that merge application requirements, system definitions, and implementation instructions in a single code base, system modules keep application requirements separate from system- and cloud-provider dependencies to enable operators enforcing security policies and validating regulatory compliance before launching a service.
+The nix packet manager enables software deployments through a functional system-configuration language and can be distributed through git repositories. This simplifies code sharing and eases the transition from development and testing to production. System declarations eliminate the need for configuration and deployment tools like Ansible and Terraform, and do not obligate the use of a platform orchestrators like Kubernetes but empower operators to decide on the optimal delivery method based on the operational context. Unlike traditional infrastructure-as-code and platform automation tools that merge application requirements, system definitions, and implementation instructions in a single code base, system modules keep application requirements separate from system- and cloud-provider dependencies to enable operators enforcing security policies and validating regulatory compliance before launching a service.
 
 ![Technology Stack](./doc/img/diagrams-sandbox.drawio.svg)
 
@@ -50,11 +50,6 @@ devenv up
 * [Home Manager](https://nix-community.github.io/home-manager/)
 * [Devenv.sh](https://devenv.sh/)
 * [Direnv](https://direnv.net/)
-
-Hardware Tips:
-1. Chromebook EFI Flash with [Firmware Utility](https://docs.mrchromebox.tech/docs/getting-started.html)
-2. keyd Keyboard remapping [guide](https://github.com/Alekamerlin/keyaboard-remap-guide)
-3. Sound card enablement using [WeirdTreeThing](https://github.com/WeirdTreeThing/chromebook-linux-audio)
 
 ## Contribution
 * *Add features* If you have an idea for a new feature, please [open an issue](https://github.com/hcops/sandbox/issues/new) to discuss it before creating a pull request.
