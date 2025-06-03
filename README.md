@@ -1,6 +1,6 @@
 # Engineering Sandbox
 
-This repository provides an opinionated and foundational configuration, designed to empower operation engineers in effortlessly setting up developer sandboxes. It streamlines the development of hybrid cloud services by enabling clear resource compositions that combine existing hosted applications with containerized applications destined for cloud deployment. While the core sandbox environment is built using NixOS for robust and reproducible setups, its flexibility allows it to run seamlessly across various platforms. Developers can leverage this framework on [Windows (via WSL)](https://learn.microsoft.com/en-us/windows/wsl/about), [ChromeOS (via CROSH)](https://chromeos.dev/en/linux), and macOS by utilizing the Nix package manager.
+This repository provides an opinionated and foundational configuration, designed to empower operation engineers in effortlessly setting up developer sandboxes. It streamlines the development of hybrid cloud services by enabling clear resource compositions that combine existing hosted applications with containerized applications destined for cloud deployment. While the core sandbox environment is built using NixOS for robust and reproducible setups, its flexibility allows it to run seamlessly across various platforms. Developers can leverage this framework on [Windows (via WSL)](https://learn.microsoft.com/en-us/windows/wsl/about), [ChromeOS (via CROSH)](https://chromeos.dev/en/linux), and [macOS by](https://github.com/LnL7/nix-darwin) utilizing the Nix package manager.
 
 #### Design Criteria
 
@@ -19,15 +19,39 @@ A layered architecture allows system engineers to design service blueprints that
 
 ## System Configuration
 
-The default deployment method is a minimal Linux operating system, providing only essential hardware communication components. A dynamic package loader, governed by application platform requirements, then adds necessary packages using templates, eliminating the need for external orchestrators, custom packaging, or specific communication patterns. This approach allows operations teams to centrally manage service designs through deployment artifacts, while the deployment itself is delegated to operation. A git repository is employed to track and revert system configurations and immutable artifacts, without impacting coresponding services, network, or storage interfaces. Virtual environments require enough space to cache the platform components, a minimum size of *80 to 120GB* is recommended. Nevertheless, this really depends on the number and the complexity of the service blueprints that are being developed. MacOS users can either rely on a virtual to maintain an isolated subsystem or utilize to [Nix Darwin](https://github.com/LnL7/nix-darwin) project.
+The default deployment method is a minimal Linux operating system, providing only essential hardware communication components. A dynamic package loader, governed by application platform requirements, then adds necessary packages using templates, eliminating the need for external orchestrators, custom packaging, or specific communication patterns. This approach allows operations teams to centrally manage service designs through deployment artifacts, while the deployment itself is delegated to operation. A git repository is employed to track and revert system configurations and immutable artifacts, without impacting coresponding services, network, or storage interfaces. Virtual environments require enough space to cache the platform components, a minimum size of *80 to 120GB* is recommended. Nevertheless, this really depends on the number and the complexity of the service blueprints that are being developed.
 
-```ǹix
-home.packages = with pkgs; [
-  devenv       # https://devenv.sh/
-  gnumake      # https://www.gnu.org/software/make/manual/make.html
-  # lunarvim   # https://www.lunarvim.org/
-  # zed-editor # https://zed.dev/
-];
+```sh
+├── configuration.nix
+├── flake.nix
+├── home.nix
+├── modules
+│   ├── programs
+│   │   ├── chrome.nix
+│   │   ├── claude.nix
+│   │   ├── gephi.nix
+│   │   ├── ghostty.nix
+│   │   ├── gimp.nix
+│   │   ├── inkscape.nix
+│   │   ├── krita.nix
+│   │   ├── obsidian.nix
+│   │   ├── scribus.nix
+│   │   ├── vscode.nix
+│   │   └── zed.nix
+│   ├── services
+│   │   └── github.nix
+│   └── system
+│       ├── captive-browser.nix
+│       ├── captivebrowser.nix
+│       ├── gnome.nix
+│       ├── lenovoflexi5.nix
+│       ├── locales.nix
+│       ├── monitor.nix
+│       ├── nixos.nix
+│       ├── pixelbook.nix
+│       ├── powersave.nix
+│       ├── python-env.nix
+│       └── zsh.nix
 ```
 
 The sandbox utilizes a package manager, such as [Nix](https://github.com/NixOS/nix), [Lix](https://lix.systems/) or [Tvix](https://tvix.dev/), to assemble a set of solution components. Packages load additional software, the functional [programming language](https://nix.dev/tutorials/nix-language.html) defines and automates provisioning processes via executable templates. Available packages are listed at the [package directory](https://search.nixos.org/packages) and the command `nix-env -qaP` provides a list incl. available attributes for sripting. Engineers define [system configurations](https://nix.dev/tutorials/packaging-existing-software.html) using declarative files, ensuring isolated dependencies and creating clean, reproducible systems without the overhead of virtual machines or containers. `Override` functions enable engineers to build packages from source by processing additional attributes.
