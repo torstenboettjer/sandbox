@@ -43,7 +43,7 @@ The sandbox utilizes a package manager, such as [Nix](https://github.com/NixOS/n
 ├── flake.nix
 ├── home.nix
 └── modules
-    └── programs
+    ├── programs
     │   ├── chrome.nix
     │   ├── claude.nix
     │   ├── gephi.nix
