@@ -24,18 +24,18 @@ The default deployment method is a minimal Linux operating system, providing onl
 ```sh
 ├── configuration.nix
 ├── modules
-│   ├── programs
-│   │   ├── chrome.nix
-│   │   ├── claude.nix
-│   │   ├── gephi.nix
-│   │   ├── ghostty.nix
-│   │   ├── gimp.nix
-│   │   ├── inkscape.nix
-│   │   ├── krita.nix
-│   │   ├── obsidian.nix
-│   │   ├── scribus.nix
-│   │   ├── vscode.nix
-│   │   └── zed.nix
+    └── system
+        ├── captive-browser.nix
+        ├── captivebrowser.nix
+        ├── gnome.nix
+        ├── lenovoflexi5.nix
+        ├── locales.nix
+        ├── monitor.nix
+        ├── nixos.nix
+        ├── pixelbook.nix
+        ├── powersave.nix
+        ├── python-env.nix
+        └── zsh.nix
 ```
 
 The sandbox utilizes a package manager, such as [Nix](https://github.com/NixOS/nix), [Lix](https://lix.systems/) or [Tvix](https://tvix.dev/), to assemble a set of solution components. Packages load additional software, the functional [programming language](https://nix.dev/tutorials/nix-language.html) defines and automates provisioning processes via executable templates. Available packages are listed at the [package directory](https://search.nixos.org/packages) and the command `nix-env -qaP` provides a list incl. available attributes for sripting. Engineers define [system configurations](https://nix.dev/tutorials/packaging-existing-software.html) using declarative files, ensuring isolated dependencies and creating clean, reproducible systems without the overhead of virtual machines or containers. `Override` functions enable engineers to build packages from source by processing additional attributes.
@@ -44,20 +44,20 @@ The sandbox utilizes a package manager, such as [Nix](https://github.com/NixOS/n
 ├── flake.nix
 ├── home.nix
 ├── modules
-│   ├── programs
-│   │   ├── chrome.nix
-│   │   ├── claude.nix
-│   │   ├── gephi.nix
-│   │   ├── ghostty.nix
-│   │   ├── gimp.nix
-│   │   ├── inkscape.nix
-│   │   ├── krita.nix
-│   │   ├── obsidian.nix
-│   │   ├── scribus.nix
-│   │   ├── vscode.nix
-│   │   └── zed.nix
-│   ├── services
-│   │   └── github.nix
+    ├── programs
+    │   ├── chrome.nix
+    │   ├── claude.nix
+    │   ├── gephi.nix
+    │   ├── ghostty.nix
+    │   ├── gimp.nix
+    │   ├── inkscape.nix
+    │   ├── krita.nix
+    │   ├── obsidian.nix
+    │   ├── scribus.nix
+    │   ├── vscode.nix
+    │   └── zed.nix
+    ├── services
+    │   └── github.nix
 ```
 
 
