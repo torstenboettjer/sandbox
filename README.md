@@ -1,6 +1,6 @@
 # Engineering Sandbox
 
-This repository provides an opinionated and foundational configuration, designed to empower operations and cloud engineers in effortlessly setting up developer sandboxes. It streamlines the development of hybrid cloud services by enabling clear resource compositions that combine existing hosted applications with containerized applications destined for cloud deployment. While the core sandbox environment is built using NixOS for robust and reproducible setups, its flexibility allows it to run seamlessly across various platforms. Developers can leverage this framework on Windows (via WSL), ChromeOS (via CROSH), and macOS by utilizing the Nix package manager.
+This repository provides an opinionated and foundational configuration, designed to empower operation engineers in effortlessly setting up developer sandboxes. It streamlines the development of hybrid cloud services by enabling clear resource compositions that combine existing hosted applications with containerized applications destined for cloud deployment. While the core sandbox environment is built using NixOS for robust and reproducible setups, its flexibility allows it to run seamlessly across various platforms. Developers can leverage this framework on Windows (via WSL), ChromeOS (via CROSH), and macOS by utilizing the Nix package manager.
 
 #### Design Criteria
 
