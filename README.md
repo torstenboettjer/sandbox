@@ -63,15 +63,17 @@ Service composition base templates are managed using [**Home-Manager**](https://
         └── github.nix
 ```
 
+Home manager is extended with [**Direnv**](https://direnv.net/), a tool that extends default- with user specific configurationa and dynamically loads or unloads system configurations based on directory changes. Nix's virtual filesystem ensures dependency isolation between software packages, enhancing stability. Direnv uses the .envrc file to reference configurations that automatically trigger provisioning. Upon entering a directory for the first time, a flag must be set to allow Direnv to monitor configuration changes and load the defined tools. Subsequently, Direnv checks for the .envrc file and, if present, makes the defined variables available in the current shell. While Nix offers various methods for separating environment definitions, Direnv only requires a reference to the configuration file within .envrc.
+
 ## Developer Tools
 
-Home manager is extended with [**Direnv**](https://direnv.net/), a tool that extends default- with user specific configurationa and dynamically loads or unloads system configurations based on directory changes. Nix's virtual filesystem ensures dependency isolation between software packages, enhancing stability. Direnv uses the .envrc file to reference configurations that automatically trigger provisioning. Upon entering a directory for the first time, a flag must be set to allow Direnv to monitor configuration changes and load the defined tools. Subsequently, Direnv checks for the .envrc file and, if present, makes the defined variables available in the current shell. While Nix offers various methods for separating environment definitions, Direnv only requires a reference to the configuration file within .envrc. **[Devenv.sh](https://devenv.sh/)** is a configuration tool that allows engineers to define these development environments declaratively by toggling basic options for nix and process-compose. Devenv leverages Nix to create reproducible development environments, it is an extension of the Nix ecosystem, tailored for development workflows. A development environment is defined by creating a directory, setting up a git repository, and sharing the repository with other developers via Github. Applications are executed, calling the process manager with the following command:
+Development environments are defined, using **[Devenv.sh](https://devenv.sh/)**, a configuration tool that allows engineers to dynamically combine a runtime with the respective toolsets and the backing services by toggling basic options for nix and [process-compose](https://github.com/F1bonacc1/process-compose). Devenv leverages Nix to create reproducible development environments, it is an extension of the Nix ecosystem, tailored for development workflows. A development environment is defined by creating a directory, setting up a git repository, and sharing the repository with other developers via Github. Applications are executed, calling the process manager with a single command.
 
 ```sh
 devenv up
 ```
 
-## Tools
+## Technologies
 
 * [NixOS](https://nixos.org/)
 * [Home Manager](https://nix-community.github.io/home-manager/)
