@@ -23,9 +23,8 @@ The default deployment method is a minimal Linux operating system, providing onl
 
 ```sh
 ├── configuration.nix
-├── modules
+└── modules
     └── system
-        ├── captive-browser.nix
         ├── captivebrowser.nix
         ├── gnome.nix
         ├── lenovoflexi5.nix
@@ -43,8 +42,8 @@ The sandbox utilizes a package manager, such as [Nix](https://github.com/NixOS/n
 ```sh
 ├── flake.nix
 ├── home.nix
-├── modules
-    ├── programs
+└── modules
+    └── programs
     │   ├── chrome.nix
     │   ├── claude.nix
     │   ├── gephi.nix
@@ -56,8 +55,8 @@ The sandbox utilizes a package manager, such as [Nix](https://github.com/NixOS/n
     │   ├── scribus.nix
     │   ├── vscode.nix
     │   └── zed.nix
-    ├── services
-    │   └── github.nix
+    └── services
+        └── github.nix
 ```
 
 
