@@ -37,7 +37,11 @@ The default deployment method is a minimal Linux operating system, providing onl
         └── zsh.nix
 ```
 
-The sandbox utilizes a package manager, such as [Nix](https://github.com/NixOS/nix), [Lix](https://lix.systems/) or [Tvix](https://tvix.dev/), to assemble a set of solution components. Packages load additional software, the functional [programming language](https://nix.dev/tutorials/nix-language.html) defines and automates provisioning processes via executable templates. Available packages are listed at the [package directory](https://search.nixos.org/packages) and the command `nix-env -qaP` provides a list incl. available attributes for sripting. Engineers define [system configurations](https://nix.dev/tutorials/packaging-existing-software.html) using declarative files, ensuring isolated dependencies and creating clean, reproducible systems without the overhead of virtual machines or containers. `Override` functions enable engineers to build packages from source by processing additional attributes.
+The sandbox provides the configuration files for a nix package manager, such as [Nix](https://github.com/NixOS/nix), [Lix](https://lix.systems/) or [Tvix](https://tvix.dev/). The `configuration.nix` is only required for NixOS and contains minimum information and references configuration modules, captured in under `./modules/system`. Packages load additional software, the functional [programming language](https://nix.dev/tutorials/nix-language.html) defines and automates provisioning processes via executable templates. Available packages are listed at the [package directory](https://search.nixos.org/packages) and the command `nix-env -qaP` provides a list incl. available attributes for sripting. Engineers define [system configurations](https://nix.dev/tutorials/packaging-existing-software.html) using declarative files, ensuring isolated dependencies and creating clean, reproducible systems without the overhead of virtual machines or containers. `Override` functions enable engineers to build packages from source by processing additional attributes.
+
+## Service Composition
+
+Service composition base templates are managed using [**Home-Manager**](https://nix-community.github.io/home-manager/), a tool that allows users to declaratively manage their home directory including environment settings. It provides a structured way to organize and maintain dotfiles for various applications that reside in a user's home directory and enables the installation of solution-specific software packages, separate from system-wide installations to support customized software environments that do affecting the system configuration. Home manager supports two ways of deploying applications, programs and packages. For a develoment environment `programs` are the prefered method, nix modules that install the software and configure system wide features. Home manager [option search](https://home-manager-options.extranix.com/) lists all available programs for engineers.
 
 ```sh
 ├── flake.nix
@@ -58,11 +62,6 @@ The sandbox utilizes a package manager, such as [Nix](https://github.com/NixOS/n
     └── services
         └── github.nix
 ```
-
-
-## Service Composition
-
-Service composition base templates are managed using [**Home-Manager**](https://nix-community.github.io/home-manager/), a tool that allows users to declaratively manage their home directory including environment settings. It provides a structured way to organize and maintain dotfiles for various applications that reside in a user's home directory and enables the installation of solution-specific software packages, separate from system-wide installations to support customized software environments that do affecting the system configuration. Home manager supports two ways of deploying applications, programs and packages. For a develoment environment `programs` are the prefered method, nix modules that install the software and configure system wide features. Home manager [option search](https://home-manager-options.extranix.com/) lists all available programs for engineers.
 
 ## Developer Tools
 
