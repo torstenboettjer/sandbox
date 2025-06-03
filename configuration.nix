@@ -13,13 +13,11 @@
   imports =
     [
       ./hardware-configuration.nix # Include the results of the hardware scan.
-      ./modules/system/lindar.nix
-      ./modules/system/keyd.nix
-      ./modules/system/sound.nix
+      ./modules/system/lenovoflexi5.nix
       ./modules/system/powersave.nix
       ./modules/system/locales.nix
       ./modules/system/gnome.nix
-      ./modules/system/zshell.nix
+      ./modules/system/zsh.nix
       ./modules/system/captive-browser.nix
     ];
 
@@ -83,9 +81,9 @@
 
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    home-manager
     direnv
+    home-manager
+    vim
+    wget
   ];
 }
