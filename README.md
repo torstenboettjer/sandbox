@@ -2,7 +2,7 @@
 
 > Work-in-Progress!
 
-This repository enables operation engineers to share resource compositions for the development of hybrid cloud services. Such a composition combines applications that are hosted on-premise with application containers that, developed for public cloud hosting. The default operating system for a sandbox is NixOS, nevertheless it supports all platforms that can host the nix package manager, e.g. WSL (Windows), CROSH (ChromeOS) or MacOS.
+This repository serves as foundation for operation engineers who aim to share resource compositions for the development of hybrid cloud services. Resource compositions combine hosted applications with application containers that will be deployed in a cloud. The sandbox is build, using NixOS, however runs alos on other platforms like WSL (Windows), CROSH (ChromeOS) or MacOS using the nix package manager.
 
 #### Design Criteria
 
