@@ -31,9 +31,7 @@ The default deployment method is a minimal Linux operating system, providing onl
         ├── locales.nix
         ├── monitor.nix
         ├── nixos.nix
-        ├── pixelbook.nix
         ├── powersave.nix
-        ├── python-env.nix
         └── zsh.nix
 ```
 
@@ -52,12 +50,7 @@ The toolset for a service development project is managed. using [Home-Manager](h
     │   ├── claude.nix
     │   ├── gephi.nix
     │   ├── ghostty.nix
-    │   ├── gimp.nix
-    │   ├── inkscape.nix
-    │   ├── krita.nix
     │   ├── obsidian.nix
-    │   ├── scribus.nix
-    │   ├── vscode.nix
     │   └── zed.nix
     └── services
         └── github.nix
@@ -67,7 +60,7 @@ Home manager is extended with [Direnv](https://direnv.net/), a tool that extends
 
 ## Resource Composition
 
-Development environments are defined, using **[Devenv.sh](https://devenv.sh/)**, a configuration tool that allows engineers to dynamically combine a runtime with the respective toolsets and the backing services by toggling basic options for nix and [process-compose](https://github.com/F1bonacc1/process-compose). Devenv leverages Nix to create reproducible development environments, it is an extension of the Nix ecosystem, tailored for development workflows. A development environment is defined by creating a directory, setting up a git repository, and sharing the repository with other developers via Github. Applications are executed, calling the process manager with a single command.
+Finally, development environments are defined by creating a directory, setting up a git repository, and sharing the repository with other developers via Github. Service development environments combine resource composition with a runtime and are defined with [devenv.sh](https://devenv.sh/), a configuration tool that dynamically combines local processes, representing the backing services with runtimes and containers for services developers. Devenv leverages Nix to create reproducible development environments, it is an extension of the Nix ecosystem, tailored for development workflows. Processes are scheduled with [process-compose](https://github.com/F1bonacc1/process-compose). The entire environment is launched, calling the process manager with a single command.
 
 ```sh
 devenv up
