@@ -64,7 +64,7 @@ The sandbox provides the configuration files for a nix package manager, such as 
         └── zed.nix
 ```
 
-Home manager profiles encapsulate a set of settings, preferences, data, and permissions, that are specific to a context. Profile switching allows developers to quickly load and use a different set of these configurations.
+Home manager profiles encapsulate a set of settings, preferences, data, and permissions, that are specific to a context. Profile switching allows developers to quickly load and use a different set of these configurations. Managed profiles provide security and privacy, as each user's files and settings are isolated. It also prevents accidental changes to system settings by non-admin users.
 
 ```sh
 sudo nixos-rebuild switch --flake '.#nixbook-default'
@@ -79,6 +79,13 @@ Finally, development environments are defined by creating a directory, setting u
     └── projects
         ├── .devenv
         └── devenv.nix
+```
+
+A developer might have different workspace layouts, tool presets, and shortcut configurations saved as profiles for different tasks during a project. service configuration improve focus and productivity by allowing developers to quickly load the most efficient setup for the task at hand. a specific service compostions is loaded with the devenv command.
+
+```sh
+devenv up
+
 ```
 
 ## Technologies
