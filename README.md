@@ -75,7 +75,7 @@ Home manager is extended with [Direnv](https://direnv.net/), a tool that extends
 Finally, development environments are defined by creating a directory, setting up a git repository, and sharing the repository with other developers via Github. Service development environments combine resource composition with a runtime and are defined with [devenv.sh](https://devenv.sh/), a configuration tool that dynamically combines local processes, representing the backing services with runtimes and containers for services developers. Devenv leverages Nix to create reproducible development environments, it is an extension of the Nix ecosystem, tailored for development workflows. Processes are scheduled with [process-compose](https://github.com/F1bonacc1/process-compose). The entire environment is launched, calling the process manager with a single command.
 
 ```sh
-└── <home>
+└── user
     └── projects
         ├── .devenv
         └── devenv.nix
