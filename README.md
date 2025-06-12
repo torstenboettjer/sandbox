@@ -46,6 +46,9 @@ The toolset for a service development project is managed. using [Home-Manager](h
 ├── flake.nix
 ├── home.nix
 └── modules
+    ├── home (profiles)
+    │   ├── default.nix
+    │   └── project.nix
     ├── programs (modules)
     │   ├── chrome.nix
     │   ├── claude.nix
