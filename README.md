@@ -26,12 +26,6 @@ The default deployment method is a minimal Linux operating system, providing onl
 └── modules
     ├── sandbox.nix (configuration)
     └── system (modules)
-        ├── captivebrowser.nix
-        ├── gnome.nix
-        ├── lenovoflexi5.nix
-        ├── locales.nix
-        ├── monitor.nix
-        ├── nixos.nix
         ├── powersave.nix
         └── zsh.nix
 ```
@@ -50,6 +44,7 @@ The toolset for a service development project is managed. using [Home-Manager](h
     │   ├── default.nix
     │   └── project.nix
     └── programs (modules)
+        ├── gnome.nix
         ├── chrome.nix
         ├── claude.nix
         ├── gephi.nix
