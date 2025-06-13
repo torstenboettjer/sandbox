@@ -12,7 +12,7 @@ sudo dd if=/path/to/nixos.iso of=/dev/sdX bs=4M status=progress oflag=sync
 
 With the bootable USB drive created, restart the computer and boot from it. Usually the boot menu is entered pressing a specific key during startup (often F2, F12, Del, or Esc). Once you boot into the live desktop, select the "Install NixOS" application. Launch it to start the Calamares installer. The installer will set the region and time zone, select a keyboard layout, handle partitioning, create a user account and set a password. Once the installation is complete, reboot the computer.
 
-## Prepare the system
+## System Configuration
 
 Adjusting allowed users in [configuration.nix](https://nixos.org/manual/nixos/stable/options.html#opt-nix.settings.allowed-users)
 
