@@ -1,9 +1,8 @@
 { config, pkgs, inputs, lib, ... }:
 
 let
-  gituser = "...";
-  gitemail = "...";
-  ghtoken = "...";
+  gituser = "torstenboettjer";
+  gitemail = "torsten.boettjer@gmail.com";
 in
 
 {
@@ -12,7 +11,6 @@ in
       enable = true;
       userName = gituser;
       userEmail = gitemail;
-      extraConfig.github.token = ghtoken;
     };
     # https://cli.github.com/manual/
     gh = {

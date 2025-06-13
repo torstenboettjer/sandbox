@@ -7,9 +7,10 @@
     enableCompletion = true;
     syntaxHighlighting.enable = true;
     shellAliases = {
-      ll = "ls -l";
+      ll = "ls -la";
       edit = "sudo -e";
-      update = "sudo nixos-rebuild switch";
+      update = "sudo nixos-rebuild switch --flake '.#nixbook-default'";
+      consult = "sudo nixos-rebuild switch --flake '.#nixbook-consult'";
       # Keep the history for searchability
       histFile = "/etc/nixos/history";
     };

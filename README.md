@@ -50,10 +50,10 @@ The sandbox provides the configuration files for a nix package manager, such as 
 ```sh
 ├── flake.nix
 ├── home.nix
+└── profiles
+    ├── default.nix (development)
+    └── consult.nix
 └── modules
-    ├── home (profiles)
-    │   ├── default.nix
-    │   └── project.nix
     └── programs (modules)
         ├── gnome.nix
         ├── chrome.nix
