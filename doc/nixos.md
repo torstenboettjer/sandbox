@@ -3,47 +3,37 @@ For the base install, download the latest [NixOS](https://nixos.org/download/#do
 
 ## Prepare the system
 
-[Channel Intro](https://jorel.dev/NixOS4Noobs/channels)
-
-Root:
-
-```sh
-sudo nix-channel --list
-```
-
-```sh
-sudo nix-channel --add https://github.com/NixOS/nixos-hardware/archive/master.tar.gz nixos-hardware
-sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
-```
-
-User:
-
-```sh
-nix-channel --list
-```
-
-```sh
-nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-```
-
-## Install Home-Manager
-
-
-Adding allowed users to [configuration.nix](https://nixos.org/manual/nixos/stable/options.html#opt-nix.settings.allowed-users)
+Adjusting allowed users in [configuration.nix](https://nixos.org/manual/nixos/stable/options.html#opt-nix.settings.allowed-users)
 
 ```nix
 nix.settings.trusted-users = [ "root" "@wheel" ];
 ```
 
-Run the install script
-```nix
-nix-shell '<home-manager>' -A install
-```
+[Channel Intro](https://jorel.dev/NixOS4Noobs/channels)
 
-Add home-manager to the profile
+Check the current channels for the sudo user
 
 ```sh
-echo '. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"' >> ~/.profile
+sudo nix-channel --list
+```
+
+Only the channel related installed version should be returned. Moving to nixos 'unstable' channel for the latest updates and adding the hardware channel as sudo user
+
+```sh
+sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+sudo nix-channel --add https://github.com/NixOS/nixos-hardware/archive/master.tar.gz nixos-hardware
+```
+
+Checking the channels as user, nothing shoud be set
+
+```sh
+nix-channel --list
+```
+
+Adding the home manager channel for home manager packages
+
+```sh
+nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 ```
 
 ## Housekeeping
