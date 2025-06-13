@@ -1,52 +1,52 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36" version="27.1.3" pages="2">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36" version="27.1.4" pages="2">
   <diagram name="technology" id="HCyVaX-hGJ82w2xpqGKD">
-    <mxGraphModel dx="1426" dy="852" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1426" dy="972" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="trhJKr_4E9_vjIeC_0na-2" value="&lt;font style=&quot;color: light-dark(rgb(255, 255, 255), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;System&lt;br&gt;Configuration&lt;br&gt;&lt;/b&gt;Nix, NixOS&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=light-dark(#003060,#003060);strokeColor=none;" vertex="1" parent="1">
+        <mxCell id="trhJKr_4E9_vjIeC_0na-2" value="&lt;font style=&quot;color: light-dark(rgb(255, 255, 255), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;System Configuration&lt;br&gt;&lt;/b&gt;Nix, NixOS&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=light-dark(#003060,#003060);strokeColor=none;" parent="1" vertex="1">
           <mxGeometry x="40" y="256" width="170" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="trhJKr_4E9_vjIeC_0na-3" value="&lt;font style=&quot;color: light-dark(rgb(255, 255, 255), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;Development&lt;br&gt;Tools and Services&lt;br&gt;&lt;/b&gt;Home-Manager, Direnv&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=light-dark(#003060,#003060);strokeColor=none;" vertex="1" parent="1">
+        <mxCell id="trhJKr_4E9_vjIeC_0na-3" value="&lt;font style=&quot;color: light-dark(rgb(255, 255, 255), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;Development Resources&lt;br&gt;&lt;/b&gt;Home-Manager, Direnv&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=light-dark(#003060,#003060);strokeColor=none;" parent="1" vertex="1">
           <mxGeometry x="40" y="186" width="170" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="trhJKr_4E9_vjIeC_0na-4" value="&lt;font style=&quot;color: light-dark(rgb(255, 255, 255), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;Resource&lt;br&gt;Composition&lt;br&gt;&lt;/b&gt;devenv, process-manager&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=light-dark(#003060,#003060);strokeColor=none;" vertex="1" parent="1">
+        <mxCell id="trhJKr_4E9_vjIeC_0na-4" value="&lt;font style=&quot;color: light-dark(rgb(255, 255, 255), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;Service Definition&lt;/b&gt;&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;color: light-dark(rgb(255, 255, 255), rgb(255, 255, 255));&quot;&gt;devenv, process-compose&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=light-dark(#003060,#003060);strokeColor=none;" parent="1" vertex="1">
           <mxGeometry x="40" y="116" width="170" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="trhJKr_4E9_vjIeC_0na-5" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+        <mxCell id="trhJKr_4E9_vjIeC_0na-5" value="" style="endArrow=none;html=1;rounded=0;labelBackgroundColor=none;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="230" y="106" as="sourcePoint" />
             <mxPoint x="430" y="106" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="trhJKr_4E9_vjIeC_0na-6" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
+        <mxCell id="trhJKr_4E9_vjIeC_0na-6" value="" style="endArrow=none;html=1;rounded=0;labelBackgroundColor=none;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="451" y="106" as="sourcePoint" />
             <mxPoint x="651" y="106" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="trhJKr_4E9_vjIeC_0na-7" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;b&gt;Scope&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=light-dark(#003060,#003060);" vertex="1" parent="1">
+        <mxCell id="trhJKr_4E9_vjIeC_0na-7" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;b&gt;Scope&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=light-dark(#003060,#003060);" parent="1" vertex="1">
           <mxGeometry x="230" y="80" width="170" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="trhJKr_4E9_vjIeC_0na-8" value="Operating environment incl. management and monitoring tools" style="text;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=light-dark(#003060,#003060);" vertex="1" parent="1">
+        <mxCell id="trhJKr_4E9_vjIeC_0na-8" value="Operating environment incl. management and monitoring tools" style="text;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=light-dark(#003060,#003060);" parent="1" vertex="1">
           <mxGeometry x="230" y="257.5" width="200" height="57" as="geometry" />
         </mxCell>
-        <mxCell id="trhJKr_4E9_vjIeC_0na-9" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;b&gt;Configuration Files&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=light-dark(#003060,#003060);" vertex="1" parent="1">
+        <mxCell id="trhJKr_4E9_vjIeC_0na-9" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;b&gt;Configuration Files&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=light-dark(#003060,#003060);" parent="1" vertex="1">
           <mxGeometry x="452" y="79" width="170" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="trhJKr_4E9_vjIeC_0na-10" value="Company wide, project and individual development tools incl. centrally hosted services&amp;nbsp;" style="text;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=light-dark(#003060,#003060);" vertex="1" parent="1">
+        <mxCell id="trhJKr_4E9_vjIeC_0na-10" value="Company wide, project and individual development tools incl. centrally hosted services&amp;nbsp;" style="text;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=light-dark(#003060,#003060);" parent="1" vertex="1">
           <mxGeometry x="230" y="187.5" width="200" height="57" as="geometry" />
         </mxCell>
-        <mxCell id="trhJKr_4E9_vjIeC_0na-11" value="Runtime environment incl. libraries and pre-configured service components" style="text;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=light-dark(#003060,#003060);" vertex="1" parent="1">
+        <mxCell id="trhJKr_4E9_vjIeC_0na-11" value="Runtime environment incl. libraries and pre-configured service components" style="text;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=light-dark(#003060,#003060);" parent="1" vertex="1">
           <mxGeometry x="230" y="117.5" width="200" height="57" as="geometry" />
         </mxCell>
-        <mxCell id="trhJKr_4E9_vjIeC_0na-12" value="configuration.nix, hardware-configuration.nix, device module" style="text;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=light-dark(#003060,#003060);" vertex="1" parent="1">
+        <mxCell id="trhJKr_4E9_vjIeC_0na-12" value="configuration.nix, hardware-configuration.nix, device module" style="text;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=light-dark(#003060,#003060);" parent="1" vertex="1">
           <mxGeometry x="452" y="257.5" width="200" height="57" as="geometry" />
         </mxCell>
-        <mxCell id="trhJKr_4E9_vjIeC_0na-13" value="home.nix, flake.nix" style="text;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=light-dark(#003060,#003060);" vertex="1" parent="1">
+        <mxCell id="trhJKr_4E9_vjIeC_0na-13" value="home.nix, flake.nix" style="text;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=light-dark(#003060,#003060);" parent="1" vertex="1">
           <mxGeometry x="452" y="187.5" width="200" height="57" as="geometry" />
         </mxCell>
-        <mxCell id="trhJKr_4E9_vjIeC_0na-14" value="denenv.nix, process.yaml" style="text;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=light-dark(#003060,#003060);" vertex="1" parent="1">
+        <mxCell id="trhJKr_4E9_vjIeC_0na-14" value="denenv.nix, process.yaml" style="text;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=light-dark(#003060,#003060);" parent="1" vertex="1">
           <mxGeometry x="452" y="117.5" width="200" height="57" as="geometry" />
         </mxCell>
       </root>
