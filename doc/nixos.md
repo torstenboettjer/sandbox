@@ -1,6 +1,10 @@
-# NixOS Installation
+# NixOS
 
-NixOS is a reproducible Linux distribution built on the Nix package manager. Its declarative configuration model allows you to define the entire state of your system in a single file, making upgrades and rollbacks trivial. For the base install, download the latest [NixOS](https://nixos.org/download/#download-nixos) image and create a bootable USB [flash drive](https://nixos.org/manual/nixos/stable/index.html#sec-booting-from-usb). On a Linux system the dd command creates a boot drive, the correct device name for your USB drive (e.g., /dev/sdb) should be adjusted.
+NixOS is a reproducible Linux distribution built on the Nix package manager. Its declarative configuration model allows you to define the entire state of your system in a single file, making upgrades and rollbacks trivial. 
+
+## Installation
+
+For the base install, download the latest [NixOS](https://nixos.org/download/#download-nixos) image and create a bootable USB [flash drive](https://nixos.org/manual/nixos/stable/index.html#sec-booting-from-usb). On a Linux system the dd command creates a boot drive, the correct device name for your USB drive (e.g., /dev/sdb) should be adjusted.
 
 ```sh
 sudo dd if=/path/to/nixos.iso of=/dev/sdX bs=4M status=progress oflag=sync
