@@ -30,7 +30,7 @@
         theme = {
           mode = "dark";
           light = "Catppuccin Latte";
-          dark = "Catppuccin Mocha";
+          dark = "Catppuccin Macchiato";
         };
         features = {
           copilot = true;
