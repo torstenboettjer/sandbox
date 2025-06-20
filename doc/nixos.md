@@ -1,6 +1,10 @@
-# NixOS Installation
+# NixOS
 
-NixOS is a reproducible Linux distribution built on the Nix package manager. Its declarative configuration model allows you to define the entire state of your system in a single file, making upgrades and rollbacks trivial. For the base install, download the latest [NixOS](https://nixos.org/download/#download-nixos) image and create a bootable USB [flash drive](https://nixos.org/manual/nixos/stable/index.html#sec-booting-from-usb). On a Linux system the dd command creates a boot drive, the correct device name for your USB drive (e.g., /dev/sdb) should be adjusted.
+NixOS is a reproducible Linux distribution built on the Nix package manager. Its declarative configuration model allows you to define the entire state of your system in a single file, making upgrades and rollbacks trivial. 
+
+## Installation
+
+For the base install, download the latest [NixOS](https://nixos.org/download/#download-nixos) image and create a bootable USB [flash drive](https://nixos.org/manual/nixos/stable/index.html#sec-booting-from-usb). On a Linux system the dd command creates a boot drive, the correct device name for your USB drive (e.g., /dev/sdb) should be adjusted.
 
 ```sh
 sudo dd if=/path/to/nixos.iso of=/dev/sdX bs=4M status=progress oflag=sync
@@ -8,7 +12,7 @@ sudo dd if=/path/to/nixos.iso of=/dev/sdX bs=4M status=progress oflag=sync
 
 With the bootable USB drive created, restart the computer and boot from it. Usually the boot menu is entered pressing a specific key during startup (often F2, F12, Del, or Esc). Once you boot into the live desktop, select the "Install NixOS" application. Launch it to start the Calamares installer. The installer will set the region and time zone, select a keyboard layout, handle partitioning, create a user account and set a password. Once the installation is complete, reboot the computer.
 
-## Prepare the system
+## System Configuration
 
 Adjusting allowed users in [configuration.nix](https://nixos.org/manual/nixos/stable/options.html#opt-nix.settings.allowed-users)
 
