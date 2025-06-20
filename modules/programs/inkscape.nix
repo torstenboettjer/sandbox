@@ -26,7 +26,7 @@ in
       exec = "inkscape %F";
       terminal = false;
       categories = [ "Application" "Graphics" "VectorGraphics" ];
-      icon = "/home/torsten/.local/share/xdg-desktop-portal/icons/Inkscape_Logo.png";
+      icon = "$HOME/.local/share/xdg-desktop-portal/icons/Inkscape_Logo.png";
     };
   };
 }

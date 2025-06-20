@@ -69,7 +69,7 @@
         context_servers = {
           postgres-context-server = {
             settings = {
-                database_url = "postgresql://torsten:mypassword@localhost:5432/rescile";
+                database_url = "postgresql://user:mypassword@localhost:5432/rescile";
             };
           };
         };

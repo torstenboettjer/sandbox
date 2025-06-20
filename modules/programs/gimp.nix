@@ -25,7 +25,7 @@ in
       exec = "gimp %u";
       terminal = false;
       categories = [ "Application" "Graphics" "RasterGraphics" "Photography"];
-      icon = "/home/torsten/.local/share/xdg-desktop-portal/icons/GIMP_Icon.png";
+      icon = "$HOME/.local/share/xdg-desktop-portal/icons/GIMP_Icon.png";
     };
   };
 }

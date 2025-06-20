@@ -25,7 +25,7 @@ in
       exec = "gephi";
       terminal = false;
       categories = [ "Application" ];
-      icon = "/home/torsten/.local/share/xdg-desktop-portal/icons/gephi_logo.png";
+      icon = "$HOME/.local/share/xdg-desktop-portal/icons/gephi_logo.png";
     };
   };
 }

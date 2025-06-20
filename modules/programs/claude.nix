@@ -25,7 +25,7 @@ in
       exec = "claude-desktop";
       terminal = false;
       categories = [ "Application" ];
-      icon = "/home/torsten/.local/share/xdg-desktop-portal/icons/Anthropic.png";
+      icon = "$HOME/.local/share/xdg-desktop-portal/icons/Anthropic.png";
     };
   };
 }

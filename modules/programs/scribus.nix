@@ -25,7 +25,7 @@ in
       exec = "scribus %F";
       terminal = false;
       categories = [ "Application" "Graphics" "Office" "Publishing" ];
-      icon = "/home/torsten/.local/share/xdg-desktop-portal/icons/Scribus_logo.png";
+      icon = "$HOME/.local/share/xdg-desktop-portal/icons/Scribus_logo.png";
     };
   };
 }

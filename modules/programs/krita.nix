@@ -25,7 +25,7 @@ in
       exec = "krita %F";
       terminal = false;
       categories = [ "Application" "Graphics" ];
-      icon = "/home/torsten/.local/share/xdg-desktop-portal/icons/Calligra_Krita_icon.png";
+      icon = "$HOME/.local/share/xdg-desktop-portal/icons/Calligra_Krita_icon.png";
     };
   };
 }

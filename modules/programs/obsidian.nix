@@ -25,7 +25,7 @@ in
       exec = "obsidian";
       terminal = false;
       categories = [ "Application" ];
-      icon = "/home/torsten/.local/share/xdg-desktop-portal/icons/obsidian.png";
+      icon = "$HOME/.local/share/xdg-desktop-portal/icons/obsidian.png";
     };
   };
 }
