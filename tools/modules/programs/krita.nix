@@ -24,8 +24,8 @@ in
       comment = "Digital Painting";
       exec = "krita %F";
       terminal = false;
-      categories = [ "Graphics" ];
-      icon = "${config.home.homeDirectory}/.local/share/xdg-desktop-portal/icons/Calligra_Krita_icon.png";
+      categories = [ "Application" "Graphics" ];
+      icon = "$HOME/.local/share/xdg-desktop-portal/icons/Calligra_Krita_icon.png";
     };
   };
 }

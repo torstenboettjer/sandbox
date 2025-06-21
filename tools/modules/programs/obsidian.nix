@@ -24,8 +24,8 @@ in
       comment = "Markdown Notetaking App";
       exec = "obsidian";
       terminal = false;
-      categories = [ "Utility" ];
-      icon = "${config.home.homeDirectory}/.local/share/xdg-desktop-portal/icons/obsidian.png";
+      categories = [ "Application" ];
+      icon = "$HOME/.local/share/xdg-desktop-portal/icons/obsidian.png";
     };
   };
 }

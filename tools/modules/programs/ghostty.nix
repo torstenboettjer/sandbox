@@ -14,7 +14,6 @@
         minimum-contrast = 1.1;
         font-family = "Arimo";
         font-size = 10;
-        maximize = true;
         keybind = [
           "ctrl+h=goto_split:left"
           "ctrl+l=goto_split:right"

@@ -25,8 +25,8 @@ in
       comment = "Create and Edit Scalable Vector Graphics Images";
       exec = "inkscape %F";
       terminal = false;
-      categories = [ "Graphics" "VectorGraphics" ];
-      icon = "${config.home.homeDirectory}/.local/share/xdg-desktop-portal/icons/Inkscape_Logo.png";
+      categories = [ "Application" "Graphics" "VectorGraphics" ];
+      icon = "$HOME/.local/share/xdg-desktop-portal/icons/Inkscape_Logo.png";
     };
   };
 }

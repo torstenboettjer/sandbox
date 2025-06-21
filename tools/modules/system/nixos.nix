@@ -1,22 +1,28 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
-  #services = {
-    # Some applications require auth token from the gnome keyring
-    #gnome.gnome-keyring.enable = true;
-  #};
+  # Import program modules
+  imports = [
+    # ./modules/programs/claude.nix
+    ../programs/chrome.nix
+    # ../programs/gephi.nix
+    ../programs/ghostty.nix
+    #../programs/gimp.nix
+    # ../programs/inkscape.nix
+    #../programs/krita.nix
+    # ../programs/obsidian.nix
+    #../programs/scribus.nix
+    # ../programs/vscode.nix
+    ../programs/zed.nix
+  ];
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    #nixd         # https://github.com/nix-community/nixd.git
+    nixd         # https://github.com/nix-community/nixd.git
     gdrive3      # https://github.com/glotlabs/gdrive
-    #nix-prefetch
-    #caffeine-ng
-    #qogir-icon-theme
-    papirus-icon-theme
-    #numix-icon-theme-circle
-    # Extensions
+    nix-prefetch
+    caffeine-ng
     gnomeExtensions.arcmenu
     gnomeExtensions.bluetooth-quick-connect
     gnomeExtensions.clipboard-history
@@ -54,7 +60,6 @@
       clock-format = "24h";
       clock-show-weekday = true;
       enable-animations = false;
-      icon-theme = "Papirus-Dark";
     };
     "org/gnome/system/region" = {
       locale = "en_US.UTF-8"; # Replace with your desired locale

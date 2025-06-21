@@ -24,8 +24,8 @@ in
       comment = "Open-source Desktop Publishing Software";
       exec = "scribus %F";
       terminal = false;
-      categories = [ "Graphics" "Office" "Publishing" ];
-      icon = "${config.home.homeDirectory}/.local/share/xdg-desktop-portal/icons/Scribus_logo.png";
+      categories = [ "Application" "Graphics" "Office" "Publishing" ];
+      icon = "$HOME/.local/share/xdg-desktop-portal/icons/Scribus_logo.png";
     };
   };
 }

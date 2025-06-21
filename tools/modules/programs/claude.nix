@@ -24,8 +24,8 @@ in
       comment = "Claude Chat App";
       exec = "claude-desktop";
       terminal = false;
-      categories = [ "Utility" ];
-      icon = "${config.home.homeDirectory}/.local/share/xdg-desktop-portal/icons/Anthropic.png";
+      categories = [ "Application" ];
+      icon = "$HOME/.local/share/xdg-desktop-portal/icons/Anthropic.png";
     };
   };
 }

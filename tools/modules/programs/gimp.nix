@@ -24,8 +24,8 @@ in
       comment = "GNU Image Manipulation Program";
       exec = "gimp %u";
       terminal = false;
-      categories = [ "Graphics" "RasterGraphics" "Photography"];
-      icon = "${config.home.homeDirectory}/.local/share/xdg-desktop-portal/icons/GIMP_Icon.png";
+      categories = [ "Application" "Graphics" "RasterGraphics" "Photography"];
+      icon = "$HOME/.local/share/xdg-desktop-portal/icons/GIMP_Icon.png";
     };
   };
 }

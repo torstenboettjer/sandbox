@@ -9,8 +9,8 @@
     shellAliases = {
       ll = "ls -la";
       edit = "sudo -e";
-      update = "cd /etc/nixos && sudo nixos-rebuild switch --flake '.#nixbook-default' --impure";
-      consult = "cd /etc/nixos && sudo nixos-rebuild switch --flake '.#nixbook-consult' --impure";
+      update = "sudo nixos-rebuild switch --flake '.#nixbook-default'";
+      consult = "sudo nixos-rebuild switch --flake '.#nixbook-consult'";
       # Keep the history for searchability
       histFile = "/etc/nixos/history";
     };

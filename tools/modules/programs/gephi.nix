@@ -24,8 +24,8 @@ in
       comment = "Graph Analytics and Visualization";
       exec = "gephi";
       terminal = false;
-      categories = [ "Utility" ];
-      icon = "${config.home.homeDirectory}/.local/share/xdg-desktop-portal/icons/gephi_logo.png";
+      categories = [ "Application" ];
+      icon = "$HOME/.local/share/xdg-desktop-portal/icons/gephi_logo.png";
     };
   };
 }
