@@ -1,6 +1,6 @@
 # Developer Sandbox
 
-Developing hybrid cloud services is challenging because developers lack an Internal Developer Platform (IDP) to replicate production setups. Mismatches in networking, service discovery, and dependency management often lead to endless regression testing and delayed go-live. This repository provides a foundation for a local developer sandbox — an opinionated, foundational configuration designed to empower platform enigneers with more flexibility. Developers compose resources locally, mixing on-premise-hosted applications with cloud-bound containers, while persistent backing services remain in hosted environments. Built on NixOS for robust reproducibility, the sandbox runs seamlessly [Windows (via WSL)](https://learn.microsoft.com/en-us/windows/wsl/about), [ChromeOS (via CROSH)](https://chromeos.dev/en/linux), and [macOS](https://github.com/LnL7/nix-darwin) by utilizing the Nix package manager.
+Developing hybrid cloud services is challenging because developers lack an Internal Developer Platform (IDP) to replicate production setups. Mismatches in networking, service discovery, and dependency management often lead to endless regression testing and delayed go-live. This repository provides a foundation for a local developer sandbox — an opinionated, foundational configuration designed to empower platform enigneers with more flexibility. Developers compose resources locally, mixing on-premise-hosted applications with cloud-bound containers, while persistent backing services remain in hosted environments. The sandbox utilizes the Nix package manager. It is built for NixOS to ensure robust reproducibility, but with the exception of UI applications, it can also be provisioned on [Windows (via WSL)](https://learn.microsoft.com/en-us/windows/wsl/about), [ChromeOS (via CROSH)](https://chromeos.dev/en/linux), and [macOS](https://github.com/LnL7/nix-darwin).
 
 #### Design Criteria
 
@@ -50,9 +50,9 @@ The sandbox provides the configuration files for a nix package manager, such as 
 ```sh
 ├── flake.nix
 ├── home.nix
-└── profiles
-    ├── default.nix (development)
-    └── consult.nix
+├── profiles
+|   ├── default.nix (development)
+|   └── consult.nix
 └── modules
     └── programs (modules)
         ├── gnome.nix
