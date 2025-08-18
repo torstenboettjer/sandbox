@@ -1,0 +1,89 @@
+The inventx Sandbox is an opinionated take on a Linux as a developer environment
+for service engineers. It includes a curated set of tools, so someone coming
+from a platform like Windows or Mac can immediately start writing code, without
+too much configuration work. The sandbox is build on NixOS and includes a number
+of tools in form of modules. Package management is only half the battle of
+getting a great development experience going on Linux, though. The other half
+lies in the dotfiles that control the configuration. Linux gets great power from
+how customizable it is, but that also presents a paradox of choice and a tall
+learning curve. Having good, curated defaults that integrate all the many tools
+in a coherent feel and look can help more developers acquire a taste for Linux,
+which they may then later inspire a fully bespoke setup (or not!). Nothing in
+Omakub provides solutions to problems you couldn’t also solve a million other
+ways. The main benefit is in *The Omakase Spirit*. The idea that an entire setup
+experience can benefit from being tailored upfront by someone with strong
+opinions about what works and looks good together. This doesn’t make the choices
+necessarily better than other choices. Linux has inspired a million options for
+a million tastes. That’s great and worthy of celebration. But there’s a large
+constituency of developers who are more than willing to trade ultimate bespoke
+customization for a cohesive package of goods, at least until they understand
+what all the options are and have fully bought into making the switch to Linux.
+Omakub is for all these future Linux users. --- ## What’s on the menu Omakub
+contains a mix of open source and commercial software. This isn’t meant as a
+Free Software Only compilation, but as a mixtape for working web developers who
+might begrudge Google, but still want to use the same Chrome browser that the
+majority of regular web users do. So you’ll find that browser as the default
+(Firefox is still there too), Spotify is installed by default, as is Zoom, and
+even 1Password. Don’t worry, you can just remove (or ignore) anything you don’t
+need or want. But the heart of the pre-configuration lies in the terminal,
+[Alacritty](https://alacritty.org/), which runs [Zellij](https://zellij.dev/) to
+provide multiple panes/sessions. It’s still bash underneath, but one configured
+with a host of great file system tools, like `eza`, `fzf`, `rg`, `zoxide`, and
+`bg`. Don’t worry if you don’t know what any of those things are! Watch the
+introduction video, and you’ll see it all in action. Then comes the editor. As
+much as I love [Neovim](https://neovim.io/) now, it’s not for everyone, so by
+default Omakub comes with both Neovim (configured via
+[lazyvim](https://www.lazyvim.org/)) and Microsoft’s VSCode. There are plenty of
+other choices, but these two are the ones that have been integrated into the
+unified theme picking. The overall UI of Ubuntu is of course Gnome, but it’s
+been tweaked substantially to cater to a keyboard-first and window-tiling
+workflow. You shouldn’t be moving windows around with a mouse. Use the six
+default workspaces for apps (hotkeys: `Super+1/2/3…`), preferably full-screen
+ones on laptop displays (`F11`), or tiled neatly using Tactile (`Super+T`).
+Speed of motion is also why all the transition animations have been nerfed. And
+start any app in the dock (`Super`) based on its position (`Alt+1/2/3/4`). So
+browser is just `Alt+1`, Terminal `Alt+2`, etc. Additionally,
+[Ulauncher](https://ulauncher.io/) provides an app launcher ala Raycast, which
+you trigger with `Super+Space`. And you can quickly enter emojis with the
+compose key (mapped to Caps Lock) and then a single letter representing the
+emoji. Run `omakub`, pick hotkeys, and you can see it all. --- ## What’s the
+dress code By default, Omakub ships with a *Tokyo Night* theme. After
+installation, run the `omakub` command, select “Theme”, and pick from one of the
+curated themes. Picking a new theme sets colors for the terminal (Alacritty +
+Zellij) and the editor (VSCode and Neovim), as well as a matching background
+image and Gnome UI accent color. The font is Microsoft’s *Cascadia Mono*,
+patched by [Nerd Fonts](https://www.nerdfonts.com/). Run `omakub`, select
+“Font”, and pick one of the options. It’ll be set in terminal and editor
+automatically. A handful of Gnome Extensions provide some extra polish with
+blurring of the shell, hiding desktop icons, and other tweaks. Run the Gnome
+Extensions Manager (`Super+Space` → “extensions”). --- ## What else Omakub also
+installs: * WhatsApp + Signal for messaging. *
+[Xournal++](https://xournalpp.github.io/) for filling out and signing PDF forms.
+* [Flameshot](https://flameshot.org/) for screenshots (`Ctrl+Print Screen`). *
+VLC for videos. * LibreOffice for Office docs. *
+[Obsidian](https://obsidian.md/) for note-taking. *
+[Pinta](https://www.pinta-project.com/) for quick image editing. * `gh` GitHub
+CLI. * Docker, with preconfigured MySQL + Redis containers and
+[lazydocker](https://github.com/jesseduffield/lazydocker). *
+[mise](https://mise.jdx.dev/) to manage Ruby, Node.js, Python, Go, Java, etc. *
+A fix for the [Framework](https://frame.work/) 13’s first-gen display font
+proportions. --- ## Installing Omakub You need: 1. An x86 computer (e.g.,
+[Framework 13](https://frame.work/), [Beelink
+SER8](https://www.bee-link.com/products/beelink-ser8-8845hs), [Minisforum UM870
+Slim](https://www.minisforum.com/products/minisforum-um870-slim)). 2. A USB
+drive (32GB+) for the Ubuntu installer. 3. Ubuntu 24.04 (or later). See
+[instructions](https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview).
+Then: 1. Install Ubuntu, set screen resolution to 200%. 2. Open a terminal
+(`Ctrl+Alt+T`) and run: ```bash wget -qO- https://omakub.org/install | bash ```
+Follow prompts, approve Gnome Extension confirmations, log out, log back in. ---
+## Origin and context Omakub was started by [David Heinemeier
+Hansson](https://dhh.dk) to streamline Linux box bootstrapping at 37signals and
+help developers switch from macOS. Read more in [Linux as the New Developer
+Default at
+37signals](https://world.hey.com/dhh/linux-as-the-new-developer-default-at-37signals-ef0823b7)
+and listen to the [For The Love of Linux REWORK
+podcast](https://www.youtube.com/watch?v=odSJr7HZMEQ). --- ## Acknowledgements
+Default *Tokyo Night* and *Rose Pine* backgrounds by
+[freepik](https://freepik.com). ``` --- Do you want me to also **pull out the
+images and video thumbnail into Markdown embeds** so the README will look like
+the original landing page? That would make it more visually complete. ```
