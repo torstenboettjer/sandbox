@@ -32,7 +32,7 @@ Allthough these services can be deployed on a hosted system, the defualt environ
 This flake lives in the traditional root-owned location and controls the core OS only.
 
 | Directory | Location | Purpose |
-| :------- | :------: | -------: |
+| :------- | :------ | :------- |
 | System Flake Root  |  /etc/nixos  |   Host OS control. Manages the kernel, NixOS services, user accounts, and Nix settings.  |
 | flake.nix  |  /etc/nixos/flake.nix |  Defines the host machine's configuration output (e.g., nixosConfigurations."myserver").  |
 | configuration.nix |  /etc/nixos/configuration.nix |  Imports base modules, sets up users (e.g., users.users.alice), enables direnv and core services.  |
@@ -42,7 +42,7 @@ This flake lives in the traditional root-owned location and controls the core OS
 This is the source of truth for all user-level applications and dotfiles. It is shared across all environments and machines.
 
 | Directory | Location | Purpose |
-| :------- | :------: | -------: |
+| :------- | :------ | :------- |
 | Directory  |  Location  |  Purpose  |
 | User Flake Root  |  ~/dotfiles (or ~/.config/nix)  |  User consistency. Manages all shared Home Manager configuration.  |
 | flake.nix  |  ~/dotfiles/flake.nix  |  Defines homeManagerModules.common (your shared config) and pins its own nixpkgs version.  |
