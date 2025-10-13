@@ -17,6 +17,39 @@ The nix package manager enables software deployments through a functional system
 
 A layered architecture allows system engineers to design service blueprints that integrate host-dependent services, such as databases, with node artifacts deployable as distributed systems in clusters or serverless environments. This architecture maintains deployment model flexibility, allowing decisions to be made later in the process. The first layer defines the hosting platform with a separate hardware- and system configuration module. It remains decoupled from the application set to prevent platform dependencies. Additional modules can address context-specific machine requirements, such as mobility functions, cloud provider settings, or company-specific monitoring agents. The second layer defines solution components including hosted backend services, and the third layer addresses the development toolset and captures configurations for developer services. Local machine provisioning empowers engineers to override default settings at any layer, enabling security operators and service architects to test the entire stack with a functional model before staging and production. Local instances also eliminate implicit dependencies on higher level packaging formats and provider specific orchestrators, fostering a decentralized development process with configuration templates shared via Git. Programmatic assembly of dedicated servers ensures reproducibility, isolation, and atomic upgrades with consistent package deployments, independent of specific vendors or solutions. Dependencies and build instructions are specified in configuration files, facilitating clear separation of duties through simple directory or file access management.
 
+### The System Flake (Admin/Root)
+This flake lives in the traditional root-owned location and controls the core OS only.
+
+Directory	Location	Purpose
+System Flake Root	/etc/nixos	Host OS control. Manages the kernel, NixOS services, user accounts, and Nix settings.
+flake.nix	/etc/nixos/flake.nix	Defines the host machine's configuration output (e.g., nixosConfigurations."myserver").
+configuration.nix	/etc/nixos/configuration.nix	Imports base modules, sets up users (e.g., users.users.alice), enables direnv and core services.
+
+### The User Flake (Shared/Consistent)
+This is the source of truth for all user-level applications and dotfiles. It is shared across all environments and machines.
+
+Directory	Location	Purpose
+User Flake Root	~/dotfiles (or ~/.config/nix)	User consistency. Manages all shared Home Manager configuration.
+flake.nix	~/dotfiles/flake.nix	Defines homeManagerModules.common (your shared config) and pins its own nixpkgs version.
+modules/common/default.nix	~/dotfiles/modules/common/default.nix	The shared core file. Defines all common packages (tmux, neovim, git config) and modules (your default.nix content).
+modules/profiles/desktop.nix	~/dotfiles/modules/profiles/desktop.nix	Optional: Contains modules for desktop-only apps (like window manager config).
+flake.lock	~/dotfiles/flake.lock	Locks the version of Home Manager and nixpkgs used for user configuration.
+How it's used: Your Environment Flakes (below) will import this flake as an input (e.g., inputs.my-home.url = "path:~/dotfiles").
+
+### The Environment Flakes (Isolated/Project-Specific)
+These are the development environments, tied directly to project code via direnv.
+
+Directory	Location	Purpose
+Environment Flake Root	~/projects/project-X	Project isolation. Manages tools specific to a single project.
+flake.nix	~/projects/project-X/flake.nix	Defines the devShells.x86_64-linux.default output and pins the specific, potentially older/unstable nixpkgs version needed for the project.
+shell.nix (or default.nix)	(Optional, imported by flake.nix)	Defines the contents of the shell environment.
+.envrc	~/projects/project-X/.envrc	Contains the single line: use flake to enable direnv integration.
+flake.lock	~/projects/project-X/flake.lock	Locks the version of nixpkgs used for project dependencies. This is the key to isolation.
+Workflow Summary
+To boot the machine: Run sudo nixos-rebuild switch --flake /etc/nixos#myserver.
+To change your shared user tools: Edit ~/dotfiles/modules/common/default.nix and run home-manager switch --flake ~/dotfiles#<username>.
+To work on a project: cd ~/projects/project-X. direnv automatically loads the project's specific shell, which imports the consistent user packages defined in your ~/dotfiles flake.
+
 ## System Configuration
 
 The default deployment method is a minimal Linux operating system, providing only essential hardware communication components. A dynamic package loader, governed by application platform requirements, then adds necessary packages using templates, eliminating the need for external orchestrators, custom packaging, or specific communication patterns. This approach allows operations teams to centrally manage service designs through deployment artifacts, while the deployment itself is delegated to operation. A git repository is employed to track and revert system configurations and immutable artifacts, without impacting coresponding services, network, or storage interfaces. Virtual environments require enough space to cache the platform components, a minimum size of *80 to 120GB* is recommended. Nevertheless, this really depends on the number and the complexity of the service blueprints that are being developed.
