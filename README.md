@@ -23,11 +23,11 @@ The sandbox can be deployed on every host system, the default scenario is a loca
 
 ### The System Flake (Admin/Root)
 
-This flake lives in the traditional root-owned location and controls the core OS only.
+The system flake is stored in the traditional root-owned location and is used to controls the core operating system.
 
 | Directory | Location | Purpose |
 | :------- | :------ | :------- |
-| System Flake Root  |  /etc/nixos  |   Host OS control. Manages the kernel, NixOS services, user accounts, and Nix settings.  |
+| System Flake Root  |  /etc/nixos  |   Host OS control, manages the kernel, NixOS services, user accounts, and Nix settings.  |
 | flake.nix  |  /etc/nixos/flake.nix |  Defines the host machine's configuration output (e.g., nixosConfigurations."myserver").  |
 | configuration.nix |  /etc/nixos/configuration.nix |  Imports base modules, sets up users (e.g., users.users.alice), enables direnv and core services.  |
 
@@ -36,11 +36,11 @@ These are the development environments, tied directly to project code via direnv
 
 | Directory | Location | Purpose |
 | :------- | :------ | :------- |
-| Environment Flake Root | ~/projects/project-X | Project isolation. Manages tools specific to a single project. |
-| flake.nix | ~/projects/project-X/flake.nix | Defines the devShells.x86_64-linux.default output and pins the specific, potentially older/unstable nixpkgs version needed for the project. |
-| shell.nix (or default.nix) | (Optional, imported by flake.nix) | Defines the contents of the shell environment. |
-| .envrc | ~/projects/project-X/.envrc | Contains the single line: use flake to enable direnv integration. |
-| flake.lock | ~/projects/project-X/flake.lock | Locks the version of nixpkgs used for project dependencies. This is the key to isolation. |
+| Environment Flake Root | ~/projects/myproject | Project isolation, manages tools specific to a single project. |
+| flake.nix | ~/projects/myproject/flake.nix | Defines the devShells.x86_64-linux.default output and pins the specific, potentially older/unstable nixpkgs version needed for the project. |
+| shell.nix | ~/projects/myproject/shell.nix | Imported by flake.nix, defines the contents of the shell environment. |
+| .envrc | ~/projects/myproject/.envrc | Contains the single line: use flake to enable direnv integration. |
+| flake.lock | ~/projects/myproject/flake.lock | Locks the version of nixpkgs used for project dependencies. This is the key to isolation. |
 
 ### The User Flake (Shared/Consistent)
 
@@ -49,11 +49,11 @@ This is the source of truth for all user-level applications and dotfiles. It is 
 | Directory | Location | Purpose |
 | :------- | :------ | :------- |
 | Directory  |  Location  |  Purpose  |
-| User Flake Root  |  ~/dotfiles (or ~/.config/nix)  |  User consistency. Manages all shared Home Manager configuration.  |
-| flake.nix  |  ~/dotfiles/flake.nix  |  Defines homeManagerModules.common (your shared config) and pins its own nixpkgs version.  |
-| modules/common/default.nix  |  ~/dotfiles/modules/common/default.nix  |  The shared core file. Defines all common packages (tmux, neovim, git config) and modules (your default.nix content).  |
-| modules/profiles/desktop.nix  |  ~/dotfiles/modules/profiles/desktop.nix  |  Optional: Contains modules for desktop-only apps (like window manager config).  |
-| flake.lock  |  ~/dotfiles/flake.lock  |  Locks the version of Home Manager and nixpkgs used for user configuration.  |
+| User Flake Root  |  ~/.config/  |  User consistency. Manages all shared Home Manager configuration.  |
+| flake.nix  |  ~/.config/flake.nix  |  Defines homeManagerModules.common (your shared config) and pins its own nixpkgs version.  |
+| modules/common/default.nix  |  ~/.config/modules/common/default.nix  |  The shared core file. Defines all common packages (tmux, neovim, git config) and modules (your default.nix content).  |
+| modules/profiles/desktop.nix  |  ~/.config/modules/profiles/desktop.nix  |  Optional: Contains modules for desktop-only apps (like window manager config).  |
+| flake.lock  |  ~/.config/flake.lock  |  Locks the version of Home Manager and nixpkgs used for user configuration.  |
 
 Environment Flakes import this user flakes as an input (e.g., inputs.my-home.url = "path:~/dotfiles").
 
