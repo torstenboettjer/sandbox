@@ -11,32 +11,46 @@ As platform engineering tool the sandbox is build against a number of design cri
 
 ## Technology Stack
 
-Other than a developer sandbox, the engineering sandbox does not rely on certain design paradigms, like micro-service or three tier architectures, but utilizes a functional system-configuration language to enable hybrid service configurations and accelerate a transition from development to testing and production for services that span private- and public clouds. A programmable paket manager eliminates the need for system configuration tools like Ansible, Script Runner and/or Rundeck and helps to avoid the use of hypervisors or container clusters if that is not beneficial. Operators remain flexible to choose the optimal delivery method for a service component after developers have finished their work and based on application requirements only. Unlike traditional automation tools that merge application requirements, system definitions, and implementation instructions in complex configuration files, system modules keep application requirements separate from system- and cloud-provider dependencies to enable operators to enforce security policies and to validate regulatory compliance without launching a service.
+Other than a developer sandbox, the engineering sandbox does not rely on certain design paradigms, like micro-service or three tier architectures, but utilizes a functional system-configuration language to enable hybrid service configurations and accelerate a transition from development to testing and production for services that span private- and public clouds. A programmable paket manager eliminates the need for system configuration tools like Ansible, Script Runner and/or Rundeck and helps to avoid the use of hypervisors or container clusters if virtualization is not beneficial.
+
+Operators remain flexible to choose the optimal delivery method for a service component after developers have finished their work - based on application requirements only. Unlike traditional automation tools that merge application requirements, system definitions, and implementation instructions in complex configuration files, system modules keep application requirements separate from system- and cloud-provider dependencies and enable operators to enforce security policies and to validate regulatory compliance without launching a service.
 
 ![Technology Stack](./doc/img/diagrams-technology.svg)
 
-A layered architecture allows system engineers to replicate service blueprints that integrate host-dependent services, such as databases, with node artifacts deployable as distributed systems in clusters or serverless environments. Architectural layers maintain the flexibility for engineers while standardizing operational processes. The first layer defines captures hardware- and system dependencies for every individual maschine.
+A layered architecture allows system engineers to separate the base system configuration from service blueprints that deploy host-dependent services, such as databases, with node artifacts deployable as distributed systems in clusters or serverless environments and from developer tools, like IDE, git and diagram tools. Architectural layers maintain the flexibility for engineers while standardizing operational processes.
 
- It remains decoupled from the application set to prevent platform dependencies. Additional modules can address context-specific machine requirements, such as mobility functions, cloud provider settings, or company-specific monitoring agents. The second layer defines solution components including hosted backend services, and the third layer addresses the development toolset and captures configurations for developer services. Local machine provisioning empowers engineers to override default settings at any layer, enabling security operators and service architects to test the entire stack with a functional model before staging and production. Local instances also eliminate implicit dependencies on higher level packaging formats and provider specific orchestrators, fostering a decentralized development process with configuration templates shared via Git. Programmatic assembly of dedicated servers ensures reproducibility, isolation, and atomic upgrades with consistent package deployments, independent of specific vendors or solutions. Dependencies and build instructions are specified in configuration files, facilitating clear separation of duties through simple directory or file access management.
+* The first layer is represented by a system flake that captures hardware- and system dependencies for the system that hosts the development environment. It remains decoupled from the application set to prevent platform dependencies. Additional modules can address context-specific machine requirements, such as mobility functions, cloud provider settings, or company-specific monitoring agents.
+
+* The second layer defines solution components including hosted backend services to ensure a homgenous development environment with the productive systems
+
+* The third layer addresses the developer toolset and captures configurations for developer services.
+
+Allthough these services can be deployed on a hosted system, the defualt environment is a local machine. Local machine provisioning empowers engineers to override default settings at any layer, enabling security operators and service architects to test the entire stack with a functional model before staging and production. Local instances also eliminate implicit dependencies on higher level packaging formats and provider specific orchestrators, fostering a decentralized development process with configuration templates shared via Git. Programmatic assembly of dedicated servers ensures reproducibility, isolation, and atomic upgrades with consistent package deployments, independent of specific vendors or solutions. Dependencies and build instructions are specified in configuration files, facilitating clear separation of duties through simple directory or file access management.
 
 ### The System Flake (Admin/Root)
+
 This flake lives in the traditional root-owned location and controls the core OS only.
 
-Directory	Location	Purpose
-System Flake Root	/etc/nixos	Host OS control. Manages the kernel, NixOS services, user accounts, and Nix settings.
-flake.nix	/etc/nixos/flake.nix	Defines the host machine's configuration output (e.g., nixosConfigurations."myserver").
-configuration.nix	/etc/nixos/configuration.nix	Imports base modules, sets up users (e.g., users.users.alice), enables direnv and core services.
+| Directory | Location | Purpose |
+| :------- | :------: | -------: |
+| System Flake Root  |  /etc/nixos  |   Host OS control. Manages the kernel, NixOS services, user accounts, and Nix settings.  |
+| flake.nix  |  /etc/nixos/flake.nix |  Defines the host machine's configuration output (e.g., nixosConfigurations."myserver").  |
+| configuration.nix |  /etc/nixos/configuration.nix |  Imports base modules, sets up users (e.g., users.users.alice), enables direnv and core services.  |
 
 ### The User Flake (Shared/Consistent)
+
 This is the source of truth for all user-level applications and dotfiles. It is shared across all environments and machines.
 
-Directory	Location	Purpose
-User Flake Root	~/dotfiles (or ~/.config/nix)	User consistency. Manages all shared Home Manager configuration.
-flake.nix	~/dotfiles/flake.nix	Defines homeManagerModules.common (your shared config) and pins its own nixpkgs version.
-modules/common/default.nix	~/dotfiles/modules/common/default.nix	The shared core file. Defines all common packages (tmux, neovim, git config) and modules (your default.nix content).
-modules/profiles/desktop.nix	~/dotfiles/modules/profiles/desktop.nix	Optional: Contains modules for desktop-only apps (like window manager config).
-flake.lock	~/dotfiles/flake.lock	Locks the version of Home Manager and nixpkgs used for user configuration.
-How it's used: Your Environment Flakes (below) will import this flake as an input (e.g., inputs.my-home.url = "path:~/dotfiles").
+| Directory | Location | Purpose |
+| :------- | :------: | -------: |
+| Directory  |  Location  |  Purpose  |
+| User Flake Root  |  ~/dotfiles (or ~/.config/nix)  |  User consistency. Manages all shared Home Manager configuration.  |
+| flake.nix  |  ~/dotfiles/flake.nix  |  Defines homeManagerModules.common (your shared config) and pins its own nixpkgs version.  |
+| modules/common/default.nix  |  ~/dotfiles/modules/common/default.nix  |  The shared core file. Defines all common packages (tmux, neovim, git config) and modules (your default.nix content).  |
+| modules/profiles/desktop.nix  |  ~/dotfiles/modules/profiles/desktop.nix  |  Optional: Contains modules for desktop-only apps (like window manager config).  |
+| flake.lock  |  ~/dotfiles/flake.lock  |  Locks the version of Home Manager and nixpkgs used for user configuration.  |
+
+Environment Flakes (below) will import this flake as an input (e.g., inputs.my-home.url = "path:~/dotfiles").
 
 ### The Environment Flakes (Isolated/Project-Specific)
 These are the development environments, tied directly to project code via direnv.
