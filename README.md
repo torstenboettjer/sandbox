@@ -17,15 +17,9 @@ Operators remain flexible to choose the optimal delivery method for a service co
 
 ![Technology Stack](./doc/img/diagrams-technology.svg)
 
-A layered architecture allows system engineers to separate the base system configuration from service blueprints that deploy host-dependent services, such as databases, with node artifacts deployable as distributed systems in clusters or serverless environments and from developer tools, like IDE, git and diagram tools. Architectural layers maintain the flexibility for engineers while standardizing operational processes.
+A layered architecture allows system engineers to separate the base system configuration from service blueprints that deploy host-dependent services, such as databases, with node artifacts deployable as distributed systems in clusters or serverless environments and from developer tools, like IDE, git and diagram tools. Architectural layers maintain the flexibility for engineers while standardizing operational processes. The first layer is represented by a system flake that captures hardware- and system dependencies for the developer host. The configuration remains decoupled from the application set to prevent platform dependencies. The flake relies on nix modules to address context-specific machine requirements, such as mobility functions, cloud provider settings, or company-specific monitoring agents. The second layer defined using an environment flake, modules deploy solution components link hosted backend services to ensure a homgenous development environment accross teams. The third layer is defined with a user flake referring to modules that provide the developer toolset and captures configurations for developer services.
 
-* The first layer is represented by a system flake that captures hardware- and system dependencies for the system that hosts the development environment. It remains decoupled from the application set to prevent platform dependencies. Additional modules can address context-specific machine requirements, such as mobility functions, cloud provider settings, or company-specific monitoring agents.
-
-* The second layer defines solution components including hosted backend services to ensure a homgenous development environment with the productive systems
-
-* The third layer addresses the developer toolset and captures configurations for developer services.
-
-Allthough these services can be deployed on a hosted system, the defualt environment is a local machine. Local machine provisioning empowers engineers to override default settings at any layer, enabling security operators and service architects to test the entire stack with a functional model before staging and production. Local instances also eliminate implicit dependencies on higher level packaging formats and provider specific orchestrators, fostering a decentralized development process with configuration templates shared via Git. Programmatic assembly of dedicated servers ensures reproducibility, isolation, and atomic upgrades with consistent package deployments, independent of specific vendors or solutions. Dependencies and build instructions are specified in configuration files, facilitating clear separation of duties through simple directory or file access management.
+The sandbox can be deployed on every host system, the default scenario is a local machine, which empowers engineers to override default settings at any layer, without triggering security concerns. Isolated machines enable security operators and service architects to test the entire stack with a functional model before staging and production. Local instances also eliminate implicit dependencies on higher level packaging formats and provider specific orchestrators, fostering a decentralized development process with configuration templates shared via Git. Programmatic assembly of dedicated servers ensures reproducibility, isolation, and atomic upgrades with consistent package deployments, independent of specific vendors or solutions. Dependencies and build instructions are specified in configuration files, facilitating clear separation of duties through simple directory or file access management.
 
 ### The System Flake (Admin/Root)
 
@@ -36,6 +30,17 @@ This flake lives in the traditional root-owned location and controls the core OS
 | System Flake Root  |  /etc/nixos  |   Host OS control. Manages the kernel, NixOS services, user accounts, and Nix settings.  |
 | flake.nix  |  /etc/nixos/flake.nix |  Defines the host machine's configuration output (e.g., nixosConfigurations."myserver").  |
 | configuration.nix |  /etc/nixos/configuration.nix |  Imports base modules, sets up users (e.g., users.users.alice), enables direnv and core services.  |
+
+### The Environment Flakes (Isolated/Project-Specific)
+These are the development environments, tied directly to project code via direnv.
+
+| Directory | Location | Purpose |
+| :------- | :------ | :------- |
+| Environment Flake Root | ~/projects/project-X | Project isolation. Manages tools specific to a single project. |
+| flake.nix | ~/projects/project-X/flake.nix | Defines the devShells.x86_64-linux.default output and pins the specific, potentially older/unstable nixpkgs version needed for the project. |
+| shell.nix (or default.nix) | (Optional, imported by flake.nix) | Defines the contents of the shell environment. |
+| .envrc | ~/projects/project-X/.envrc | Contains the single line: use flake to enable direnv integration. |
+| flake.lock | ~/projects/project-X/flake.lock | Locks the version of nixpkgs used for project dependencies. This is the key to isolation. |
 
 ### The User Flake (Shared/Consistent)
 
@@ -50,18 +55,9 @@ This is the source of truth for all user-level applications and dotfiles. It is 
 | modules/profiles/desktop.nix  |  ~/dotfiles/modules/profiles/desktop.nix  |  Optional: Contains modules for desktop-only apps (like window manager config).  |
 | flake.lock  |  ~/dotfiles/flake.lock  |  Locks the version of Home Manager and nixpkgs used for user configuration.  |
 
-Environment Flakes (below) will import this flake as an input (e.g., inputs.my-home.url = "path:~/dotfiles").
+Environment Flakes import this user flakes as an input (e.g., inputs.my-home.url = "path:~/dotfiles").
 
-### The Environment Flakes (Isolated/Project-Specific)
-These are the development environments, tied directly to project code via direnv.
-
-Directory	Location	Purpose
-Environment Flake Root	~/projects/project-X	Project isolation. Manages tools specific to a single project.
-flake.nix	~/projects/project-X/flake.nix	Defines the devShells.x86_64-linux.default output and pins the specific, potentially older/unstable nixpkgs version needed for the project.
-shell.nix (or default.nix)	(Optional, imported by flake.nix)	Defines the contents of the shell environment.
-.envrc	~/projects/project-X/.envrc	Contains the single line: use flake to enable direnv integration.
-flake.lock	~/projects/project-X/flake.lock	Locks the version of nixpkgs used for project dependencies. This is the key to isolation.
-Workflow Summary
+### Workflow Summary
 To boot the machine: Run sudo nixos-rebuild switch --flake /etc/nixos#myserver.
 To change your shared user tools: Edit ~/dotfiles/modules/common/default.nix and run home-manager switch --flake ~/dotfiles#<username>.
 To work on a project: cd ~/projects/project-X. direnv automatically loads the project's specific shell, which imports the consistent user packages defined in your ~/dotfiles flake.
