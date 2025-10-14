@@ -19,19 +19,11 @@ Relying on a programmable package manager gives engineers architectural freedom 
 
 | Layer | Scope |  Purpose |
 | :------- | :------- | :------- |
-| Base System | Hardware drivers, core operating system needs, and low-level security/monitoring agents | Standardization: Captures where the service is running (e.g., cloud mobility settings) but is kept separate from the actual application code to prevent platform lock-in. |
-| Backend Services | Databases or messaging systems | Team Consistency: Links developer machines to backend components, ensuring everyone across teams is working with an identical, homogeneous development environment. |
-| Developer Tools | IDE, Git, diagramming apps and individual service configurations | Maximum Flexibility: This layer is unique to each engineer, allowing them to customize their local toolset and override defaults without causing security or system conflicts. |
+| Base System | Hardware drivers, core operating system needs, and low-level security/monitoring agents | A system flake captures where the service is running (e.g., cloud mobility settings) but is kept separate from the actual application code to prevent platform lock-in. |
+| Backend Services | Databases or messaging systems | An environment flake links developer machines to backend components, ensuring everyone across teams is working with an identical, homogeneous development environment. |
+| Developer Tools | IDE, Git, diagramming apps and individual service configurations | The user flake is unique to each engineer, it ensures personal productivity by allowing customizations to the local toolset and override defaults without causing security or system conflicts. |
 
-
-
-Flexibility and Override: Because the default setup is on a local machine, engineers can easily override any default setting in their personal User Flake (Layer 3) without requiring security approval or breaking the standardized lower layers.
-
-Full-Stack Testing: By defining the entire stack (from hardware to developer tools) in these files, architects and security teams can launch fully isolated machines to test the functional model before it moves to staging or production.
-
-Decentralized Control: This system eliminates the need for high-level management tools (like Ansible or Rundeck) and provider-specific orchestrators. The configurations are shared via Git, which enables a decentralized development process.
-
-Reproducible Operations: The programmatic assembly of the server ensures that deployments are reproducible, isolated, and allow for atomic upgrades across any vendor or solution.
+The default setup for a sandbox is a local machine, engineers can easily override any default setting in their personal User Flake (Layer 3) without requiring security approval or breaking the standardized lower layers. By defining the entire stack (from hardware to developer tools) in these files, architects and security teams can launch fully isolated machines to test the functional model before it moves to staging or production. This system eliminates the need for high-level management tools (like Ansible or Rundeck) and provider-specific orchestrators. The configurations are shared via Git, which enables a decentralized development process. The programmatic assembly of the server ensures that deployments are reproducible, isolated, and allow for atomic upgrades across any vendor or solution.
 
 Clear Duties: By separating dependencies and build instructions into different files, you create a clear separation of duties—operators can manage system compliance and security (Layers 1 & 2) without needing to touch the application requirements defined by developers (Layer 3).
 
