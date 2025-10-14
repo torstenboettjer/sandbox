@@ -26,7 +26,7 @@ Relying on a programmable package manager gives engineers architectural freedom 
 
 The default setup for a sandbox is a local machine, engineers can easily override any default setting in their personal User Flake without requiring security approval or breaking the standardized lower layers. By defining the entire stack from hardware to developer tools in these files, architects and security teams can launch fully isolated machines to test the functional model before it moves to staging or production. This system eliminates the need for high-level management tools and provider-specific orchestrators. The configurations are shared via Git, which enables a decentralized development process. The programmatic assembly of the server ensures that deployments are reproducible, isolated, and allow for atomic upgrades across any vendor or solution. Separating dependencies and build instructions into different files creates a clear separation of duties—operators can manage system compliance and security without needing to touch the application requirements defined by developers.
 
-### The System Flake (Admin/Root)
+### System Flake
 
 The System Flake is the most foundational part—it's the core control file for the entire operating system. It is stored in the traditional, protected spot, */etc/nixos*. This location is root-owned, meaning only administrators can change it, which keeps the base system secure and stable. This configuration manages everything essential for the host to run, including the kernel, core NixOS services, basic user accounts, and all Nix settings. The System Flake is the blueprint for the host machine itself.
 
@@ -35,9 +35,9 @@ The System Flake is the most foundational part—it's the core control file for 
 | flake.nix  |  /etc/nixos/flake.nix |  Defines the host machine's configuration output (e.g., nixosConfigurations."myserver").  |
 | configuration.nix |  /etc/nixos/configuration.nix |  Imports base modules, sets up users (e.g., users.users.alice), enables direnv and core services.  |
 
-### The Environment Flakes (Isolated/Project-Specific)
-The Environment Flake defines the specific tools and settings for a single project, keeping development environments separate and consistent for the entire team. It it is stored within the project's code directory, typically at *~/projects/myproject*. It's tied directly to the project code using a tool like direnv. This means as soon as a developer enters that project folder, the correct environment and tools automatically load. This configuration achieves project isolation and ensures every team member is using the exact same project-specific tools, backend services, and dependencies. The Environment Flake makes sure the project's development environment travels with the code.
+### Environment Flakes
 
+The Environment Flake defines the specific tools and settings for a single project, keeping development environments separate and consistent for the entire team. It it is stored within the project's code directory, typically at *~/projects/myproject*. It's tied directly to the project code using a tool like direnv. This means as soon as a developer enters that project folder, the correct environment and tools automatically load. This configuration achieves project isolation and ensures every team member is using the exact same project-specific tools, backend services, and dependencies. The Environment Flake makes sure the project's development environment travels with the code.
 
 | Directory | Location | Purpose |
 | :------- | :------ | :------- |
@@ -46,7 +46,7 @@ The Environment Flake defines the specific tools and settings for a single proje
 | .envrc | ~/projects/myproject/.envrc | Contains the single line: use flake to enable direnv integration. |
 | flake.lock | ~/projects/myproject/flake.lock | Locks the version of nixpkgs used for project dependencies. This is the key to isolation. |
 
-### The User Flake (Shared/Consistent)
+### User Flake
 
 The User Flake is the single source of truth for an individual developer's personal setup. It itis stored in the user's configuration directory, typically at *~/.config/*. It defines all user-level applications and personal settings (called "dotfiles"). By storing the entire Home Manager configuration, this single file ensures that your personal toolset and preferences are identical across all the machines and environments you use. The User Flake is your personalized setup that follows you everywhere.
 
