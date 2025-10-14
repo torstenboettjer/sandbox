@@ -19,9 +19,9 @@ Relying on a programmable package manager gives engineers architectural freedom 
 
 | Layer | Scope |  Purpose |
 | :------- | :------- | :------- |
-| Base System | Hardware drivers, core operating system needs, and low-level security/monitoring agents. | Standardization: Captures where the service is running (e.g., cloud mobility settings) but is kept separate from the actual application code to prevent platform lock-in. |
-| Backend Services | Databases or messaging systems). | Team Consistency: Links developer machines to backend components, ensuring everyone across teams is working with an identical, homogeneous development environment. |
-| Developer Tools | IDE, Git, diagramming apps and individual service configurations. | Maximum Flexibility: This layer is unique to each engineer, allowing them to customize their local toolset and override defaults without causing security or system conflicts. |
+| Base System | Hardware drivers, core operating system needs, and low-level security/monitoring agents | Standardization: Captures where the service is running (e.g., cloud mobility settings) but is kept separate from the actual application code to prevent platform lock-in. |
+| Backend Services | Databases or messaging systems | Team Consistency: Links developer machines to backend components, ensuring everyone across teams is working with an identical, homogeneous development environment. |
+| Developer Tools | IDE, Git, diagramming apps and individual service configurations | Maximum Flexibility: This layer is unique to each engineer, allowing them to customize their local toolset and override defaults without causing security or system conflicts. |
 
 
 
