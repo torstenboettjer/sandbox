@@ -28,20 +28,19 @@ The default setup for a sandbox is a local machine, engineers can easily overrid
 
 ### The System Flake (Admin/Root)
 
-The system flake is stored in the traditional root-owned location and is used to controls the core operating system.
+The System Flake is the most foundational part—it's the core control file for the entire operating system. It is stored in the traditional, protected spot, */etc/nixos*. This location is root-owned, meaning only administrators can change it, which keeps the base system secure and stable. This configuration manages everything essential for the host to run, including the kernel, core NixOS services, basic user accounts, and all Nix settings. The System Flake is the blueprint for the host machine itself.
 
 | Directory | Location | Purpose |
 | :------- | :------ | :------- |
-| System Flake Root  |  /etc/nixos  |   Host OS control, manages the kernel, NixOS services, user accounts, and Nix settings.  |
 | flake.nix  |  /etc/nixos/flake.nix |  Defines the host machine's configuration output (e.g., nixosConfigurations."myserver").  |
 | configuration.nix |  /etc/nixos/configuration.nix |  Imports base modules, sets up users (e.g., users.users.alice), enables direnv and core services.  |
 
 ### The Environment Flakes (Isolated/Project-Specific)
-These are the development environments, tied directly to project code via direnv.
+The Environment Flake defines the specific tools and settings for a single project, keeping development environments separate and consistent for the entire team. It it is stored within the project's code directory, typically at *~/projects/myproject*. It's tied directly to the project code using a tool like direnv. This means as soon as a developer enters that project folder, the correct environment and tools automatically load. This configuration achieves project isolation and ensures every team member is using the exact same project-specific tools, backend services, and dependencies. The Environment Flake makes sure the project's development environment travels with the code.
+
 
 | Directory | Location | Purpose |
 | :------- | :------ | :------- |
-| Environment Flake Root | ~/projects/myproject | Project isolation, manages tools specific to a single project. |
 | flake.nix | ~/projects/myproject/flake.nix | Defines the devShells.x86_64-linux.default output and pins the specific, potentially older/unstable nixpkgs version needed for the project. |
 | shell.nix | ~/projects/myproject/shell.nix | Imported by flake.nix, defines the contents of the shell environment. |
 | .envrc | ~/projects/myproject/.envrc | Contains the single line: use flake to enable direnv integration. |
@@ -49,12 +48,10 @@ These are the development environments, tied directly to project code via direnv
 
 ### The User Flake (Shared/Consistent)
 
-This is the source of truth for all user-level applications and dotfiles. It is shared across all environments and machines.
+The User Flake is the single source of truth for an individual developer's personal setup. It itis stored in the user's configuration directory, typically at *~/.config/*. It defines all user-level applications and personal settings (called "dotfiles"). By storing the entire Home Manager configuration, this single file ensures that your personal toolset and preferences are identical across all the machines and environments you use. The User Flake is your personalized setup that follows you everywhere.
 
 | Directory | Location | Purpose |
 | :------- | :------ | :------- |
-| Directory  |  Location  |  Purpose  |
-| User Flake Root  |  ~/.config/  |  User consistency. Manages all shared Home Manager configuration.  |
 | flake.nix  |  ~/.config/flake.nix  |  Defines homeManagerModules.common (your shared config) and pins its own nixpkgs version.  |
 | modules/common/default.nix  |  ~/.config/modules/common/default.nix  |  The shared core file. Defines all common packages (tmux, neovim, git config) and modules (your default.nix content).  |
 | modules/profiles/desktop.nix  |  ~/.config/modules/profiles/desktop.nix  |  Optional: Contains modules for desktop-only apps (like window manager config).  |
