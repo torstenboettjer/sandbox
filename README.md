@@ -2,13 +2,16 @@
 
 Developing new services for a hybrid cloud, partially on-premises, partially in the public cloud, is difficult and slow because the connections between network settings and the service's configuration are very complicated. It's hard to copy and run essential supporting services like databases or message queues that don't fit into the dynamic, container-based part of the cloud. This project offers a configurable sandbox to speed up development in hybrid environments by solving the replication problem. It creates a full, reproducible copy of a service's setup, including the service itself as binaries, containers, or OS extensions and its supporting services. The sandbox is primarily built on NixOS and uses the Nix package manager to guarantee that the environment is reproducible. It can also run on [Windows (via WSL)](https://learn.microsoft.com/en-us/windows/wsl/about), [ChromeOS (via CROSH)](https://chromeos.dev/en/linux), and [macOS](https://github.com/LnL7/nix-darwin) with minor adjustments.
 
-## Design Criteria
+## Key Design Criteria
 
-As platform engineering tool the sandbox is build against a number of design criteria to ensure the reproducability of a developed service.
-* Independence from any orchestration tools or hosting services that dictate the operating model for a service in production.
-* Flexible system configuration enabling independent rollouts across diverse hardware platforms.
-* Secure package distribution via a cache, ensuring supply chain control for non-interactive, unattended updates.
-* Declarative system configurations that enable fast roll back in case of a malfunction.
+The sandbox is built with the following criteria to ensure that the services developed within it are reproducible and reliable:
+
+* *No Vendor Lock-in:* It must be independent of specific production tools or hosting services (like Kubernetes or a particular cloud provider). This ensures the operating model can be freely chosen for deployment.
+* *Flexible and Portable:* It needs a flexible system configuration to allow the service to be deployed and run on any diverse hardware platform.
+* *Secure Distribution:* It must use a package cache for distribution. This provides supply chain control and enables secure, non-interactive, unattended updates.
+* *Reliable Rollbacks:* The system configurations must be declarative (describing what the system should look like, not how to build it). This allows for fast and easy rollbacks if any malfunction occurs.
+
+The sandbox is designed to be a portable, secure, and easily reversible environment that doesn't dictate your final production setup.
 
 ## Technology Stack
 
