@@ -59,25 +59,12 @@ The User Flake is the single source of truth for an individual developer's perso
 
 Environment Flakes import this user flakes as an input (e.g., inputs.my-home.url = "path:~/dotfiles").
 
-### Workflow Summary
-To boot the machine: Run sudo nixos-rebuild switch --flake /etc/nixos#myserver.
-To change your shared user tools: Edit ~/dotfiles/modules/common/default.nix and run home-manager switch --flake ~/dotfiles#<username>.
-To work on a project: cd ~/projects/project-X. direnv automatically loads the project's specific shell, which imports the consistent user packages defined in your ~/dotfiles flake.
+## Prerequisites
 
-## Using Direnv
-
-### Prerequisites
-Before setting this up, ensure you have:
-
-Nix Flakes Enabled: (You already do this).
-direnv installed: It should be installed on your system and hooked into your shell (e.g., added to your .bashrc, .zshrc, or equivalent).
-The Nix direnv Integration: The Home Manager or NixOS modules for direnv often install this, but if you're using a manual installation, you must ensure the use_nix or use_flake functionality is available.
+Direnv is an important enabler for project configurations, setting it up, nix flakes have to be enabled. On NixOS direnv should be installed by default, for manual installations, the use_nix or use_flake functionality needs to be made available.
 
 ### The use_flake Method (Recommended)
-The best and most modern way to integrate Nix flakes with direnv is by using the use_flake helper function.
-
-#### Define the Environment in flake.nix
-In your developer environment flake (e.g., in ~/dev-env-A/flake.nix), ensure you define a devShells output. This is the part that direnv will load.
+The best and most modern way to integrate Nix flakes with direnv is by using the use_flake helper function. In the environment flake (e.g., in ~/dev-env-A/flake.nix), devShells outputs should be defined. This is the part that direnv will load.
 
 ```sh
 # ~/dev-env-A/flake.nix
@@ -108,7 +95,6 @@ In your developer environment flake (e.g., in ~/dev-env-A/flake.nix), ensure you
 }
 ```
 
-#### Create the .envrc File
 In the root of that same directory (~/dev-env-A), create a .envrc file with a single line:
 
 ```sh
@@ -116,7 +102,6 @@ In the root of that same directory (~/dev-env-A), create a .envrc file with a si
 use flake
 ```
 
-#### Allow the Environment
 The first time you do this, direnv will ask for permission (a security measure to prevent arbitrary code execution):
 
 ```sh
@@ -125,15 +110,15 @@ cd ~/dev-env-A
 direnv allow
 ```
 
-Now, every time you cd into ~/dev-env-A:
+Now, every time a developer *cd* into ~/dev-env-A:
+* direnv reads .envrc.
+* use flake tells direnv to find the nearest flake.nix file.
+* direnv calls nix develop --command bash (or equivalent) for the default devShells output.
+* The specified packages (docker, kubectl, go) and the shellHook are loaded into your current shell session.
 
-direnv reads .envrc.
-use flake tells direnv to find the nearest flake.nix file.
-direnv calls nix develop --command bash (or equivalent) for the default devShells output.
-The specified packages (docker, kubectl, go) and the shellHook are loaded into your current shell session.
 ### Alternative: Specifying the Flake Output
 
-If your flake has multiple shell outputs, you can specify exactly which one to use in your .envrc:
+If a flake has multiple shell outputs, developers can specify exactly which one to use in your .envrc:
 
 ```sh
 # ~/dev-env-A/.envrc
@@ -141,8 +126,13 @@ If your flake has multiple shell outputs, you can specify exactly which one to u
 use flake .#backend
 ```
 
+## Workflow Summary
+To boot the machine: Run sudo nixos-rebuild switch --flake /etc/nixos#myserver.
+To change your shared user tools: Edit ~/dotfiles/modules/common/default.nix and run home-manager switch --flake ~/dotfiles#<username>.
+To work on a project: cd ~/projects/project-X. direnv automatically loads the project's specific shell, which imports the consistent user packages defined in your ~/dotfiles flake.
+
 ## Subscribe to a common developer toolset
-A shared Home Manager module *default.nix* in the home directory maintains a consistent developer application set across environments. This ensures that all developer environments share the same user-level applications, dotfiles, and shell settings via the shared Home Manager code. Eventhough each developer environment flake can use a different nixpkgs version (e.g., for specific system libraries).
+A shared Home Manager module *shell.nix* in the home directory maintains a consistent developer application set across environments. This ensures that all developer environments share the same user-level applications, dotfiles, and shell settings via the shared Home Manager code. Eventhough each developer environment flake can use a different nixpkgs version (e.g., for specific system libraries).
 
 ### Create a Dedicated Home Manager Flake (The Source of Truth)
 Create a separate repository or directory (e.g., ~/dotfiles) that houses your user configuration logic.
