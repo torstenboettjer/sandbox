@@ -46,7 +46,7 @@ The Environment Flake defines the specific tools and settings for a single proje
 | .envrc | ~/projects/myproject/.envrc | Contains the single line: use flake to enable direnv integration. |
 | flake.lock | ~/projects/myproject/flake.lock | Locks the version of nixpkgs used for project dependencies. This is the key to isolation. |
 
-Direnv is an important enabler for project configurations, setting it up, nix flakes have to be enabled. On NixOS direnv should be installed by default, for manual installations, the use_nix or use_flake functionality needs to be made available.
+*direnv* is used as an automatic environment setup utility that is particularly useful for managing project-specific development environments in NixOS. It loads and unloads environment variables automatically based on the current directory you are in. On NixOS direnv should be installed by default, for manual installations, the use_nix or use_flake functionality needs to be made available.
 
 #### The use_flake Method (Recommended)
 The best and most modern way to integrate Nix flakes with direnv is by using the use_flake helper function. In the environment flake (e.g., in ~/dev-env-A/flake.nix), devShells outputs should be defined. This is the part that direnv will load.
