@@ -37,7 +37,7 @@ The System Flake is the most foundational part—it's the core control file for 
 
 ### Backend Services
 
-The Environment Flake defines the specific tools and settings for a single project, keeping development environments separate and consistent for the entire team. It it is stored within the project's code directory, typically at *~/projects/myproject*. It's tied directly to the project code using a tool like direnv. This means as soon as a developer enters that project folder, the correct environment and tools automatically load. This configuration achieves project isolation and ensures every team member is using the exact same project-specific tools, backend services, and dependencies. The Environment Flake makes sure the project's development environment travels with the code.
+The Environment Flake defines the specific tools and settings for a single project, keeping development environments separate and consistent for the entire team. It is stored within the project's code directory, typically at *~/projects/myproject*. It's tied directly to the project code using a tool like direnv. This means as soon as a developer enters that project folder, the correct environment and tools automatically load. This configuration achieves project isolation and ensures every team member is using the exact same project-specific tools, backend services, and dependencies. The Environment Flake makes sure the project's development environment travels with the code.
 
 | Directory | Location | Purpose |
 | :------- | :------ | :------- |
@@ -46,13 +46,13 @@ The Environment Flake defines the specific tools and settings for a single proje
 | .envrc | ~/projects/myproject/.envrc | Contains the single line: use flake to enable direnv integration. |
 | flake.lock | ~/projects/myproject/flake.lock | Locks the version of nixpkgs used for project dependencies. This is the key to isolation. |
 
-*direnv* is used as an automatic environment setup utility that is particularly useful for managing project-specific development environments in NixOS. It loads and unloads environment variables automatically based on the current directory you are in. On NixOS direnv should be installed by default, for manual installations, the use_nix or use_flake functionality needs to be made available.
+*direnv* is used as an utlity to automaticly setup project-specific development environments. It loads and unloads environment variables automatically based on the current directory. On NixOS direnv is installed by default, other operating systems might need a manual installation and requires the use_nix or use_flake functionality to be made available.
 
 #### The use_flake Method (Recommended)
-The best and most modern way to integrate Nix flakes with direnv is by using the use_flake helper function. In the environment flake (e.g., in ~/dev-env-A/flake.nix), devShells outputs should be defined. This is the part that direnv will load.
+The best and most modern way to integrate Nix flakes with direnv is by using the use_flake helper function. In the environment flake (e.g., in ~/projects/myproject/flake.nix), devShells outputs should be defined. This is the part that direnv will load.
 
 ```sh
-# ~/dev-env-A/flake.nix
+# ~/projects/myproject/flake.nix
 {
   # ... inputs defined here ...
   outputs = { self, nixpkgs, ... }:
@@ -80,22 +80,22 @@ The best and most modern way to integrate Nix flakes with direnv is by using the
 }
 ```
 
-In the root of that same directory (~/dev-env-A), create a .envrc file with a single line:
+In the root of that same directory (~/projects/myproject), create a .envrc file with a single line:
 
 ```sh
-# ~/dev-env-A/.envrc
+# ~/projects/myproject/.envrc
 use flake
 ```
 
-The first time you do this, direnv will ask for permission (a security measure to prevent arbitrary code execution):
+When the directoruy is entered for the first time, direnv will ask for permission. this is a security measure to prevent arbitrary code execution:
 
 ```sh
-cd ~/dev-env-A
+cd ~/projects/myproject
 # direnv: error .envrc is blocked. Run `direnv allow` to approve its contents
 direnv allow
 ```
 
-Now, every time a developer *cd* into ~/dev-env-A:
+Now, every time a developer *cd* into ~/projects/myproject:
 * direnv reads .envrc.
 * use flake tells direnv to find the nearest flake.nix file.
 * direnv calls nix develop --command bash (or equivalent) for the default devShells output.
@@ -106,7 +106,7 @@ Now, every time a developer *cd* into ~/dev-env-A:
 If a flake has multiple shell outputs, developers can specify exactly which one to use in your .envrc:
 
 ```sh
-# ~/dev-env-A/.envrc
+# ~/projects/myproject/.envrc
 # Use a specific shell output named 'backend'
 use flake .#backend
 ```
