@@ -117,28 +117,11 @@ The User Flake is the single source of truth for an individual developer's perso
 | Directory | Location | Purpose |
 | :------- | :------ | :------- |
 | flake.nix  |  ~/.config/flake.nix  |  Defines homeManagerModules.common (your shared config) and pins its own nixpkgs version.  |
-| modules/common/default.nix  |  ~/.config/modules/common/default.nix  |  The shared core file. Defines all common packages (tmux, neovim, git config) and modules (your default.nix content).  |
-| modules/profiles/desktop.nix  |  ~/.config/modules/profiles/desktop.nix  |  Optional: Contains modules for desktop-only apps (like window manager config).  |
+| default.nix  |  ~/.config/modules/common/default.nix  |  The shared core file. Defines all common packages (tmux, neovim, git config) and modules (your default.nix content).  |
+| desktop.nix  |  ~/.config/modules/profiles/desktop.nix  |  Optional: Contains modules for desktop-only apps (like window manager config).  |
 | flake.lock  |  ~/.config/flake.lock  |  Locks the version of Home Manager and nixpkgs used for user configuration.  |
 
 Environment Flakes import this user flakes as an input (e.g., inputs.my-home.url = "path:~/dotfiles").
-
-## Workflow Summary
-
-Updating the operating system
-```sh
-sudo nixos-rebuild switch --flake /etc/nixos#myserver
-```
-
-Changing shared user tools, edit `~/dotfiles/modules/common/default.nix` and run:
-```sh
-home-manager switch --flake ~/dotfiles#<username>.
-```
-3. To work on a project
-```sh
-cd ~/projects/myproject
-```
-direnv automatically loads the project's specific shell, which imports the consistent user packages defined in the Environment Flake.
 
 ## Subscribe to a common developer toolset
 A shared Home Manager module *shell.nix* in the home directory maintains a consistent developer application set across environments. This ensures that all developer environments share the same user-level applications, dotfiles, and shell settings via the shared Home Manager code. Eventhough each developer environment flake can use a different nixpkgs version (e.g., for specific system libraries).
@@ -280,6 +263,24 @@ If 80% of your environments use the same core utilities (e.g., git, neovim, bash
 
 3.No Centralized Host System Control
 Your /etc/nixos will now only manage the base operating system. You lose the ability to easily audit all packages and services running on the machine from a single configuration file.
+
+
+## Workflow Summary
+
+Setting up the developer maschine
+```sh
+sudo nixos-rebuild switch --flake /etc/nixos#myserver
+```
+
+Changing shared user tools, edit `~/.config/modules/common/default.nix` and run:
+```sh
+home-manager switch --flake ~/.config#<username>.
+```
+Working on a project
+```sh
+cd ~/projects/myproject
+```
+direnv automatically loads the project's specific shell, which imports the consistent user packages defined in the Environment Flake.
 
 
 ## System Configuration
