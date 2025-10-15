@@ -111,19 +111,6 @@ If a flake has multiple shell outputs, developers can specify exactly which one 
 use flake .#backend
 ```
 
-### Developer Tools
-The User Flake is the single source of truth for an individual developer's personal setup. It itis stored in the user's configuration directory, typically at *~/.config/*. It defines all user-level applications and personal settings (called "dotfiles"). By storing the entire Home Manager configuration, this single file ensures that your personal toolset and preferences are identical across all the machines and environments you use. The User Flake is your personalized setup that follows you everywhere.
-
-| Directory | Location | Purpose |
-| :------- | :------ | :------- |
-| flake.nix  |  ~/.config/flake.nix  |  Defines homeManagerModules.common (your shared config) and pins its own nixpkgs version.  |
-| default.nix  |  ~/.config/modules/common/default.nix  |  The shared core file. Defines all common packages (tmux, neovim, git config) and modules (your default.nix content).  |
-| desktop.nix  |  ~/.config/modules/profiles/desktop.nix  |  Optional: Contains modules for desktop-only apps (like window manager config).  |
-| flake.lock  |  ~/.config/flake.lock  |  Locks the version of Home Manager and nixpkgs used for user configuration.  |
-
-Environment Flakes import this user flakes as an input (e.g., inputs.my-home.url = "path:~/dotfiles").
-
-## Subscribe to a common developer toolset
 A shared Home Manager module *shell.nix* in the home directory maintains a consistent developer application set across environments. This ensures that all developer environments share the same user-level applications, dotfiles, and shell settings via the shared Home Manager code. Eventhough each developer environment flake can use a different nixpkgs version (e.g., for specific system libraries).
 
 ### Create a Dedicated Home Manager Flake (The Source of Truth)
@@ -222,9 +209,17 @@ Now, in each of your developer environment flakes (e.g., ~/dev-env-A and ~/dev-e
 
 By making the *~/dotfiles* flake an input to all environment flakes, we ensure that all environments receive the consistent set of applications and configuration defined in *default.nix*, while still allowing each environment to manage its own core dependencies and specific NixOS settings.
 
-## Flakes for Developer Environments
-For system engineering environments, the isolation, portability, and independence offered by separate flakes are worth the management overhead.
+### Developer Tools
+The User Flake is the single source of truth for an individual developer's personal setup. It itis stored in the user's configuration directory, typically at *~/.config/*. It defines all user-level applications and personal settings (called "dotfiles"). By storing the entire Home Manager configuration, this single file ensures that your personal toolset and preferences are identical across all the machines and environments you use. The User Flake is your personalized setup that follows you everywhere.
 
+| Directory | Location | Purpose |
+| :------- | :------ | :------- |
+| flake.nix  |  ~/.config/flake.nix  |  Defines homeManagerModules.common (your shared config) and pins its own nixpkgs version.  |
+| default.nix  |  ~/.config/modules/common/default.nix  |  The shared core file. Defines all common packages (tmux, neovim, git config) and modules (your default.nix content).  |
+| desktop.nix  |  ~/.config/modules/profiles/desktop.nix  |  Optional: Contains modules for desktop-only apps (like window manager config).  |
+| flake.lock  |  ~/.config/flake.lock  |  Locks the version of Home Manager and nixpkgs used for user configuration.  |
+
+Environment Flakes import this user flakes as an input (e.g., inputs.my-home.url = "path:~/.config"). For system engineering environments, the isolation, portability, and independence offered by separate flakes are worth the management overhead.
 
 * *Dedicated Flakes for Nix Shells* Define each environment as a separate flake (or a subdirectory containing a flake) that primarily exposes the devShells output. Engineers use the nix develop command, which is non-invasive to the host system.
 
