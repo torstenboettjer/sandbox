@@ -124,9 +124,20 @@ The User Flake is the single source of truth for an individual developer's perso
 Environment Flakes import this user flakes as an input (e.g., inputs.my-home.url = "path:~/dotfiles").
 
 ## Workflow Summary
-To boot the machine: Run sudo nixos-rebuild switch --flake /etc/nixos#myserver.
-To change your shared user tools: Edit ~/dotfiles/modules/common/default.nix and run home-manager switch --flake ~/dotfiles#<username>.
-To work on a project: cd ~/projects/project-X. direnv automatically loads the project's specific shell, which imports the consistent user packages defined in your ~/dotfiles flake.
+1. To boot the machine:
+```sh
+sudo nixos-rebuild switch --flake /etc/nixos#myserver
+```
+
+2. To change your shared user tools, edit `~/dotfiles/modules/common/default.nix` and run:
+```sh
+home-manager switch --flake ~/dotfiles#<username>.
+```
+3. To work on a project
+```sh
+cd ~/projects/myproject
+```
+direnv automatically loads the project's specific shell, which imports the consistent user packages defined in the Environment Flake.
 
 ## Subscribe to a common developer toolset
 A shared Home Manager module *shell.nix* in the home directory maintains a consistent developer application set across environments. This ensures that all developer environments share the same user-level applications, dotfiles, and shell settings via the shared Home Manager code. Eventhough each developer environment flake can use a different nixpkgs version (e.g., for specific system libraries).
