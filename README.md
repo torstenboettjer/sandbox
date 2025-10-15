@@ -46,24 +46,9 @@ The Environment Flake defines the specific tools and settings for a single proje
 | .envrc | ~/projects/myproject/.envrc | Contains the single line: use flake to enable direnv integration. |
 | flake.lock | ~/projects/myproject/flake.lock | Locks the version of nixpkgs used for project dependencies. This is the key to isolation. |
 
-### Developer Tools
-
-The User Flake is the single source of truth for an individual developer's personal setup. It itis stored in the user's configuration directory, typically at *~/.config/*. It defines all user-level applications and personal settings (called "dotfiles"). By storing the entire Home Manager configuration, this single file ensures that your personal toolset and preferences are identical across all the machines and environments you use. The User Flake is your personalized setup that follows you everywhere.
-
-| Directory | Location | Purpose |
-| :------- | :------ | :------- |
-| flake.nix  |  ~/.config/flake.nix  |  Defines homeManagerModules.common (your shared config) and pins its own nixpkgs version.  |
-| modules/common/default.nix  |  ~/.config/modules/common/default.nix  |  The shared core file. Defines all common packages (tmux, neovim, git config) and modules (your default.nix content).  |
-| modules/profiles/desktop.nix  |  ~/.config/modules/profiles/desktop.nix  |  Optional: Contains modules for desktop-only apps (like window manager config).  |
-| flake.lock  |  ~/.config/flake.lock  |  Locks the version of Home Manager and nixpkgs used for user configuration.  |
-
-Environment Flakes import this user flakes as an input (e.g., inputs.my-home.url = "path:~/dotfiles").
-
-## Prerequisites
-
 Direnv is an important enabler for project configurations, setting it up, nix flakes have to be enabled. On NixOS direnv should be installed by default, for manual installations, the use_nix or use_flake functionality needs to be made available.
 
-### The use_flake Method (Recommended)
+#### The use_flake Method (Recommended)
 The best and most modern way to integrate Nix flakes with direnv is by using the use_flake helper function. In the environment flake (e.g., in ~/dev-env-A/flake.nix), devShells outputs should be defined. This is the part that direnv will load.
 
 ```sh
@@ -116,7 +101,7 @@ Now, every time a developer *cd* into ~/dev-env-A:
 * direnv calls nix develop --command bash (or equivalent) for the default devShells output.
 * The specified packages (docker, kubectl, go) and the shellHook are loaded into your current shell session.
 
-### Alternative: Specifying the Flake Output
+#### Alternative: Specifying the Flake Output
 
 If a flake has multiple shell outputs, developers can specify exactly which one to use in your .envrc:
 
@@ -125,6 +110,18 @@ If a flake has multiple shell outputs, developers can specify exactly which one 
 # Use a specific shell output named 'backend'
 use flake .#backend
 ```
+
+### Developer Tools
+The User Flake is the single source of truth for an individual developer's personal setup. It itis stored in the user's configuration directory, typically at *~/.config/*. It defines all user-level applications and personal settings (called "dotfiles"). By storing the entire Home Manager configuration, this single file ensures that your personal toolset and preferences are identical across all the machines and environments you use. The User Flake is your personalized setup that follows you everywhere.
+
+| Directory | Location | Purpose |
+| :------- | :------ | :------- |
+| flake.nix  |  ~/.config/flake.nix  |  Defines homeManagerModules.common (your shared config) and pins its own nixpkgs version.  |
+| modules/common/default.nix  |  ~/.config/modules/common/default.nix  |  The shared core file. Defines all common packages (tmux, neovim, git config) and modules (your default.nix content).  |
+| modules/profiles/desktop.nix  |  ~/.config/modules/profiles/desktop.nix  |  Optional: Contains modules for desktop-only apps (like window manager config).  |
+| flake.lock  |  ~/.config/flake.lock  |  Locks the version of Home Manager and nixpkgs used for user configuration.  |
+
+Environment Flakes import this user flakes as an input (e.g., inputs.my-home.url = "path:~/dotfiles").
 
 ## Workflow Summary
 To boot the machine: Run sudo nixos-rebuild switch --flake /etc/nixos#myserver.
