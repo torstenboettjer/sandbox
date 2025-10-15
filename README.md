@@ -124,12 +124,13 @@ The User Flake is the single source of truth for an individual developer's perso
 Environment Flakes import this user flakes as an input (e.g., inputs.my-home.url = "path:~/dotfiles").
 
 ## Workflow Summary
-1. To boot the machine:
+
+Updating the operating system
 ```sh
 sudo nixos-rebuild switch --flake /etc/nixos#myserver
 ```
 
-2. To change your shared user tools, edit `~/dotfiles/modules/common/default.nix` and run:
+Changing shared user tools, edit `~/dotfiles/modules/common/default.nix` and run:
 ```sh
 home-manager switch --flake ~/dotfiles#<username>.
 ```
