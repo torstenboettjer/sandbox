@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  # 💡 Core System Modules
+  # Core System Modules
   imports = [
     ./users.nix # Defines 'alice', 'bob'
     ./security.nix

@@ -62,7 +62,7 @@ The System Flake defines the core OS and is typically located at */etc/nixos*. I
 { config, pkgs, ... }:
 
 {
-  # 💡 Core System Modules
+  # Core System Modules
   imports = [
     ./users.nix # Defines 'alice', 'bob'
     ./security.nix
@@ -104,7 +104,7 @@ The User Flake defines a consistent set of user-level applications and dotfiles 
   };
 
   outputs = { self, home-manager, ... }: {
-    # 💡 Exports the reusable module
+    # Exports the reusable module
     homeManagerModules.common = import ./shell.nix;
   };
 }
@@ -116,7 +116,7 @@ The User Flake defines a consistent set of user-level applications and dotfiles 
 { config, pkgs, ... }:
 
 {
-  # 💡 Consistent application settings and packages
+  # Consistent application settings and packages
   home.packages = with pkgs; [
     # Core tools for every environment
     tmux
@@ -154,7 +154,7 @@ The Environment Flake is the entry point for a project or specialized task. It u
   description = "Legacy Project Development Environment";
 
   inputs = {
-    # 💡 PINNED legacy nixpkgs version for ISOLATION
+    # Pinned legacy nixpkgs version for isolation
     nixpkgs.url = "github:nixos/nixpkgs/nixos-20.09";
 
     # Import the consistent user setup
@@ -170,10 +170,10 @@ The Environment Flake is the entry point for a project or specialized task. It u
   in
   {
     devShells.${system}.default = pkgs.mkShell {
-      # 💡 Environment-specific tools and the shared user config
+      # Environment-specific tools and the shared user config
       imports = [
-        commonHomeModule            # Shared apps (tmux, zsh aliases, etc.)
-        ./services.nix # Project-specific services
+        commonHomeModule # Shared apps (tmux, zsh aliases, etc.)
+        ./services.nix   # Project-specific services
       ];
     };
   };
@@ -186,7 +186,7 @@ The Environment Flake is the entry point for a project or specialized task. It u
 { config, pkgs, ... }:
 
 {
-  # 💡 Project-specific tools and overrides
+  # Project-specific tools and overrides
   home.packages = with pkgs; [
     # Required old tool versions
     specific-compiler-v1
@@ -225,7 +225,7 @@ The best and most modern way to integrate Nix flakes with direnv is by using the
     pkgs = import nixpkgs { inherit system; };
   in
   {
-    # 💡 Dev Shells output is what direnv looks for
+    # Dev Shells output is what direnv looks for
     devShells.${system}.default = pkgs.mkShell {
       packages = with pkgs; [
         # Environment-specific tools
@@ -302,7 +302,7 @@ Create a separate repository or directory (e.g., ~/dotfiles) that houses your us
   };
 
   outputs = { self, home-manager, ... }: {
-    # 💡 The key is defining a reusable module output
+    # The key is defining a reusable module output
     homeManagerModules.common = import ./default.nix;
 
     # Optionally, expose the standalone configuration for non-NixOS
@@ -362,12 +362,12 @@ Now, in each of your developer environment flakes (e.g., ~/dev-env-A and ~/dev-e
       modules = [
         # ... Other NixOS modules
 
-        # 💡 Import Home Manager as a module
+        # Import Home Manager as a module
         home-manager.nixosModules.home-manager {
           home-manager.useUserPackages = true;
           home-manager.users.alice = {
             imports = [
-              # 💡 Import the shared module from the 'my-home' input!
+              # Import the shared module from the 'my-home' input!
               my-home.homeManagerModules.common
 
               # Add environment-specific overrides/packages here:
