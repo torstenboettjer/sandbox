@@ -7,17 +7,18 @@
   # Modular Imports (This profile requires fewer specific program modules than 'consult')
   imports = [
     # General/Base modules
-    ./modules/gnome.nix
-    ./modules/captive-browser.nix
-    ./modules/zed.nix
-    ./modules/ghostty.nix
-    ./modules/github.nix
+    "${programModulesPath}/captive-browser.nix"
+    "${programModulesPath}/ghostty.nix"
+    "${programModulesPath}/gnome.nix"
+    "${programModulesPath}/zed.nix"
+    "${programModulesPath}/zsh.nix"
 
-    # NOTE: The analyst profile imports are leaner than the consult profile.
-    # If the analyst profile needs Chrome or Obsidian, those modules need to be added here.
+    # SERVICE MODULES (e.g., ~/.config/modules/services/...)
+    # Importing github.nix via the dedicated service path
+    "${serviceModulesPath}/github.nix"
   ];
 
-  # 💡 Consistent application packages for all profiles
+  # Consistent application packages for all profiles
   home.packages = with pkgs; [
     # Core utilities
     devenv
@@ -29,7 +30,7 @@
     postgresql     # Database client/tools
   ];
 
-  # 💡 Home Manager program configurations
+  # Home Manager program configurations
   programs = {
     home-manager.enable = true;
 

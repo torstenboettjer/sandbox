@@ -7,13 +7,14 @@
   # Modular Imports, separating programs and services
   imports = [
     # PROGRAM MODULES (e.g., ~/.config/modules/programs/...)
-    "${programModulesPath}/gnome.nix"
     "${programModulesPath}/captive-browser.nix"
-    "${programModulesPath}/zed.nix"
     "${programModulesPath}/chrome.nix"
     "${programModulesPath}/claude.nix"
     "${programModulesPath}/ghostty.nix"
+    "${programModulesPath}/gnome.nix"
     "${programModulesPath}/obsidian.nix"
+    "${programModulesPath}/zed.nix"
+    "${programModulesPath}/zsh.nix"
 
     # SERVICE MODULES (e.g., ~/.config/modules/services/...)
     # Importing github.nix via the dedicated service path

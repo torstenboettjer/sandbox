@@ -6,19 +6,23 @@
 
   # Modular Imports (Includes modules specific to the 'consult' profile)
   imports = [
-    ./modules/gnome.nix
-    ./modules/captive-browser.nix
-    ./modules/zed.nix
-    ./modules/chrome.nix
-    ./modules/obsidian.nix
-    ./modules/ghostty.nix
-    ./modules/github.nix
+    "${programModulesPath}/gnome.nix"
+    "${programModulesPath}/captive-browser.nix"
+    "${programModulesPath}/zed.nix"
+    "${programModulesPath}/chrome.nix"
+    "${programModulesPath}/obsidian.nix"
+    "${programModulesPath}/ghostty.nix"
 
     # Graphics and publishing tools specific to the 'consult' profile
-    ./modules/gimp.nix
-    ./modules/inkscape.nix
-    ./modules/krita.nix
-    ./modules/scribus.nix
+    "${programModulesPath}/gimp.nix"
+    "${programModulesPath}/inkscape.nix"
+    "${programModulesPath}/krita.nix"
+    "${programModulesPath}/scribus.nix"
+    "${programModulesPath}/zsh.nix"
+
+    # SERVICE MODULES (e.g., ~/.config/modules/services/...)
+    # Importing github.nix via the dedicated service path
+    "${serviceModulesPath}/github.nix"
   ];
 
   # Consistent application packages for all profiles
@@ -30,7 +34,7 @@
     lunarvim
   ];
 
-  # 💡 Home Manager program configurations
+  # Home Manager program configurations
   programs = {
     home-manager.enable = true;
 
