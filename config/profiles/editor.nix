@@ -4,21 +4,20 @@
   # Required: Set the state version
   home.stateVersion = "25.05";
 
-  # Modular Imports (Includes modules specific to the 'consult' profile)
+  # Modular Imports
   imports = [
-    "${programModulesPath}/gnome.nix"
+    # Base modules
     "${programModulesPath}/captive-browser.nix"
-    "${programModulesPath}/zed.nix"
-    "${programModulesPath}/chrome.nix"
-    "${programModulesPath}/obsidian.nix"
     "${programModulesPath}/ghostty.nix"
+    "${programModulesPath}/gnome.nix"
+    "${programModulesPath}/zed.nix"
+    "${programModulesPath}/zsh.nix"
 
-    # Graphics and publishing tools specific to the 'consult' profile
+    # Grafik modules
     "${programModulesPath}/gimp.nix"
     "${programModulesPath}/inkscape.nix"
     "${programModulesPath}/krita.nix"
     "${programModulesPath}/scribus.nix"
-    "${programModulesPath}/zsh.nix"
 
     # SERVICE MODULES (e.g., ~/.config/modules/services/...)
     # Importing github.nix via the dedicated service path
@@ -32,6 +31,9 @@
     gnumake
     tgpt
     lunarvim
+
+    # Analyst-specific tools
+    postgresql     # Database client/tools
   ];
 
   # Home Manager program configurations
@@ -42,8 +44,8 @@
     zsh = {
       enable = true;
       shellAliases = {
-        # Update alias specific to the consult profile
-        update = "home-manager switch --flake ~/dotfiles#torsten-consult";
+        # Update alias specific to the analyst profile
+        update = "home-manager switch --flake ~/dotfiles#torsten-analyst";
         hl = "history | grep";
       };
     };
@@ -67,7 +69,7 @@
 
   # Managed Files and Session Variables (Placeholder sections)
   home.sessionVariables = {
-    # Add any specific session variables needed for consultation work
+    # Add any specific session variables needed for data analysis
   };
 
   home.file = {

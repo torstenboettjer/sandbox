@@ -33,7 +33,7 @@
     # Map of all your Home Manager profiles
     homeProfiles = {
       default = ./profiles/default.nix;
-      consult = ./profiles/consult.nix;
+      consult = ./profiles/editor.nix;
       analyst = ./profiles/analyst.nix;
     };
 

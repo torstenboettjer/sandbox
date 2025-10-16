@@ -1,4 +1,4 @@
-{ config, pkgs, serviceModulesPath, ... }: # 💡 Destructure the new argument here
+{ config, pkgs, serviceModulesPath, ... }:
 
 {
   # This is the main service composition file for the project environment.
