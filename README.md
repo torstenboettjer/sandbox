@@ -20,13 +20,12 @@ Relying on a programmable package manager gives engineers architectural freedom 
 | Layer | Scope |  Purpose |
 | :------- | :------- | :------- |
 | Base System | Hardware drivers, core operating system needs, and low-level security/monitoring agents | A system flake captures where the service is running (e.g., cloud mobility settings) but is kept separate from the actual application code to prevent platform lock-in. |
+| Developer Tools | IDE, Git, diagramming apps and individual service configurations | The user flake maintains a consistent shell across environments to ensure that all developer environments share the same user-level applications at the command line, incl. dotfiles and shell settings. |
 | Backend Services | Databases or messaging systems | An environment flake links developer machines to backend components, ensuring everyone across teams is working with an identical, homogeneous development environment. |
-| Developer Tools | IDE, Git, diagramming apps and individual service configurations | The user flake is unique to each engineer, it ensures personal productivity by allowing customizations to the local toolset and override defaults without causing security or system conflicts. |
 
 The default setup for a sandbox is a local machine, engineers can easily override any default settings without requiring security approval or breaking the standardized lower layers. By defining the entire stack from hardware to developer tools in nix flakes, architects and security teams can launch fully isolated machines to test the functional model before it moves to staging or production. This system eliminates the need for high-level management tools and provider-specific orchestrators. The configurations are shared via Git, which enables a decentralized development process. The programmatic assembly of the server ensures that deployments are reproducible, isolated, and allow for atomic upgrades across any vendor or solution. Separating dependencies and build instructions into different files creates a clear separation of duties—operators can manage system compliance and security without needing to touch the application requirements defined by developers.
 
 ### Base System
-
 The System Flake defines the core OS and is typically located at */etc/nixos*. It uses the nixosConfigurations output to build the host machine, including core system-level services and users. The location is root-owned, meaning only administrators can change it, which keeps the base system secure and stable.
 
 | Directory | Location | Purpose |
@@ -84,8 +83,123 @@ The System Flake defines the core OS and is typically located at */etc/nixos*. I
 }
 ```
 
+### Developer Tools
+The User Flake defines a consistent set of user-level applications and dotfiles via Home Manager modules. It's stored in a user-owned directory like *~/.config* and is reusable across different systems.
+
+| Directory | Location | Purpose |
+| :------- | :------ | :------- |
+| flake.nix | ~/.config/flake.nix | Exports the shared Home Manager module (homeManagerModules.common). |
+| shell.nix | ~/.config/shell.nix | Defines shell-related user apps. |
+
+```sh
+// ~/.config/flake.nix
+
+{
+  description = "Shared Home Manager Configuration";
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  outputs = { self, home-manager, ... }: {
+    # 💡 Exports the reusable module
+    homeManagerModules.common = import ./shell.nix;
+  };
+}
+```
+
+```sh
+// ~/.config/shell.nix (Application Module Example)
+
+{ config, pkgs, ... }:
+
+{
+  # 💡 Consistent application settings and packages
+  home.packages = with pkgs; [
+    # Core tools for every environment
+    tmux
+    ripgrep
+    fd
+  ];
+
+  programs.zsh = {
+    enable = true;
+    dotDir = ".config/zsh";
+    # Ensure all users have the same prompt settings
+    shellAliases = {
+      ll = "ls -lh";
+      gc = "git checkout";
+    };
+  };
+
+  # Common version for dotfiles
+  home.stateVersion = "24.05";
+}
+```
 
 ### Backend Services
+The Environment Flake is the entry point for a project or specialized task. It uses the devShells output and imports the User Flake's shared modules.
+
+| Directory | Location | Purpose |
+| :------- | :------ | :------- |
+| flake.nix | ~/projects/myproject/flake.nix | Defines the devShells.default output and pins specific versions. |
+| services.nix | ~/projects/myproject/services.nix | Defines environment-specific tools. |
+
+```sh
+// ~/projects/myproject/flake.nix
+
+{
+  description = "Legacy Project Development Environment";
+
+  inputs = {
+    # 💡 PINNED legacy nixpkgs version for ISOLATION
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-20.09";
+
+    # Import the consistent user setup
+    user-home.url = "path:~/dotfiles";
+  };
+
+  outputs = { self, nixpkgs, user-home, ... }:
+  let
+    system = "x86_64-linux";
+    pkgs = import nixpkgs { inherit system; };
+    # Bring in the shared user configuration
+    commonHomeModule = user-home.homeManagerModules.common;
+  in
+  {
+    devShells.${system}.default = pkgs.mkShell {
+      # 💡 Environment-specific tools and the shared user config
+      imports = [
+        commonHomeModule            # Shared apps (tmux, zsh aliases, etc.)
+        ./services.nix # Project-specific services
+      ];
+    };
+  };
+}
+```
+
+```sh
+// ~/projects/myproject/services.nix (NixOS Module Example)
+
+{ config, pkgs, ... }:
+
+{
+  # 💡 Project-specific tools and overrides
+  home.packages = with pkgs; [
+    # Required old tool versions
+    specific-compiler-v1
+    old-library-v2
+  ];
+
+  # Shell variable for this environment
+  shellHook = ''
+    echo "WARNING: Loading legacy environment (NixOS 20.09 dependencies)."
+    export LEGACY_MODE=1
+  '';
+}
+```
 
 The Environment Flake defines the specific tools and settings for a single project, keeping development environments separate and consistent for the entire team. It is stored within the project's code directory, typically at *~/projects/myproject*. It's tied directly to the project code using a tool like direnv. This means as soon as a developer enters that project folder, the correct environment and tools automatically load. This configuration achieves project isolation and ensures every team member is using the exact same project-specific tools, backend services, and dependencies. The Environment Flake makes sure the project's development environment travels with the code.
 
@@ -160,9 +274,6 @@ If a flake has multiple shell outputs, developers can specify exactly which one 
 # Use a specific shell output named 'backend'
 use flake .#backend
 ```
-
-#### Common shell environment
-The shared Home Manager module *shell.nix* in the home directory maintains a consistent shell across environments. This ensures that all developer environments share the same user-level applications at the command line, incl. dotfiles and shell settings.
 
 ### Developer Tools
 The User Flake is the single source of truth for an individual developer's personal setup. It itis stored in the user's configuration directory, typically at *~/.config/*. It defines all user-level applications and personal settings (called "dotfiles"). By storing the entire Home Manager configuration, this single file ensures that your personal toolset and preferences are identical across all the machines and environments you use. The User Flake is your personalized setup that follows you everywhere.
