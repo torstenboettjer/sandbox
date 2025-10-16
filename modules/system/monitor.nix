@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  monitorsXmlContent = builtins.readFile /home/torsten/.config/monitors.xml;
+  monitorsXmlContent = builtins.readFile ./.config/monitors.xml;
   monitorsConfig = pkgs.writeText "gdm_monitors.xml" monitorsXmlContent;
 in
 
