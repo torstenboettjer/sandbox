@@ -22,6 +22,10 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
 
+        # Use builtins.getEnv to fetch the current user's $HOME directory
+        # This makes the flake portable across machines and users.
+        homeDir = builtins.getEnv "HOME";
+
         # Import the specific analyst profile module from your user flake
         analystHomeModule = user-home.homeManagerModules.analyst;
       in
@@ -47,6 +51,11 @@
             analystHomeModule
             ./services.nix # <-- Imports the Metabase/JRE configuration from the Canvas
           ];
+
+          # Pass the calculated portable path to child modules
+          extraSpecialArgs = {
+              serviceModulesPath = "${homeDir}/.config/modules/services";
+          };
 
           # Project setup logic that runs when entering the shell
           # The shellHook from ./services.nix will be merged with this one.
