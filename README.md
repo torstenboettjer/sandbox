@@ -91,6 +91,8 @@ The User Flake defines a consistent set of user-level applications and dotfiles 
 | flake.nix | ~/.config/flake.nix | Exports the shared Home Manager module (homeManagerModules.common). |
 | shell.nix | ~/.config/shell.nix | Defines shell-related user apps. |
 
+The User Flake is the single source of truth for an individual developer's personal setup. By storing the entire Home Manager configuration, this single file ensures that the development toolset are identical across all the machines and environments.
+
 ```sh
 // ~/.config/flake.nix
 
@@ -109,6 +111,8 @@ The User Flake defines a consistent set of user-level applications and dotfiles 
   };
 }
 ```
+
+Environment Flakes import this user flakes as an input (e.g., inputs.my-home.url = "path:~/.config"). For system engineering environments, the isolation, portability, and independence offered by separate flakes are worth the management overhead.
 
 ```sh
 // ~/.config/shell.nix (Application Module Example)
@@ -137,6 +141,20 @@ The User Flake defines a consistent set of user-level applications and dotfiles 
   # Common version for dotfiles
   home.stateVersion = "24.05";
 }
+```
+
+By making the *~/.config* flake an input to all environment flakes, we ensure that all environments receive the consistent set of applications and configuration defined in *default.nix*, while still allowing each environment to manage its own core dependencies and specific NixOS settings.
+
+* *Dedicated Flakes for Nix Shells* Define each environment as a separate flake (or a subdirectory containing a flake) that primarily exposes the devShells output. Engineers use the nix develop command, which is non-invasive to the host system.
+
+```sh
+nix develop path/to/env-A/
+```
+
+* *Dedicated Flakes for Virtual Machines/Containers* Define each environment as a separate flake that exposes nixosConfigurations intended to be built as a VM or container. This is the ultimate isolation for system engineers.
+
+```sh
+nix build path/to/env-A/#nixosVM
 ```
 
 ### Backend Services
@@ -221,127 +239,6 @@ Now, every time a developer *cd* into ~/projects/myproject:
 * direnv calls nix develop --command bash (or equivalent) for the default devShells output.
 * The specified packages (docker, kubectl, go) and the shellHook are loaded into your current shell session.
 
-
-### Developer Tools
-The User Flake is the single source of truth for an individual developer's personal setup. It itis stored in the user's configuration directory, typically at *~/.config/*. It defines all user-level applications and personal settings (called "dotfiles"). By storing the entire Home Manager configuration, this single file ensures that your personal toolset and preferences are identical across all the machines and environments you use. The User Flake is your personalized setup that follows you everywhere.
-
-| Directory | Location | Purpose |
-| :------- | :------ | :------- |
-| flake.nix  |  ~/.config/flake.nix  |  Defines homeManagerModules.common (your shared config) and pins its own nixpkgs version.  |
-| default.nix  |  ~/.config/modules/common/default.nix  |  The shared core file. Defines all common packages (tmux, neovim, git config) and modules (your default.nix content).  |
-| desktop.nix  |  ~/.config/modules/profiles/desktop.nix  |  Optional: Contains modules for desktop-only apps (like window manager config).  |
-| flake.lock  |  ~/.config/flake.lock  |  Locks the version of Home Manager and nixpkgs used for user configuration.  |
-
-Environment Flakes import this user flakes as an input (e.g., inputs.my-home.url = "path:~/.config"). For system engineering environments, the isolation, portability, and independence offered by separate flakes are worth the management overhead.
-
-### Create a Dedicated Home Manager Flake (The Source of Truth)
-Create a separate repository or directory (e.g., ~/dotfiles) that houses your user configuration logic.
-
-```sh
-# ~/dotfiles/flake.nix This flake's primary job is to expose the shared configuration logic as a reusable module.
-{
-  description = "Shared Home Manager configuration";
-
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-  };
-
-  outputs = { self, home-manager, ... }: {
-    # The key is defining a reusable module output
-    homeManagerModules.common = import ./default.nix;
-
-    # Optionally, expose the standalone configuration for non-NixOS
-    homeConfigurations."alice" = home-manager.lib.homeManagerConfiguration {
-      # ...
-    };
-  };
-}
-~/dotfiles/default.nix (Your shared application set) This file defines all your core user applications and dotfiles.
-
-{ config, pkgs, lib, ... }:
-
-{
-  # Define all the user packages you want in ALL environments
-  home.packages = with pkgs; [
-    git
-    tmux
-    neovim
-    jq
-    htop
-  ];
-
-  # Define common dotfile configurations
-  programs.zsh.enable = true;
-  programs.git.enable = true;
-  programs.git.userName  = "Alice Engineer";
-
-  # Allow customization based on the environment importing this file
-  # Example: Only enable a graphical tool if the environment is a desktop one
-  # programs.alacritty.enable = lib.mkIf config.custom.isDesktop;
-
-  home.stateVersion = "24.05";
-}
-2. Import the Home Flake into Your Environment Flakes
-Now, in each of your developer environment flakes (e.g., ~/dev-env-A and ~/dev-env-B), you import the shared Home Flake and use its module output.
-
-~/dev-env-A/flake.nix (The NixOS configuration for a development system)
-
-{
-  description = "NixOS Config for Dev Environment A (Legacy)";
-
-  inputs = {
-    # Pin a specific, stable nixpkgs version for isolation
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-
-    # Import your shared home configuration
-    my-home.url = "path:~/dotfiles"; # Use path: for local file system
-    # my-home.url = "github:alice/dotfiles"; # Use github: for remote repo
-
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs"; # HM follows THIS flake's pkgs
-  };
-
-  outputs = { self, nixpkgs, my-home, home-manager, ... }: {
-    nixosConfigurations."dev-machine" = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        # ... Other NixOS modules
-
-        # Import Home Manager as a module
-        home-manager.nixosModules.home-manager {
-          home-manager.useUserPackages = true;
-          home-manager.users.alice = {
-            imports = [
-              # Import the shared module from the 'my-home' input!
-              my-home.homeManagerModules.common
-
-              # Add environment-specific overrides/packages here:
-              { home.packages = with pkgs; [ specific-tool-v1.0 ]; }
-            ];
-          };
-        }
-      ];
-    };
-  };
-}
-```
-
-By making the *~/dotfiles* flake an input to all environment flakes, we ensure that all environments receive the consistent set of applications and configuration defined in *default.nix*, while still allowing each environment to manage its own core dependencies and specific NixOS settings.
-
-* *Dedicated Flakes for Nix Shells* Define each environment as a separate flake (or a subdirectory containing a flake) that primarily exposes the devShells output. Engineers use the nix develop command, which is non-invasive to the host system.
-
-```sh
-nix develop path/to/env-A/
-```
-
-* *Dedicated Flakes for Virtual Machines/Containers* Define each environment as a separate flake that exposes nixosConfigurations intended to be built as a VM or container. This is the ultimate isolation for system engineers.
-
-```sh
-nix build path/to/env-A/#nixosVM
-```
-
 ### Advantages of Separate Flakes for Dev Environments
 For system engineering environments, the isolation benefits of separate flakes usually outweigh the overhead.
 
@@ -368,8 +265,7 @@ If 80% of your environments use the same core utilities (e.g., git, neovim, bash
 3.No Centralized Host System Control
 Your /etc/nixos will now only manage the base operating system. You lose the ability to easily audit all packages and services running on the machine from a single configuration file.
 
-
-## Workflow Summary
+## Usage
 
 Setting up the developer maschine
 ```sh
@@ -386,79 +282,7 @@ cd ~/projects/myproject
 ```
 direnv automatically loads the project's specific shell, which imports the consistent user packages defined in the Environment Flake.
 
-
-## System Configuration
-
-The default deployment method is a minimal Linux operating system, providing only essential hardware communication components. A dynamic package loader, governed by application platform requirements, then adds necessary packages using templates, eliminating the need for external orchestrators, custom packaging, or specific communication patterns. This approach allows operations teams to centrally manage service designs through deployment artifacts, while the deployment itself is delegated to operation. A git repository is employed to track and revert system configurations and immutable artifacts, without impacting coresponding services, network, or storage interfaces. Virtual environments require enough space to cache the platform components, a minimum size of *80 to 120GB* is recommended. Nevertheless, this really depends on the number and the complexity of the service blueprints that are being developed.
-
-```sh
-├── configuration.nix
-└── modules
-    ├── sandbox.nix (configuration)
-    └── system (modules)
-        ├── powersave.nix
-        └── zsh.nix
-```
-
-The sandbox provides the configuration files for a nix package manager, such as [Nix](https://github.com/NixOS/nix), [Lix](https://lix.systems/) or [Tvix](https://tvix.dev/). The `configuration.nix` is only required for NixOS and contains minimum information and references configuration modules, captured in under `./modules/system`. Packages load additional software, the functional [programming language](https://nix.dev/tutorials/nix-language.html) defines and automates provisioning processes via executable templates. Available packages are listed at the [package directory](https://search.nixos.org/packages) and the command `nix-env -qaP` provides a list incl. available attributes for sripting. Engineers define [system configurations](https://nix.dev/tutorials/packaging-existing-software.html) using declarative files, ensuring isolated dependencies and creating clean, reproducible systems without the overhead of virtual machines or containers. `Override` functions enable engineers to build packages from source by processing additional attributes.
-
-## Resource Composition
-
-[Direnv](https://direnv.net/) extends a system with service specific configurations and dynamically loads or unloads system configurations based on directory changes. Nix's virtual filesystem ensures dependency isolation between software packages, enhancing stability. Direnv uses the .envrc file to reference configurations that automatically trigger provisioning. Upon entering a directory for the first time, a flag must be set to allow Direnv to monitor configuration changes and load the defined tools. Subsequently, Direnv checks for the .envrc file and, if present, makes the defined variables available in the current shell. While Nix offers various methods for separating environment definitions, Direnv only requires a reference to the configuration file within .envrc.
-
-```sh
-├── flake.nix
-└── modules
-    └── services (modules)
-        └── github.nix
-```
-
-## Development Tools
-
-[Home-Manager](https://nix-community.github.io/home-manager/) allows to define project specific user profiles and enables the system-wide installations of customized software environments even when these affect the system configuration. Administrators maintain company standards by managing the home directory including environment settings on a developer maschine with declarative configuration files in a git repository. Relying on modules provides a structured way to organize and maintain dotfiles for various applications and enables the installation of solution-specific software packages. It supports two ways of deploying applications, programs and packages. Home managers [option search](https://home-manager-options.extranix.com/) lists available programs with settings. Program modules abstract this difference from the deployment process, each module installs the software and configures system wide features. Service modules represent hosted services. These modules contain configuration options and the secrets to access an external system from the developer maschine.
-
-```sh
-├── flake.nix
-├── home.nix
-├── profiles
-|   ├── default.nix (development)
-|   └── consult.nix
-└── modules
-    └── programs (modules)
-        ├── gnome.nix
-        ├── chrome.nix
-        ├── claude.nix
-        ├── gephi.nix
-        ├── ghostty.nix
-        ├── obsidian.nix
-        └── zed.nix
-```
-
-Home manager profiles encapsulate a set of settings, preferences, data, and permissions, that are specific to a context. Profile switching allows developers to quickly load and use a different set of these configurations. Managed profiles provide security and privacy, as each user's files and settings are isolated. It also prevents accidental changes to system settings by non-admin users.
-
-```sh
-sudo nixos-rebuild switch --flake '.#nixbook-default'
-```
-
-## Service Configuration
-
-Finally, development environments are defined by creating a directory, setting up a git repository, and sharing the repository with other developers via Github. Service development environments combine resource composition with a runtime and are defined with [devenv.sh](https://devenv.sh/), a configuration tool that dynamically combines local processes, representing the backing services with runtimes and containers for services developers. Devenv leverages Nix to create reproducible development environments, it is an extension of the Nix ecosystem, tailored for development workflows. Processes are scheduled with [process-compose](https://github.com/F1bonacc1/process-compose). The entire environment is launched, calling the process manager with a single command.
-
-```sh
-└── user
-    └── projects
-        ├── .devenv
-        └── devenv.nix
-```
-
-A developer might have different workspace layouts, tool presets, and shortcut configurations saved as profiles for different tasks during a project. service configuration improve focus and productivity by allowing developers to quickly load the most efficient setup for the task at hand. a specific service compostions is loaded with the devenv command.
-
-```sh
-devenv up
-
-```
-
-## Usage
+### Gnome Navigation
 
 * Navigating between windows: `super` + 0 ... 9 for the app in the dock
 
@@ -469,7 +293,6 @@ To create a new split window in Ghostty, you can use the keybindings `Ctrl`+`Shi
 
 * [NixOS](https://nixos.org/)
 * [Home Manager](https://nix-community.github.io/home-manager/)
-* [Devenv.sh](https://devenv.sh/)
 * [Direnv](https://direnv.net/)
 
 ## Contribution
