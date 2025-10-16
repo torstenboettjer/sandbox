@@ -1,19 +1,23 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, lib, programModulesPath, serviceModulesPath, ... }:
 
 {
-  # 💡 Required: Set the state version
-  home.stateVersion = "25.05"; # Updated to 25.05 based on your old configuration
+  # Required: Set the state version
+  home.stateVersion = "25.05";
 
-  # 💡 Modular Imports (Assuming these files are moved/re-created under ~/dotfiles/modules)
+  # Modular Imports, separating programs and services
   imports = [
-    ./modules/gnome.nix
-    ./modules/captive-browser.nix
-    ./modules/zed.nix
-    ./modules/chrome.nix
-    ./modules/claude.nix
-    ./modules/ghostty.nix
-    ./modules/obsidian.nix
-    ./modules/github.nix
+    # PROGRAM MODULES (e.g., ~/.config/modules/programs/...)
+    "${programModulesPath}/gnome.nix"
+    "${programModulesPath}/captive-browser.nix"
+    "${programModulesPath}/zed.nix"
+    "${programModulesPath}/chrome.nix"
+    "${programModulesPath}/claude.nix"
+    "${programModulesPath}/ghostty.nix"
+    "${programModulesPath}/obsidian.nix"
+
+    # SERVICE MODULES (e.g., ~/.config/modules/services/...)
+    # Importing github.nix via the dedicated service path
+    "${serviceModulesPath}/github.nix"
   ];
 
   # Consistent application packages for all profiles

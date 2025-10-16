@@ -23,6 +23,13 @@
     pkgs = nixpkgs.legacyPackages.${system};
     username = "torsten"; # Define the primary user globally
 
+    # Calculate portable HOME directory path
+    homeDir = builtins.getEnv "HOME";
+
+    # Define portable paths to your centralized modules
+    programModulesPath = "${homeDir}/.config/modules/programs";
+    serviceModulesPath = "${homeDir}/.config/modules/services";
+
     # Map of all your Home Manager profiles
     homeProfiles = {
       default = ./profiles/default.nix;
@@ -37,11 +44,14 @@
       modules = [
         # The specific profile module
         profilePath
-        # Pass inputs/outputs as special arguments, needed by modules like claude-desktop
+        # Pass inputs/outputs and the new module paths as special arguments
         {
           home.username = username;
-          home.homeDirectory = "/home/${username}";
-          home.extraSpecialArgs = { inherit inputs; };
+          home.homeDirectory = "/home/${username}"; # This should typically be set by the system flake or determined by home-manager, but we keep it here for clarity.
+
+          home.extraSpecialArgs = {
+            inherit inputs programModulesPath serviceModulesPath; # 💡 Pass the calculated paths
+          };
         }
       ];
     };
@@ -57,9 +67,10 @@
       homeProfiles;
 
     # Optional: Define reusable modules to be imported by devShells
-    # We are making the 'default' profile available as a reusable module for direnv
+    # Note: These modules (the files in ./profiles) will automatically receive
+    # the 'programModulesPath' and 'serviceModulesPath' when imported into a devShell
+    # because the devShell is responsible for passing these as 'extraSpecialArgs'.
     homeManagerModules.default = ./profiles/default.nix;
     homeManagerModules.analyst = ./profiles/analyst.nix;
-    # (The contents of this module will be merged into a devShell's mkShell)
   };
 }
