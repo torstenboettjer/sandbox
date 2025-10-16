@@ -140,12 +140,14 @@ The User Flake defines a consistent set of user-level applications and dotfiles 
 ```
 
 ### Backend Services
-The Environment Flake is the entry point for a project or specialized task. It uses the devShells output and imports the User Flake's shared modules.
+The Environment Flake defines the specific tools and settings for a single project, keeping development environments separate and consistent for the entire team. It is stored within the project's code directory, typically at *~/projects/myproject*.
 
 | Directory | Location | Purpose |
 | :------- | :------ | :------- |
 | flake.nix | ~/projects/myproject/flake.nix | Defines the devShells.default output and pins specific versions. |
 | services.nix | ~/projects/myproject/services.nix | Defines environment-specific tools. |
+
+The Environment Flake is the entry point for a project or specialized task. It uses the devShells output and imports the User Flake's shared modules. This configuration achieves project isolation and ensures every team member is using the exact same project-specific tools, backend services, and dependencies.
 
 ```sh
 // ~/projects/myproject/flake.nix
@@ -180,71 +182,25 @@ The Environment Flake is the entry point for a project or specialized task. It u
 }
 ```
 
+*direnv* is used as an utlity to automaticly setup project-specific development environments. It loads and unloads environment variables automatically based on the current directory. On NixOS direnv is installed by default, other operating systems might need a manual installation and requires the use_nix or use_flake functionality to be made available. The services.nix references the services that are loaded automatically.
+
 ```sh
-// ~/projects/myproject/services.nix (NixOS Module Example)
+// ~/projects/myproject/services.nix
 
-{ config, pkgs, ... }:
-
+{ config, pkgs, serviceModulesPath, ... }:
 {
-  # Project-specific tools and overrides
-  home.packages = with pkgs; [
-    # Required old tool versions
-    specific-compiler-v1
-    old-library-v2
+  # This is the main service composition file for the project environment.
+  # It now imports modules from the centralized dotfiles directory.
+  imports = [
+    # Use string interpolation to reference the module in the modules location
+    "${serviceModulesPath}/metabase.nix"
+    # Future services (e.g., "${serviceModulesPath}/redis.nix")
+    # can be added here easily.
   ];
-
-  # Shell variable for this environment
-  shellHook = ''
-    echo "WARNING: Loading legacy environment (NixOS 20.09 dependencies)."
-    export LEGACY_MODE=1
-  '';
 }
 ```
 
-The Environment Flake defines the specific tools and settings for a single project, keeping development environments separate and consistent for the entire team. It is stored within the project's code directory, typically at *~/projects/myproject*. It's tied directly to the project code using a tool like direnv. This means as soon as a developer enters that project folder, the correct environment and tools automatically load. This configuration achieves project isolation and ensures every team member is using the exact same project-specific tools, backend services, and dependencies. The Environment Flake makes sure the project's development environment travels with the code.
-
-| Directory | Location | Purpose |
-| :------- | :------ | :------- |
-| flake.nix | ~/projects/myproject/flake.nix | Defines the devShells.x86_64-linux.default output and pins the specific, potentially older/unstable nixpkgs version needed for the project. |
-| shell.nix | ~/projects/myproject/shell.nix | Imported by flake.nix, defines the contents of the shell environment. |
-| .envrc | ~/projects/myproject/.envrc | Contains the single line: use flake to enable direnv integration. |
-| flake.lock | ~/projects/myproject/flake.lock | Locks the version of nixpkgs used for project dependencies. This is the key to isolation. |
-
-*direnv* is used as an utlity to automaticly setup project-specific development environments. It loads and unloads environment variables automatically based on the current directory. On NixOS direnv is installed by default, other operating systems might need a manual installation and requires the use_nix or use_flake functionality to be made available.
-
-#### The use_flake Method (Recommended)
-The best and most modern way to integrate Nix flakes with direnv is by using the use_flake helper function. In the environment flake (e.g., in ~/projects/myproject/flake.nix), devShells outputs should be defined. This is the part that direnv will load.
-
-```sh
-# ~/projects/myproject/flake.nix
-{
-  # ... inputs defined here ...
-  outputs = { self, nixpkgs, ... }:
-  let
-    system = "x86_64-linux";
-    pkgs = import nixpkgs { inherit system; };
-  in
-  {
-    # Dev Shells output is what direnv looks for
-    devShells.${system}.default = pkgs.mkShell {
-      packages = with pkgs; [
-        # Environment-specific tools
-        docker # System engineer tool
-        kubectl
-        go
-      ];
-
-      # Environment variables for the shell
-      shellHook = ''
-        echo "Nix Dev Environment A (Legacy) loaded."
-        export PROJECT_ROOT="$(pwd)"
-      '';
-    };
-  };
-}
-```
-
-In the root of that same directory (~/projects/myproject), create a .envrc file with a single line:
+direnv is activated through the use_flake function. In the root of that same directory (~/projects/myproject), create a .envrc file with a single line:
 
 ```sh
 # ~/projects/myproject/.envrc
@@ -265,15 +221,6 @@ Now, every time a developer *cd* into ~/projects/myproject:
 * direnv calls nix develop --command bash (or equivalent) for the default devShells output.
 * The specified packages (docker, kubectl, go) and the shellHook are loaded into your current shell session.
 
-#### Alternative: Specifying the Flake Output
-
-If a flake has multiple shell outputs, developers can specify exactly which one to use in your .envrc:
-
-```sh
-# ~/projects/myproject/.envrc
-# Use a specific shell output named 'backend'
-use flake .#backend
-```
 
 ### Developer Tools
 The User Flake is the single source of truth for an individual developer's personal setup. It itis stored in the user's configuration directory, typically at *~/.config/*. It defines all user-level applications and personal settings (called "dotfiles"). By storing the entire Home Manager configuration, this single file ensures that your personal toolset and preferences are identical across all the machines and environments you use. The User Flake is your personalized setup that follows you everywhere.
