@@ -23,16 +23,67 @@ Relying on a programmable package manager gives engineers architectural freedom 
 | Backend Services | Databases or messaging systems | An environment flake links developer machines to backend components, ensuring everyone across teams is working with an identical, homogeneous development environment. |
 | Developer Tools | IDE, Git, diagramming apps and individual service configurations | The user flake is unique to each engineer, it ensures personal productivity by allowing customizations to the local toolset and override defaults without causing security or system conflicts. |
 
-The default setup for a sandbox is a local machine, engineers can easily override any default setting in their personal User Flake without requiring security approval or breaking the standardized lower layers. By defining the entire stack from hardware to developer tools in these files, architects and security teams can launch fully isolated machines to test the functional model before it moves to staging or production. This system eliminates the need for high-level management tools and provider-specific orchestrators. The configurations are shared via Git, which enables a decentralized development process. The programmatic assembly of the server ensures that deployments are reproducible, isolated, and allow for atomic upgrades across any vendor or solution. Separating dependencies and build instructions into different files creates a clear separation of duties—operators can manage system compliance and security without needing to touch the application requirements defined by developers.
+The default setup for a sandbox is a local machine, engineers can easily override any default settings without requiring security approval or breaking the standardized lower layers. By defining the entire stack from hardware to developer tools in nix flakes, architects and security teams can launch fully isolated machines to test the functional model before it moves to staging or production. This system eliminates the need for high-level management tools and provider-specific orchestrators. The configurations are shared via Git, which enables a decentralized development process. The programmatic assembly of the server ensures that deployments are reproducible, isolated, and allow for atomic upgrades across any vendor or solution. Separating dependencies and build instructions into different files creates a clear separation of duties—operators can manage system compliance and security without needing to touch the application requirements defined by developers.
 
 ### Base System
 
-The System Flake is the most foundational part—it's the core control file for the entire operating system. It is stored in the traditional, protected spot, */etc/nixos*. This location is root-owned, meaning only administrators can change it, which keeps the base system secure and stable. This configuration manages everything essential for the host to run, including the kernel, core NixOS services, basic user accounts, and all Nix settings. The System Flake is the blueprint for the host machine itself.
+The System Flake defines the core OS and is typically located at */etc/nixos*. It uses the nixosConfigurations output to build the host machine, including core system-level services and users. The location is root-owned, meaning only administrators can change it, which keeps the base system secure and stable.
 
 | Directory | Location | Purpose |
 | :------- | :------ | :------- |
-| flake.nix  |  /etc/nixos/flake.nix |  Defines the host machine's configuration output (e.g., nixosConfigurations."myserver").  |
-| configuration.nix |  /etc/nixos/configuration.nix |  Imports base modules, sets up users (e.g., users.users.alice), enables direnv and core services.  |
+| flake.nix  |  /etc/nixos/flake.nix |  Defines the host output and imports the core NixOS config.  |
+| configuration.nix |  /etc/nixos/configuration.nix |  Imports base modules, enables direnv and core services.  |
+| default.nix |  /etc/nixos/system/default.nix |  Sets up users, networking, and security.  |
+
+```sh
+// /etc/nixos/flake.nix
+
+{
+  description = "Host OS Configuration";
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    # No user or environment flakes needed here, keeping it clean.
+  };
+
+  outputs = { self, nixpkgs, ... }: {
+    nixosConfigurations.devserver = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        ./system/default.nix
+      ];
+    };
+  };
+}
+```
+
+```sh
+// /etc/nixos/system/default.nix (System Module Example)
+
+{ config, pkgs, ... }:
+
+{
+  # 💡 Core System Modules
+  imports = [
+    ./users.nix # Defines 'alice', 'bob'
+    ./security.nix
+  ];
+
+  # System-wide settings
+  time.timeZone = "Europe/Zurich";
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  # Base service installation
+  services.openssh.enable = true;
+
+  # Enable direnv globally for all users
+  programs.direnv = {
+    enable = true;
+    enableFlakes = true;
+  };
+}
+```
+
 
 ### Backend Services
 
