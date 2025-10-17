@@ -2,7 +2,7 @@
 
 Developing services for a hybrid cloud is challenging. The high volume of interdependencies, complex network configurations, and granular security settings make it extremely difficult to reliably replicate production backing services for local development. This project introduces a configurable development sandbox designed to solve this replication problem and significantly speed up your development cycle.
 
-### Key Features
+## Key Features
 
 The sandbox creates a reproducible, isolated copy of all necessary service components. This environment is intentionally decoupled:
 
@@ -12,7 +12,7 @@ The sandbox creates a reproducible, isolated copy of all necessary service compo
 
 While natively utilizing the power of NixOS, the sandbox is flexible and can be adapted to run on major platforms, but with minimal configuration, it also runs on [Windows (via WSL)](https://learn.microsoft.com/en-us/windows/wsl/about), [ChromeOS (via CROSH)](https://chromeos.dev/en/linux) or [macOS](https://github.com/LnL7/nix-darwin).
 
-### Architectural Objectives
+## Architectural Objectives
 
 The sandbox is built upon the following criteria to ensure that the services developed within it are reproducible and reliable in the production environment:
 
