@@ -1,17 +1,35 @@
-# Cloud Service Sandbox
+# Configurable Sandbox for Hybrid Cloud Development
 
-Developing services for a hybrid cloud can be difficult. A large number interdependencies, complex network configurations and granular security settings  make it tough to replicate backing services outside the dynamic part of the cloud and still keep them integrated. This project offers a configurable sandbox to speed up development by solving the replication problem. It creates a reproducible copy of all service components without predefined networks and without orchestrator dependencies. The sandbox is isolated at the operating system level. All service components are kept separate to avoid interference with the host system. It is built on NixOS and uses the Nix package manager to guarantee that the environment is reproducible. With some tweaks, it can also run on [Windows (via WSL)](https://learn.microsoft.com/en-us/windows/wsl/about), [ChromeOS (via CROSH)](https://chromeos.dev/en/linux), and [macOS](https://github.com/LnL7/nix-darwin).
+Developing services for a hybrid cloud is challenging. The high volume of interdependencies, complex network configurations, and granular security settings make it extremely difficult to reliably replicate production backing services for local development.
 
-## Key Design Criteria
+This project introduces a configurable development sandbox designed to solve this replication problem and significantly speed up your development cycle.
 
-The sandbox is built with the following criteria to ensure that the services developed within it are reproducible and reliable:
+### Key Features
 
-* *No Vendor Lock-in:* It must be independent of specific production tools or hosting services (like Kubernetes or a particular cloud provider). This ensures the operating model can be freely chosen for deployment.
-* *Flexible and Portable:* It needs a flexible system configuration to allow the service to be deployed and run on any diverse hardware platform.
-* *Secure Distribution:* It must use a package cache for distribution. This provides supply chain control and enables secure, non-interactive, unattended updates.
-* *Reliable Rollbacks:* The system configurations must be declarative (describing what the system should look like, not how to build it). This allows for fast and easy rollbacks if any malfunction occurs.
+The sandbox creates a reproducible, isolated copy of all necessary service components. This environment is intentionally decoupled:
 
-The development environment is designed to be a portable, secure, and easily reversible environment that doesn't dictate your final production setup.
+* **No Orchestrator Dependencies:** It operates without requiring predefined networks or complex orchestrators.
+* **Operating System Isolation:** Isolation is achieved at the operating system level, ensuring all service components are kept separate to avoid interference with the host system.
+* **Guaranteed Reproducibility:** Built on NixOS and leveraging the Nix package manager, the environment is guaranteed to be consistent across machines.
+
+### Cross-Platform Flexibility
+
+While natively utilizing the power of NixOS, the sandbox is flexible and can be adapted to run on major platforms, with minimal configuration:
+
+* [Windows (via WSL)](https://learn.microsoft.com/en-us/windows/wsl/about)
+* [ChromeOS (via CROSH)](https://chromeos.dev/en/linux)
+* [macOS](https://github.com/LnL7/nix-darwin).
+
+### Architectural Objectives
+
+The sandbox is built upon the following criteria to ensure that the services developed within it are reproducible and reliable in the production environment:
+
+* **No Vendor Lock-in:** It must be independent of specific production tools or hosting services (like Kubernetes or a particular cloud provider), ensuring the operating model can be freely chosen for deployment.
+* **Flexible and Portable:** It features a flexible system configuration to allow the service to be deployed and run on diverse hardware platforms.
+* **Secure Distribution:** It uses a package cache for distribution, providing supply chain control and enabling secure, non-interactive, unattended updates.
+* **Reliable Rollbacks:** The system configurations are declarative, which allows for fast, easy rollbacks if any malfunction occurs.
+
+This development environment is designed to be a portable, secure, and easily reversible system that doesn't dictate your final production setup.
 
 ## Technology Stack
 
