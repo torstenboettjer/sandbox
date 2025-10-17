@@ -1,8 +1,8 @@
 { config, pkgs, inputs, lib, ... }:
 
 let
-  gituser = "torstenboettjer";
-  gitemail = "torsten.boettjer@gmail.com";
+  gituser = "yourname";
+  gitemail = "yourname@mail.com";
 in
 
 {
