@@ -16,7 +16,7 @@ While natively utilizing the power of NixOS, the sandbox is flexible and can be 
 
 The sandbox is built upon the following criteria to ensure that the services developed within it are reproducible and reliable in the production environment:
 
-* **No Vendor Lock-in:** It must be independent of specific production tools or hosting services (like Kubernetes or a particular cloud provider), ensuring the operating model can be freely chosen for deployment.
+* **Avoid Vendor Lock-in:** It must be independent of specific production tools or hosting services (like Kubernetes or a particular cloud provider), ensuring the operating model can be freely chosen for deployment.
 * **Flexible and Portable:** It features a flexible system configuration to allow the service to be deployed and run on diverse hardware platforms.
 * **Secure Distribution:** It uses a package cache for distribution, providing supply chain control and enabling secure, non-interactive, unattended updates.
 * **Reliable Rollbacks:** The system configurations are declarative, which allows for fast, easy rollbacks if any malfunction occurs.
