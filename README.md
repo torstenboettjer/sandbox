@@ -103,7 +103,7 @@ The User Flake defines a consistent set of user-level applications and dotfiles 
 | Directory | Location | Purpose |
 | :------- | :------ | :------- |
 | flake.nix | ~/.config/flake.nix | Exports the shared Home Manager module (homeManagerModules.common). |
-| shell.nix | ~/.config/shell.nix | Defines shell-related user apps. |
+| default.nix | ~/.config/profiles/default.nix | Defines common set of developer tools. |
 
 The User Flake is the single source of truth for an individual developer's personal setup. By storing the entire Home Manager configuration, this single file ensures that the development toolset are identical across all the machines and environments.
 
