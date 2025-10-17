@@ -129,7 +129,7 @@ The User Flake is the single source of truth for an individual developer's perso
 Environment Flakes import this user flakes as an input (e.g., inputs.my-home.url = "path:~/.config"). For system engineering environments, the isolation, portability, and independence offered by separate flakes are worth the management overhead.
 
 ```sh
-// ~/.config/shell.nix (Application Module Example)
+// ~/.config/profiles/default.nix (Application Module Example)
 
 { config, pkgs, ... }:
 
