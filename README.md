@@ -34,6 +34,8 @@ The System Flake defines the core OS and is typically located at */etc/nixos*. I
 | configuration.nix |  /etc/nixos/configuration.nix |  Imports base modules, enables direnv and core services.  |
 | default.nix |  /etc/nixos/system/default.nix |  Sets up users, networking, and security.  |
 
+Separate flakes are the standard way to define reproducible developer shells (nix develop). Engineers can simply run nix develop within the flake directory to instantly load the required tools, environment variables, and pre-commit hooks, without needing a full nixos-rebuild switch. If one environment needs to test an overlay that modifies a core system package (e.g., overriding the global Python or adding an unstable patch to gcc), it can do so within its own flake's inputs without risking the host system or other environments. Each environment becomes a standalone unit that can be checked out, built, and used anywhere Nix is installed (NixOS, macOS, WSL, etc.). This is ideal for sharing via a version control system.
+
 ```sh
 // /etc/nixos/flake.nix
 
@@ -55,6 +57,8 @@ The System Flake defines the core OS and is typically located at */etc/nixos*. I
   };
 }
 ```
+
+System engineering often involves maintaining old systems or testing against specific historical library versions (e.g., a specific compiler, a known-bug version of a database). System modules allow developers to pin the exact nixpkgs version needed for that environment without affecting any other environment or the base operating system.
 
 ```sh
 // /etc/nixos/system/default.nix (System Module Example)
@@ -239,33 +243,7 @@ Now, every time a developer *cd* into ~/projects/myproject:
 * direnv calls nix develop --command bash (or equivalent) for the default devShells output.
 * The specified packages (docker, kubectl, go) and the shellHook are loaded into your current shell session.
 
-### Advantages of Separate Flakes for Dev Environments
-For system engineering environments, the isolation benefits of separate flakes usually outweigh the overhead.
-
-1. True Dependency Pinning and Isolation (Crucial)
-System engineering often involves maintaining old systems or testing against specific historical library versions (e.g., a specific compiler, a known-bug version of a database). A separate flake allows you to pin the exact nixpkgs version needed for that environment without affecting any other environment or the base operating system.
-
-2. Self-Contained and Portable
-Each environment becomes a standalone unit that can be checked out, built, and used anywhere Nix is installed (NixOS, macOS, WSL, etc.).
-This is ideal for sharing: "Here's the flake for the legacy project; it defines everything."
-
-3. Independent System Overrides (Configuration)
-If one environment needs to test an overlay that modifies a core system package (e.g., overriding the global Python or adding an unstable patch to gcc), it can do so within its own flake's inputs without risking the host system or other environments.
-
-4. Better for nix develop (Nix Shells)
-Separate flakes are the standard way to define reproducible developer shells (nix develop). Engineers can simply run nix develop within the flake directory to instantly load the required tools, environment variables, and pre-commit hooks, without needing a full nixos-rebuild switch.
-
-### Disadvantages of Separate Flakes
-1. Management Overhead
-You will be managing many small Git repositories and a multitude of flake.lock files, increasing the overhead for updating common security patches (like OpenSSL).
-
-2. Increased Duplication
-If 80% of your environments use the same core utilities (e.g., git, neovim, bash), you'll be duplicating the package definitions across many flakes, or you'll need to create a shared "utility flake" input.
-
-3.No Centralized Host System Control
-Your /etc/nixos will now only manage the base operating system. You lose the ability to easily audit all packages and services running on the machine from a single configuration file.
-
-## Usage
+## Usage Tips
 
 Setting up the developer maschine
 ```sh
@@ -289,7 +267,7 @@ direnv automatically loads the project's specific shell, which imports the consi
 ### Ghostty Navigation
 To create a new split window in Ghostty, you can use the keybindings `Ctrl`+`Shift`+`O` (or Cmd+D on macOS) to create a horizontal split, and `Ctrl`+`Shift`+`E` (or Cmd+Shift+D on macOS) to create a vertical split. To navigate between splits, use `Ctrl`+`Super`+`[` (or Cmd+[ on macOS) to focus the previous split, and `Ctrl`+`Super`+`]` (or Cmd+] on macOS) to focus the next split. [More Details](https://www.youtube.com/watch?v=zjUAUqcmZ3w&t=589s)
 
-## Technologies
+## Links
 
 * [NixOS](https://nixos.org/)
 * [Home Manager](https://nix-community.github.io/home-manager/)
