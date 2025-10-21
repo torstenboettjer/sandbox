@@ -2,17 +2,7 @@
 
 Developing services for a hybrid cloud is challenging. The high volume of interdependencies, complex network configurations, and granular security settings make it extremely difficult to reliably replicate production backing services for local development. This project introduces a configurable development sandbox designed to solve this replication problem and significantly speed up your development cycle.
 
-## Key Features
-
-The sandbox creates a reproducible, isolated copy of all necessary service components. This environment is intentionally decoupled:
-
-* **No Orchestrator Dependencies:** It operates without requiring predefined networks or complex orchestrators.
-* **Operating System Isolation:** Isolation is achieved at the operating system level, ensuring all service components are kept separate to avoid interference with the host system.
-* **Guaranteed Reproducibility:** Built on NixOS and leveraging the Nix package manager, the environment is guaranteed to be consistent across machines.
-
-While natively utilizing the power of NixOS, the sandbox is flexible and can be adapted to run on major platforms, but with minimal configuration, it also runs on [Windows (via WSL)](https://learn.microsoft.com/en-us/windows/wsl/about), [ChromeOS (via CROSH)](https://chromeos.dev/en/linux) or [macOS](https://github.com/LnL7/nix-darwin).
-
-## Architectural Objectives
+## Objectives
 
 The sandbox is built upon the following criteria to ensure that the services developed within it are reproducible and reliable in the production environment:
 
@@ -22,6 +12,16 @@ The sandbox is built upon the following criteria to ensure that the services dev
 * **Reliable Rollbacks:** The system configurations are declarative, which allows for fast, easy rollbacks if any malfunction occurs.
 
 This development environment is designed to be a portable, secure, and easily reversible system that doesn't dictate your final production setup.
+
+## Key Features
+
+The sandbox creates a reproducible, isolated copy of all necessary service components. This environment is intentionally decoupled:
+
+* **No Orchestrator Dependencies:** It operates without requiring predefined networks or complex orchestrators.
+* **Operating System Isolation:** Isolation is achieved at the operating system level, ensuring all service components are kept separate to avoid interference with the host system.
+* **Guaranteed Reproducibility:** Built on NixOS and leveraging the Nix package manager, the environment is guaranteed to be consistent across machines.
+
+While natively utilizing the power of NixOS, the sandbox is flexible and can be adapted to run on major platforms, but with minimal configuration, it also runs on [Windows (via WSL)](https://learn.microsoft.com/en-us/windows/wsl/about), [ChromeOS (via CROSH)](https://chromeos.dev/en/linux) or [macOS](https://github.com/LnL7/nix-darwin).
 
 ## Technology Stack
 
