@@ -253,7 +253,9 @@ Now, every time a developer *cd* into ~/projects/myproject:
 * direnv calls nix develop --command bash (or equivalent) for the default devShells output.
 * The specified packages (docker, kubectl, go) and the shellHook are loaded into your current shell session.
 
-## Usage Tips
+## Usage
+
+### System Configuration
 
 Setting up the developer maschine
 ```sh
@@ -274,7 +276,7 @@ direnv automatically loads the project's specific shell, which imports the consi
 
 * Navigating between windows: `super` + 0 ... 9 for the app in the dock
 
-### Ghostty Navigation
+### Terminal Separation
 To create a new split window in Ghostty, you can use the keybindings `Ctrl`+`Shift`+`O` (or Cmd+D on macOS) to create a horizontal split, and `Ctrl`+`Shift`+`E` (or Cmd+Shift+D on macOS) to create a vertical split. To navigate between splits, use `Ctrl`+`Super`+`[` (or Cmd+[ on macOS) to focus the previous split, and `Ctrl`+`Super`+`]` (or Cmd+] on macOS) to focus the next split. [More Details](https://www.youtube.com/watch?v=zjUAUqcmZ3w&t=589s)
 
 ## Links
