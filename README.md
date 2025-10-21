@@ -30,7 +30,7 @@ Relying on the programmable nix package manager gives engineers architectural fr
 | Layer | Scope |  Purpose |
 | :------- | :------- | :------- |
 | Base System | Hardware drivers, core operating system needs, and low-level security/monitoring agents | A system flake captures where the service is running (e.g., cloud mobility settings) but is kept separate from the actual application code to prevent platform lock-in. |
-| Development Tools | IDE, Git, diagramming apps and individual service configurations | The user flake maintains a consistent shell across environments to ensure that all developer environments share the same user-level applications at the command line, incl. dotfiles and shell settings. |
+| Development Tools | IDE, Git, diagramming apps and individual service configurations | The tools flake maintains a consistent shell across environments to ensure that all developer environments share the same user-level applications at the command line, incl. dotfiles and shell settings. |
 | Backend Services | Databases or messaging systems | An environment flake links developer machines to backend components, ensuring everyone across teams is working with an identical, homogeneous development environment. |
 
 The default setup for a sandbox is a local machine, engineers can easily override any default settings without requiring security approval or breaking the standardized lower layers. By defining the entire stack from hardware to developer tools in nix flakes, architects and security teams can launch fully isolated machines to test the functional model before it moves to staging or production. This system eliminates the need for high-level management tools and provider-specific orchestrators. The configurations are shared via Git, which enables a decentralized development process. The programmatic assembly of the server ensures that deployments are reproducible, isolated, and allow for atomic upgrades across any vendor or solution. Separating dependencies and build instructions into different files creates a clear separation of duties—operators can manage system compliance and security without needing to touch the application requirements defined by developers.
@@ -98,14 +98,14 @@ System engineering often involves maintaining old systems or testing against spe
 ```
 
 ### Development Tools
-The User Flake defines a consistent set of user-level applications and dotfiles via Home Manager modules. It's stored in a user-owned directory like *~/.config* and is reusable across different systems.
+The tools flake defines a consistent set of user-level applications and dotfiles via Home Manager modules. It's stored in a user-owned directory like *~/.config* and is reusable across different systems.
 
 | Directory | Location | Purpose |
 | :------- | :------ | :------- |
 | flake.nix | ~/.config/flake.nix | Exports the shared Home Manager module (homeManagerModules.common). |
 | default.nix | ~/.config/profiles/default.nix | Defines common set of developer tools. |
 
-The User Flake is the single source of truth for an individual developer's personal setup. By storing the entire Home Manager configuration, this single file ensures that the development toolset are identical across all the machines and environments.
+The tools flake is the single source of truth for an individual developer's personal setup. By storing the entire Home Manager configuration, this single file ensures that the development toolset are identical across all the machines and environments.
 
 ```sh
 // ~/.config/flake.nix
@@ -126,7 +126,7 @@ The User Flake is the single source of truth for an individual developer's perso
 }
 ```
 
-Environment Flakes import this user flakes as an input (e.g., inputs.my-home.url = "path:~/.config"). For system engineering environments, the isolation, portability, and independence offered by separate flakes are worth the management overhead.
+Environment Flakes import this tools flakes as an input (e.g., inputs.my-home.url = "path:~/.config"). For system engineering environments, the isolation, portability, and independence offered by separate flakes are worth the management overhead.
 
 ```sh
 // ~/.config/profiles/default.nix (Application Module Example)
@@ -179,7 +179,7 @@ The Environment Flake defines the specific tools and settings for a single proje
 | flake.nix | ~/projects/myproject/flake.nix | Defines the devShells.default output and pins specific versions. |
 | services.nix | ~/projects/myproject/services.nix | Defines environment-specific tools. |
 
-The Environment Flake is the entry point for a project or specialized task. It uses the devShells output and imports the User Flake's shared modules. This configuration achieves project isolation and ensures every team member is using the exact same project-specific tools, backend services, and dependencies.
+The Environment Flake is the entry point for a project or specialized task. It uses the devShells output and imports the tools flake's shared modules. This configuration achieves project isolation and ensures every team member is using the exact same project-specific tools, backend services, and dependencies.
 
 ```sh
 // ~/projects/myproject/flake.nix
