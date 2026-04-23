@@ -60,15 +60,13 @@ cd /etc/nixos && nix-env --delete-generations old; nix-store --gc --print-roots 
 ## Channel Refresh (root und der user)
 
 ```sh
-#sudo nix-channel --update && nix-channel --update
 sudo nix flake update && nix flake update
 ```
 
 ## System und home-manager upgrade:
 
 ```sh
-cd /etc/nixos && sudo nix flake update
-update
+cd /etc/nixos && sudo nix flake update && update
 ```
 
 
